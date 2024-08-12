@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home_navbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/home_icon"
+        android:title="Home" />
+    <item
+        android:id="@+id/recipes_navbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Recipes"
+        android:icon="@drawable/recipes_icon" />
+    <item
+        android:id="@+id/shoppingList_navbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Shopping lists"
+        android:icon = "@drawable/shopping_lists_icon" />
+    <item
+        android:id="@+id/mealPlanner_navbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Meal planner"
+        android:icon="@drawable/meal_planner_icon" />
+</menu>
