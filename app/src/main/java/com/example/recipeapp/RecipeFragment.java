@@ -7,6 +7,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.SearchView;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +28,19 @@ public class RecipeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+
+    ArrayList<Recipe> recipes = new ArrayList<>();
+    // Load sample recipes data
+    Recipe r1 = new Recipe("Apple", null, "", 0,
+            null, null, "", 0);
+    Recipe r2 = new Recipe("Orange", null, "", 0,
+            null, null, "", 0);
+    Recipe r3 = new Recipe("Banana", null, "", 0,
+            null, null, "", 0);
+
+    ListView listView;   // listview to display recipes
+
 
     public RecipeFragment() {
         // Required empty public constructor
@@ -58,7 +76,35 @@ public class RecipeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Load sample data
+        recipes.add(r1);
+        recipes.add(r2);
+        recipes.add(r3);
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recipe, container, false);
+        View view = inflater.inflate(R.layout.fragment_recipe, container, false);
+
+        // Inflate the list of items
+        listView = (ListView) view.findViewById(R.id.recipes_listView);
+        RecipeAdapter recipeAdapter = new RecipeAdapter(getContext().getApplicationContext(), recipes);
+        listView.setAdapter(recipeAdapter);
+
+        // set up listener for search view
+        SearchView searchView = (SearchView) view.findViewById(R.id.recipes_searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // when text is changed, filter search results
+                recipeAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return view;
     }
+
 }
