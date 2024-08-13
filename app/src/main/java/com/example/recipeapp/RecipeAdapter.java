@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class RecipeAdapter extends BaseAdapter implements Filterable {
 
     Context ctx;
+    ArrayList<Recipe> originalRecipes;   // keep the original copy of recipes
     ArrayList<Recipe> recipes;
     LayoutInflater inflater;
     RecipeFilter recipeFilter;
@@ -25,6 +26,7 @@ public class RecipeAdapter extends BaseAdapter implements Filterable {
     public RecipeAdapter(Context ctx, ArrayList<Recipe> recipes){
         this.ctx = ctx;
         this.recipes = recipes;
+        this.originalRecipes = new ArrayList<>(recipes);
         inflater = LayoutInflater.from(ctx);
     }
 
@@ -77,10 +79,9 @@ public class RecipeAdapter extends BaseAdapter implements Filterable {
                 ArrayList<Recipe> filtered_recipes = new ArrayList<>();
 
                 // filtering logic goes here
-                for (int i = 0 ; i < recipes.size(); i++){
-                    if (recipes.get(i).getRecipeName().toLowerCase().contains(constraint)){
-                        filtered_recipes.add(recipes.get(i));
-
+                for (int i = 0 ; i < originalRecipes.size(); i++){
+                    if (originalRecipes.get(i).getRecipeName().toLowerCase().contains(constraint)){
+                        filtered_recipes.add(originalRecipes.get(i));
                     }
 
                     // adjust result
@@ -90,8 +91,8 @@ public class RecipeAdapter extends BaseAdapter implements Filterable {
             }
             else{
                 // search query without any filter text
-                results.count = recipes.size();
-                results.values = recipes;
+                results.count = originalRecipes.size();
+                results.values = originalRecipes;
             }
             return results;
         }
