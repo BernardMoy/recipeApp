@@ -2,6 +2,8 @@ package com.example.recipeapp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+
 public class Recipe {
     private String recipeName;
     private ArrayList<String> tags;
@@ -12,6 +14,7 @@ public class Recipe {
     private String recipeLink;
     private int recipeImage;
     private boolean favourite;
+    private int timesCooked;
 
     public Recipe(String recipeName, ArrayList<String> tags, String description, int prepTime,
                   HashMap<Ingredient, Float> requiredIngredients, HashMap<Ingredient, Float> optionalIngredients,
@@ -25,6 +28,7 @@ public class Recipe {
         this.recipeLink = recipeLink;
         this.recipeImage = recipeImage;
         this.favourite = false;
+        this.timesCooked = 0;
     }
 
     public void markFavourite(){
@@ -66,6 +70,10 @@ public class Recipe {
         this.recipeLink = recipeLink;
     }
 
+    public void incrementTimesCooked(){
+        timesCooked++;
+    }
+
     public int getPrepTime() {
         return prepTime;
     }
@@ -99,5 +107,17 @@ public class Recipe {
     }
     public boolean getFavourite(){
         return this.favourite;
+    }
+
+    public int getTimesCooked() {
+        return timesCooked;
+    }
+
+    public float calculateCost(){
+        float cost = 0;
+        for (Map.Entry<Ingredient, Float> entry : requiredIngredients.entrySet()){
+            cost += entry.getKey().getCost()*entry.getValue();
+        }
+        return cost;
     }
 }

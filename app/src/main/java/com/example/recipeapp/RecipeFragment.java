@@ -4,10 +4,12 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -40,6 +42,7 @@ public class RecipeFragment extends Fragment {
             null, null, "", 0);
 
     ListView listView;   // listview to display recipes
+    AutoCompleteTextView autoCompleteTextView;
 
 
     public RecipeFragment() {
@@ -104,6 +107,16 @@ public class RecipeFragment extends Fragment {
                 return false;
             }
         });
+
+        // Load the dropdown menu for ordering
+        autoCompleteTextView = view.findViewById(R.id.recipe_dropDown);
+        String[] orderingStringArray = getResources().getStringArray(R.array.orderBy);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext().getApplicationContext(), R.layout.recipe_dropdown_item, orderingStringArray);   // populate with recipe dropdown item which is a single textview.
+        autoCompleteTextView.setAdapter(arrayAdapter);
+        // Listener to make the view show dropdown
+        autoCompleteTextView.setOnClickListener(view1 -> autoCompleteTextView.showDropDown());
+
+        // the final return object
         return view;
     }
 
