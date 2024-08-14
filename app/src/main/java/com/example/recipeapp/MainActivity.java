@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 
@@ -63,6 +65,19 @@ public class MainActivity extends AppCompatActivity {
         popupMenu.getMenuInflater().inflate(R.menu.floating_button_popup_menu, popupMenu.getMenu());
         popupMenu.setForceShowIcon(true);
         popupMenu.show();
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                if (menuItem.getItemId() == R.id.add_recipe_popup){
+                    Log.d("PopUp", "Add recipe option cliked");
+                }
+                else if (menuItem.getItemId() == R.id.add_shopping_list_popup){
+                    Log.d("PopUp", "Add shopping list option clicked");
+                }
+                return true;
+            }
+        });
 
     }
 
