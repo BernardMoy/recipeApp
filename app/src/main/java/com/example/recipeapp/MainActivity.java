@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -70,7 +71,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.add_recipe_popup){
-                    Log.d("PopUp", "Add recipe option cliked");
+                    Log.d("PopUp", "Add recipe option clicked");
+                    Intent i = new Intent(MainActivity.this, AddNewRecipe.class);
+                    startActivity(i);
                 }
                 else if (menuItem.getItemId() == R.id.add_shopping_list_popup){
                     Log.d("PopUp", "Add shopping list option clicked");
