@@ -121,7 +121,7 @@ public class RecipeFragment extends Fragment {
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String selectedOption = getResources().getStringArray(R.array.orderBy)[i];
+                String selectedOption = getResources().getStringArray(R.array.orderBy)[i];    // i is the position of selected elem
                 Log.d("Dropdown menu", selectedOption);
             }
         });
