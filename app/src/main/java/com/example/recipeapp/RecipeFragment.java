@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
@@ -115,6 +116,15 @@ public class RecipeFragment extends Fragment {
         autoCompleteTextView.setAdapter(arrayAdapter);
         // Listener to make the view show dropdown
         autoCompleteTextView.setOnClickListener(view1 -> autoCompleteTextView.showDropDown());
+
+        // Listener to do something to the selected object
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String selectedOption = getResources().getStringArray(R.array.orderBy)[i];
+                Log.d("Dropdown menu", selectedOption);
+            }
+        });
 
         // the final return object
         return view;

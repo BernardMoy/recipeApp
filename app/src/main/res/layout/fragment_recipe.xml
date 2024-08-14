@@ -25,19 +25,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
             <AutoCompleteTextView
-                android:id="@+id/recipe_dropDown"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:id="@+id/recipe_dropDown"
                 android:inputType="none"
                 android:layout_width="194dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
                 android:drawableEnd="@drawable/dropdown_icon"
-                android:text="Order by" />
+                android:text="@string/recipe_dropDown_hint" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <ListView
