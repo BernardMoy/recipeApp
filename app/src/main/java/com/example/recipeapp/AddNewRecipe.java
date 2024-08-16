@@ -27,4 +27,6 @@ public class AddNewRecipe extends AppCompatActivity {
     public void exitActivity(View v){
         super.onBackPressed();
     }
+
+    // Method to add image when the add button is selected
 }
