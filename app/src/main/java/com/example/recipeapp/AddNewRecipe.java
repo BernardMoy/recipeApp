@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -17,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import org.w3c.dom.Text;
 
 public class AddNewRecipe extends AppCompatActivity {
 
@@ -75,5 +78,29 @@ public class AddNewRecipe extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    // method for clearing name
+    public void clearName(View v){
+        TextView textView = (TextView) findViewById(R.id.recipeName_edittext);
+        textView.setText("");
+    }
+
+    // method for clearing description
+    public void clearDesc(View v){
+        TextView textView = (TextView) findViewById(R.id.recipeDesc_edittext);
+        textView.setText("");
+    }
+
+    // method for clearing prep time
+    public void clearPrepTime(View v){
+        TextView textView = (TextView) findViewById(R.id.recipePrepTime_edittext);
+        textView.setText("");
+    }
+
+    // method for clearing recipe link
+    public void clearLink(View v){
+        TextView textView = (TextView) findViewById(R.id.recipeLink_edittext);
+        textView.setText("");
     }
 }

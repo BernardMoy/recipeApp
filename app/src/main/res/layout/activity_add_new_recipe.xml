@@ -133,6 +133,7 @@
                 android:layout_height="@dimen/image_button_size"
                 android:backgroundTint="@android:color/transparent"
                 android:contentDescription="Clear"
+                android:onClick="clearName"
                 app:srcCompat="@drawable/cancel_icon"
                 app:tint="@color/secondaryColor" />
         </LinearLayout>
@@ -161,7 +162,8 @@
                 android:background="@drawable/custom_edit_text"
                 android:hint="Description"
                 android:textColor="@color/gray"
-                android:paddingLeft="@dimen/content_margin"/>
+                android:paddingStart="@dimen/content_margin"
+                android:paddingEnd="@dimen/content_margin"/>
 
             <ImageButton
                 android:id="@+id/imageButton6"
@@ -169,6 +171,7 @@
                 android:layout_height="@dimen/image_button_size"
                 android:backgroundTint="@android:color/transparent"
                 android:contentDescription="Clear"
+                android:onClick="clearDesc"
                 app:srcCompat="@drawable/cancel_icon"
                 app:tint="@color/secondaryColor" />
         </LinearLayout>
@@ -224,12 +227,12 @@
 
             <EditText
                 android:id="@+id/recipePrepTime_edittext"
-                android:layout_width="187dp"
+                android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:inputType="text"
+                android:inputType="number"
                 android:textSize="@dimen/content_font_size"
                 android:background="@drawable/custom_edit_text"
-                android:hint="Preparation time"
+                android:hint="0"
                 android:textColor="@color/gray"
                 android:paddingLeft="@dimen/content_margin"/>
 
@@ -239,6 +242,7 @@
                 android:layout_height="@dimen/image_button_size"
                 android:backgroundTint="@android:color/transparent"
                 android:contentDescription="Clear"
+                android:onClick="clearPrepTime"
                 app:srcCompat="@drawable/cancel_icon"
                 app:tint="@color/secondaryColor" />
         </LinearLayout>
@@ -277,6 +281,7 @@
                 android:layout_height="@dimen/image_button_size"
                 android:backgroundTint="@android:color/transparent"
                 android:contentDescription="Clear"
+                android:onClick="clearLink"
                 app:srcCompat="@drawable/cancel_icon"
                 app:tint="@color/secondaryColor" />
         </LinearLayout>
