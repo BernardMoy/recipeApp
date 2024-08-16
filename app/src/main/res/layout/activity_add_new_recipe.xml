@@ -82,6 +82,7 @@
                 android:id="@+id/imageButton0"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:onClick="getImage"
                 android:backgroundTint="@android:color/transparent"
                 android:contentDescription="Add"
                 app:srcCompat="@drawable/add_circle_icon"
@@ -93,6 +94,7 @@
                 android:layout_height="48dp"
                 android:backgroundTint="@android:color/transparent"
                 android:contentDescription="Clear"
+                android:onClick="clearImage"
                 app:srcCompat="@drawable/cancel_icon"
                 app:tint="@color/secondaryColor" />
         </LinearLayout>

@@ -1,15 +1,27 @@
 package com.example.recipeapp;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class AddNewRecipe extends AppCompatActivity {
+
+    // Result launcher for the image picker
+    ActivityResultLauncher<Intent> resultLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,12 +33,47 @@ public class AddNewRecipe extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // register result for the image picker
+        registerResult();
     }
 
     // Return to previous activity
     public void exitActivity(View v){
-        super.onBackPressed();
+       getOnBackPressedDispatcher().onBackPressed();
     }
 
-    // Method to add image when the add button is selected
+    // method for the button to get image
+    public void getImage(View v){
+        Intent intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
+        resultLauncher.launch(intent);
+    }
+
+    // method for the button to clear image
+    public void clearImage(View v){
+        ImageView recipeImage = (ImageView) findViewById(R.id.recipeImage);
+        recipeImage.setImageResource(0);
+    }
+
+    // Register result for the image picker
+    public void registerResult(){
+        ImageView recipeImage = (ImageView) findViewById(R.id.recipeImage);
+        resultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult o) {
+                        try{
+                            Uri image = o.getData().getData();
+                            recipeImage.setImageURI(image);
+
+                        } catch (Exception e){
+                            // display error message when user does not submit data
+                            Toast.makeText(AddNewRecipe.this, "No image selected", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                }
+        );
+    }
 }
