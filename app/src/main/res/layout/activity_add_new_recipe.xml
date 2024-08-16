@@ -31,9 +31,9 @@
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_width="@dimen/image_button_size"
+        android:layout_height="@dimen/image_button_size"
+        android:layout_marginStart="@dimen/content_margin"
         android:backgroundTint="@android:color/transparent"
         android:contentDescription="Discard"
         android:onClick="exitActivity"
@@ -41,6 +41,23 @@
         app:layout_constraintStart_toStartOf="@+id/toolbar"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/close_icon" />
+
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:drawableEnd="@drawable/check_icon"
+        android:drawableTint="@color/white"
+        android:backgroundTint="@color/primaryColor"
+        android:layout_marginEnd="@dimen/content_margin"
+        android:paddingEnd="@dimen/content_margin"
+        android:paddingStart="@dimen/content_margin"
+        app:cornerRadius="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
