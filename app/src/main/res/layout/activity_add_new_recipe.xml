@@ -138,7 +138,7 @@
                 android:inputType="text"
                 android:textSize="@dimen/content_font_size"
                 android:background="@drawable/custom_edit_text"
-                android:hint="Name"
+                android:hint=" Name"
                 android:textColor="@color/gray"
                 android:drawableStart="@drawable/brush_icon"
                 android:drawableTint="@color/gray"
@@ -177,8 +177,10 @@
                 android:inputType="textMultiLine"
                 android:textSize="@dimen/content_font_size"
                 android:background="@drawable/custom_edit_text"
-                android:hint="Description"
+                android:hint=" Description"
                 android:textColor="@color/gray"
+                android:drawableStart="@drawable/text_snippet_icon"
+                android:drawableTint="@color/gray"
                 android:paddingStart="@dimen/content_margin"
                 android:paddingEnd="@dimen/content_margin"/>
 
@@ -197,16 +199,28 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:layout_marginTop="@dimen/content_margin"
-            android:layout_marginBottom="@dimen/content_margin"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/textView10"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="Tags"
                 android:textSize="@dimen/content_font_size" />
+
+            <EditText
+                android:id="@+id/recipeNewTag_edittext"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:inputType="text"
+                android:textSize="@dimen/content_font_size"
+                android:background="@drawable/custom_edit_text"
+                android:hint=" New tag"
+                android:textColor="@color/gray"
+                android:drawableStart="@drawable/add_icon"
+                android:drawableTint="@color/gray"
+                android:paddingLeft="@dimen/content_margin"/>
 
             <ImageButton
                 android:id="@+id/imageButton7"
@@ -219,6 +233,30 @@
 
             <ImageButton
                 android:id="@+id/imageButton8"
+                android:layout_width="@dimen/image_button_size"
+                android:layout_height="@dimen/image_button_size"
+                android:backgroundTint="@android:color/transparent"
+                android:contentDescription="Clear"
+                app:srcCompat="@drawable/cancel_icon"
+                app:tint="@color/secondaryColor" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginBottom="@dimen/content_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text=""
+                android:textSize="@dimen/content_font_size" />
+
+            <ImageButton
+                android:id="@+id/imageButton11"
                 android:layout_width="@dimen/image_button_size"
                 android:layout_height="@dimen/image_button_size"
                 android:backgroundTint="@android:color/transparent"
@@ -244,13 +282,15 @@
 
             <EditText
                 android:id="@+id/recipePrepTime_edittext"
-                android:layout_width="60dp"
+                android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:inputType="number"
                 android:textSize="@dimen/content_font_size"
                 android:background="@drawable/custom_edit_text"
-                android:hint="0"
+                android:hint=" 0"
                 android:textColor="@color/gray"
+                android:drawableStart="@drawable/time_icon"
+                android:drawableTint="@color/gray"
                 android:paddingLeft="@dimen/content_margin"/>
 
             <ImageButton
@@ -286,7 +326,7 @@
                 android:background="@drawable/custom_edit_text"
                 android:drawableStart="@drawable/link_icon"
                 android:drawableTint="@color/gray"
-                android:hint="Recipe Link"
+                android:hint=" Recipe Link"
                 android:inputType="text"
                 android:paddingLeft="@dimen/content_margin"
                 android:textColor="@color/gray"
