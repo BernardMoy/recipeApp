@@ -80,8 +80,8 @@
 
             <ImageButton
                 android:id="@+id/imageButton0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:backgroundTint="@android:color/transparent"
                 android:contentDescription="Add"
                 app:srcCompat="@drawable/add_circle_icon"
@@ -89,8 +89,8 @@
 
             <ImageButton
                 android:id="@+id/imageButton4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:backgroundTint="@android:color/transparent"
                 android:contentDescription="Clear"
                 app:srcCompat="@drawable/cancel_icon"
@@ -127,8 +127,8 @@
 
             <ImageButton
                 android:id="@+id/imageButton5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/image_button_size"
+                android:layout_height="@dimen/image_button_size"
                 android:backgroundTint="@android:color/transparent"
                 android:contentDescription="Clear"
                 app:srcCompat="@drawable/cancel_icon"
@@ -163,8 +163,8 @@
 
             <ImageButton
                 android:id="@+id/imageButton6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/image_button_size"
+                android:layout_height="@dimen/image_button_size"
                 android:backgroundTint="@android:color/transparent"
                 android:contentDescription="Clear"
                 app:srcCompat="@drawable/cancel_icon"
@@ -188,8 +188,8 @@
 
             <ImageButton
                 android:id="@+id/imageButton7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/image_button_size"
+                android:layout_height="@dimen/image_button_size"
                 android:backgroundTint="@android:color/transparent"
                 android:contentDescription="Add"
                 app:srcCompat="@drawable/add_circle_icon"
@@ -197,8 +197,8 @@
 
             <ImageButton
                 android:id="@+id/imageButton8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/image_button_size"
+                android:layout_height="@dimen/image_button_size"
                 android:backgroundTint="@android:color/transparent"
                 android:contentDescription="Clear"
                 app:srcCompat="@drawable/cancel_icon"
@@ -233,8 +233,8 @@
 
             <ImageButton
                 android:id="@+id/imageButton9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/image_button_size"
+                android:layout_height="@dimen/image_button_size"
                 android:backgroundTint="@android:color/transparent"
                 android:contentDescription="Clear"
                 app:srcCompat="@drawable/cancel_icon"
@@ -260,19 +260,19 @@
                 android:id="@+id/recipeLink_edittext"
                 android:layout_width="187dp"
                 android:layout_height="match_parent"
-                android:inputType="text"
-                android:textSize="@dimen/content_font_size"
                 android:background="@drawable/custom_edit_text"
-                android:hint="Recipe Link"
                 android:drawableStart="@drawable/link_icon"
                 android:drawableTint="@color/gray"
+                android:hint="Recipe Link"
+                android:inputType="text"
+                android:paddingLeft="@dimen/content_margin"
                 android:textColor="@color/gray"
-                android:paddingLeft="@dimen/content_margin"/>
+                android:textSize="@dimen/content_font_size" />
 
             <ImageButton
                 android:id="@+id/imageButton10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/image_button_size"
+                android:layout_height="@dimen/image_button_size"
                 android:backgroundTint="@android:color/transparent"
                 android:contentDescription="Clear"
                 app:srcCompat="@drawable/cancel_icon"
