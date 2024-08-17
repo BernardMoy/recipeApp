@@ -124,6 +124,12 @@ public class AddNewRecipe extends AppCompatActivity {
         textView.setText("");
     }
 
+    // method for clearing new tag box
+    public void clearNewTag(View v){
+        TextView textView = (TextView) findViewById(R.id.recipeNewTag_edittext);
+        textView.setText("");
+    }
+
     // method when the plus button after writing a new tag is pressed
     public void addNewTag(View v){
         TextView textview = (TextView) findViewById(R.id.recipeNewTag_edittext);

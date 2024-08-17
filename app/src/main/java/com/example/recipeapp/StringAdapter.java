@@ -31,6 +31,7 @@ public class StringAdapter extends RecyclerView.Adapter<StringRecyclerViewHolder
     public void onBindViewHolder(@NonNull StringRecyclerViewHolder holder, int position) {
         holder.getTextView().setText(stringList.get(position));
 
+        // Make the displayed box disappear when clicked on
         holder.getTextView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

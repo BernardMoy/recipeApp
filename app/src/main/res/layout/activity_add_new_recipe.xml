@@ -238,6 +238,7 @@
                 android:layout_height="@dimen/image_button_size"
                 android:backgroundTint="@android:color/transparent"
                 android:contentDescription="Clear"
+                android:onClick="clearNewTag"
                 app:srcCompat="@drawable/cancel_icon"
                 app:tint="@color/secondaryColor" />
         </LinearLayout>
