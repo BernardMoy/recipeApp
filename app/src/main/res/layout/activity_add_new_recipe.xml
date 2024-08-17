@@ -254,14 +254,16 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text=""
-                android:textSize="@dimen/content_font_size" />
+                android:text="Click on the tags to remove"
+                android:textColor="@color/gray"
+                android:textSize="10sp" />
 
             <!--Recycler view for storing a list of tags-->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recipeTags_recyclerView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                tools:itemCount="1"/>
 
         </LinearLayout>
         <LinearLayout
@@ -342,6 +344,98 @@
                 app:srcCompat="@drawable/cancel_icon"
                 app:tint="@color/secondaryColor" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginTop="@dimen/content_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Ingredients"
+                android:textSize="@dimen/content_font_size" />
+
+
+            <ImageButton
+                android:id="@+id/imageButton11"
+                android:layout_width="@dimen/image_button_size"
+                android:layout_height="@dimen/image_button_size"
+                android:backgroundTint="@android:color/transparent"
+                android:contentDescription="Add"
+                app:srcCompat="@drawable/add_circle_icon"
+                app:tint="@color/primaryColor" />
+
+            <ImageButton
+                android:id="@+id/imageButton12"
+                android:layout_width="@dimen/image_button_size"
+                android:layout_height="@dimen/image_button_size"
+                android:backgroundTint="@android:color/transparent"
+                android:contentDescription="Clear"
+                app:srcCompat="@drawable/cancel_icon"
+                app:tint="@color/secondaryColor" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginBottom="@dimen/content_margin"
+            android:orientation="horizontal">
+
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/content_margin"
+                android:layout_marginEnd="@dimen/content_margin">
+
+                <TableRow
+                    android:background="@color/primaryColor">
+
+                    <TextView
+                        android:gravity="center_horizontal"
+                        android:text="Ingredient"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/content_font_size" />
+
+                    <TextView
+                        android:gravity="center_horizontal"
+                        android:text="Portion size"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/content_font_size" />
+
+                    <TextView
+                        android:gravity="center_horizontal"
+                        android:text="Supermarket"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/content_font_size" />
+
+                    <TextView
+                        android:gravity="center_horizontal"
+                        android:text="Cost"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/content_font_size" />
+                </TableRow>
+            </TableLayout>
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
