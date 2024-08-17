@@ -242,7 +242,7 @@
                 app:tint="@color/secondaryColor" />
         </LinearLayout>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:layout_marginBottom="@dimen/content_margin"
@@ -256,13 +256,11 @@
                 android:text=""
                 android:textSize="@dimen/content_font_size" />
 
-            <!--Linear layout for storing a list of tags-->
-            <LinearLayout
+            <!--Recycler view for storing a list of tags-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recipeTags_recyclerView"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-            </LinearLayout>
+                android:layout_height="wrap_content"/>
 
             <ImageButton
                 android:id="@+id/imageButton11"

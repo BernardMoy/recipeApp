@@ -5,7 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +20,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.w3c.dom.Text;
 
@@ -28,6 +33,8 @@ public class AddNewRecipe extends AppCompatActivity {
 
     // Result launcher for the image picker
     ActivityResultLauncher<Intent> resultLauncher;
+
+    RecyclerView tagsRecyclerView;
 
     // stores current tags that are added
     private ArrayList<String> tags;
@@ -48,6 +55,10 @@ public class AddNewRecipe extends AppCompatActivity {
 
         // set tags to new empty array
         tags = new ArrayList<>();
+
+        // init the tags recycler view
+        tagsRecyclerView = (RecyclerView) findViewById(R.id.recipeTags_recyclerView);
+        
     }
 
     // Return to previous activity
@@ -126,7 +137,13 @@ public class AddNewRecipe extends AppCompatActivity {
             return;
         }
 
+        // Add tag to arraylist
         tags.add(newTag);
+
+        // modify the recyclerview of tags that are displayed
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false);
+        tagsRecyclerView.setLayoutManager(gridLayoutManager);
+        tagsRecyclerView.setAdapter(new StringAdapter(this, tags));
 
         // clear box
         textview.setText("");
