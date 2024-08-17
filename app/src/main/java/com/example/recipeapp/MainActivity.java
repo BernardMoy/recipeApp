@@ -52,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // function to close app
+    public void exitApp(){
+        System.exit(0);
+    }
+
     // function to replace fragment
     private void replaceFragment(Fragment f){
         FragmentManager fm = getSupportFragmentManager();
