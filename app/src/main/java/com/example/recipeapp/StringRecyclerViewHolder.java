@@ -1,5 +1,6 @@
 package com.example.recipeapp;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ public class StringRecyclerViewHolder extends ViewHolder {
     public StringRecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
         textView = itemView.findViewById(R.id.boxText);
+
 
     }
 

@@ -30,6 +30,15 @@ public class StringAdapter extends RecyclerView.Adapter<StringRecyclerViewHolder
     @Override
     public void onBindViewHolder(@NonNull StringRecyclerViewHolder holder, int position) {
         holder.getTextView().setText(stringList.get(position));
+
+        holder.getTextView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = holder.getAdapterPosition();
+                stringList.remove(position);
+                notifyItemRemoved(position);
+            }
+        });
     }
 
     @Override

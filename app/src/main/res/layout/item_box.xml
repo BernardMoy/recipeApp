@@ -3,7 +3,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/boxText"
     android:text="Test"
-    android:textColor="@color/black"
+    android:textColor="@color/white"
     android:background="@color/primaryColor"
     android:textSize="@dimen/content_font_size"
     android:paddingStart="10dp"

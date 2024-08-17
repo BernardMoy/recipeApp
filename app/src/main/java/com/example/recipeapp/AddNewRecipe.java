@@ -58,7 +58,7 @@ public class AddNewRecipe extends AppCompatActivity {
 
         // init the tags recycler view
         tagsRecyclerView = (RecyclerView) findViewById(R.id.recipeTags_recyclerView);
-        
+
     }
 
     // Return to previous activity
