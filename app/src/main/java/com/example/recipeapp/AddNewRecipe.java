@@ -21,10 +21,16 @@ import androidx.core.view.WindowInsetsCompat;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 public class AddNewRecipe extends AppCompatActivity {
 
     // Result launcher for the image picker
     ActivityResultLauncher<Intent> resultLauncher;
+
+    // stores current tags that are added
+    private ArrayList<String> tags;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,9 @@ public class AddNewRecipe extends AppCompatActivity {
 
         // register result for the image picker
         registerResult();
+
+        // set tags to new empty array
+        tags = new ArrayList<>();
     }
 
     // Return to previous activity
@@ -102,5 +111,24 @@ public class AddNewRecipe extends AppCompatActivity {
     public void clearLink(View v){
         TextView textView = (TextView) findViewById(R.id.recipeLink_edittext);
         textView.setText("");
+    }
+
+    // method when the plus button after writing a new tag is pressed
+    public void addNewTag(View v){
+        TextView textview = (TextView) findViewById(R.id.recipeNewTag_edittext);
+
+        // get the new tag that is submitted
+        String newTag = textview.getText().toString();
+
+        // empty tag submitted
+        if (newTag.isEmpty()){
+            Toast.makeText(AddNewRecipe.this, "Tag is empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        tags.add(newTag);
+
+        // clear box
+        textview.setText("");
     }
 }

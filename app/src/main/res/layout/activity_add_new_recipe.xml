@@ -228,6 +228,7 @@
                 android:layout_height="@dimen/image_button_size"
                 android:backgroundTint="@android:color/transparent"
                 android:contentDescription="Add"
+                android:onClick="addNewTag"
                 app:srcCompat="@drawable/add_circle_icon"
                 app:tint="@color/primaryColor" />
 
@@ -241,7 +242,7 @@
                 app:tint="@color/secondaryColor" />
         </LinearLayout>
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:layout_marginBottom="@dimen/content_margin"
@@ -254,6 +255,14 @@
                 android:layout_marginStart="10dp"
                 android:text=""
                 android:textSize="@dimen/content_font_size" />
+
+            <!--Linear layout for storing a list of tags-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+            </LinearLayout>
 
             <ImageButton
                 android:id="@+id/imageButton11"
