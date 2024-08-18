@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -38,7 +39,10 @@ public class AddNewRecipe extends AppCompatActivity {
     RecyclerView ingredientsRecyclerView;
 
     // stores current tags that are added
-    private ArrayList<String> tags;
+    private ArrayList<String> tagList;
+
+    // stores current list of ingredients
+    private ArrayList<Ingredient> ingredientList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +59,8 @@ public class AddNewRecipe extends AppCompatActivity {
         registerResult();
 
         // set tags to new empty array
-        tags = new ArrayList<>();
+        tagList = new ArrayList<>();
+        ingredientList = new ArrayList<>();
 
         // init the recycler views
         tagsRecyclerView = (RecyclerView) findViewById(R.id.recipeTags_recyclerView);
@@ -145,14 +150,71 @@ public class AddNewRecipe extends AppCompatActivity {
         }
 
         // Add tag to arraylist
-        tags.add(newTag);
+        tagList.add(newTag);
 
         // modify the recyclerview of tags that are displayed
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false);
         tagsRecyclerView.setLayoutManager(gridLayoutManager);
-        tagsRecyclerView.setAdapter(new StringAdapter(this, tags));
+        tagsRecyclerView.setAdapter(new StringAdapter(this, tagList));
 
         // clear box
         textview.setText("");
+    }
+
+    // method to add new ingredient row to the table when plus icon is pressed
+    public void addNewIngredient(View v){
+        // get fields that are submitted
+        TextView ingredientEditText = (TextView) findViewById(R.id.recipeIngredient_edittext);
+        TextView portionSizeEditText = (TextView) findViewById(R.id.recipePortionSize_edittext);
+        TextView supermarketEditText = (TextView) findViewById(R.id.recipeSupermarket_edittext);
+        TextView costEditText = (TextView) findViewById(R.id.recipeCost_edittext);
+
+        String ingredient = ingredientEditText.getText().toString();
+        String portionSizeStr = portionSizeEditText.getText().toString();
+        String supermarket = supermarketEditText.getText().toString();
+        String costStr = costEditText.getText().toString();
+
+        // empty ingredient name submitted
+        if (ingredient.isEmpty()){
+            Toast.makeText(AddNewRecipe.this, "Ingredient name is empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // empty portion size
+        if (portionSizeStr.isEmpty()){
+            Toast.makeText(AddNewRecipe.this, "Amount is empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // empty supermarket
+        if (supermarket.isEmpty()){
+            Toast.makeText(AddNewRecipe.this, "Supermarket is empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // empty cost
+        if (costStr.isEmpty()){
+            Toast.makeText(AddNewRecipe.this, "Cost is empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // casts
+        float portionSize = Float.parseFloat(portionSizeStr);
+        float cost = Float.parseFloat(costStr);
+
+        // construct ingredient and add to arraylist
+        Ingredient newIngredient = new Ingredient(ingredient, portionSize, supermarket, cost);
+        ingredientList.add(newIngredient);
+
+        // modify the recycler view that displays list of items
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
+        ingredientsRecyclerView.setAdapter(new IngredientAdapter(this, ingredientList));
+
+        // reset fields
+        ingredientEditText.setText("");
+        portionSizeEditText.setText("");
+        supermarketEditText.setText("");
+        costEditText.setText("");
     }
 }
