@@ -3,10 +3,14 @@ package com.example.recipeapp;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -43,10 +47,19 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientRecyclerVi
             holder.getCostTextView().setBackgroundResource(R.color.lightColor);
         }
 
+        // Make the displayed box disappear when clicked the delete button
+        holder.getDeleteButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = holder.getAdapterPosition();
+                ingredientList.remove(position);
+                notifyItemRemoved(position);
+            }
+        });
     }
-
     @Override
     public int getItemCount() {
         return ingredientList.size();
     }
+
 }

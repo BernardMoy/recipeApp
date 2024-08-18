@@ -222,7 +222,9 @@ public class AddNewRecipe extends AppCompatActivity {
         // modify the recycler view that displays list of items
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
-        ingredientsRecyclerView.setAdapter(new IngredientAdapter(this, ingredientList));
+
+        IngredientAdapter ingredientRecyclerViewAdapter = new IngredientAdapter(this, ingredientList);
+        ingredientsRecyclerView.setAdapter(ingredientRecyclerViewAdapter);
 
         // reset fields
         ingredientEditText.setText("");
@@ -230,12 +232,12 @@ public class AddNewRecipe extends AppCompatActivity {
         supermarketEditText.setText("");
         costEditText.setText("");
 
-        // update the cost displayed at the bottom
         updateCost();
     }
 
+    // method to update the cost displayed according to items
     public void updateCost(){
-        // adjust the total weighted cost
+
         TextView totalCost = (TextView) findViewById(R.id.totalCost_textView);
 
         // If no ingredients
@@ -244,12 +246,13 @@ public class AddNewRecipe extends AppCompatActivity {
             totalCost.setText(totalCostString);
         }
 
-        // Else, calculate sum
-        float total = 0.0f;
-        for (Ingredient i : ingredientList){
-            total += i.getCost()*i.getAmount();
+        else{  // Else calculate sum
+            float total = 0.0f;
+            for (Ingredient i : ingredientList){
+                total += i.getCost()*i.getAmount();
+            }
+            String totalCostString = "Total weighted cost: " + String.valueOf(total);
+            totalCost.setText(totalCostString);
         }
-        String totalCostString = "Total weighted cost: " + String.valueOf(total);
-        totalCost.setText(totalCostString);
     }
 }
