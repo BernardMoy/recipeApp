@@ -35,6 +35,7 @@ public class AddNewRecipe extends AppCompatActivity {
     ActivityResultLauncher<Intent> resultLauncher;
 
     RecyclerView tagsRecyclerView;
+    RecyclerView ingredientsRecyclerView;
 
     // stores current tags that are added
     private ArrayList<String> tags;
@@ -56,9 +57,9 @@ public class AddNewRecipe extends AppCompatActivity {
         // set tags to new empty array
         tags = new ArrayList<>();
 
-        // init the tags recycler view
+        // init the recycler views
         tagsRecyclerView = (RecyclerView) findViewById(R.id.recipeTags_recyclerView);
-
+        ingredientsRecyclerView = (RecyclerView) findViewById(R.id.recipeIngredients_recyclerView);
     }
 
     // Return to previous activity

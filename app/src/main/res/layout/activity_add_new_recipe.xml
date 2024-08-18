@@ -405,6 +405,7 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/content_font_size" />
 
+
                     <TextView
                         android:gravity="center_horizontal"
                         android:text="Portion size"
@@ -432,6 +433,14 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/content_font_size" />
                 </TableRow>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recipeIngredients_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:itemCount="2"
+                    />
+
             </TableLayout>
 
         </LinearLayout>

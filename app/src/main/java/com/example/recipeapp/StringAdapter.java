@@ -13,6 +13,8 @@ import java.util.List;
 
 public class StringAdapter extends RecyclerView.Adapter<StringRecyclerViewHolder> {
 
+    // Used to display a single list of strings in a format.
+
     private Context ctx;
     private List<String> stringList;
 

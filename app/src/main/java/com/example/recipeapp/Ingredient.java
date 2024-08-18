@@ -2,36 +2,30 @@ package com.example.recipeapp;
 
 public class Ingredient {
     private String ingredientName;
-    private String shopName;
+    private float portionSize;
+    private String supermarket;
     private float cost;
 
-    public Ingredient(String ingredientName, String shopName, float cost){
+    public Ingredient(String ingredientName, float portionSize, String supermarket, float cost){
         this.ingredientName = ingredientName;
-        this.shopName = shopName;
+        this.portionSize = portionSize;
+        this.supermarket = supermarket;
         this.cost = cost;
     }
 
-    public void setIngredientName(String ingredientName) {
-        this.ingredientName = ingredientName;
-    }
-
-    public void setShopName(String shopName) {
-        this.shopName = shopName;
-    }
-
-    public void setCost(float cost){
-        this.cost = cost;
-    }
-
-    public String getIngredientName() {
+    public String getIngredient() {
         return ingredientName;
     }
 
-    public String getShopName() {
-        return shopName;
+    public float getPortionSize() {
+        return portionSize;
     }
 
-    public float getCost(){
+    public String getSupermarket() {
+        return supermarket;
+    }
+
+    public float getCost() {
         return cost;
     }
 }
