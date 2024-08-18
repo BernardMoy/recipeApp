@@ -30,7 +30,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientRecyclerVi
     public void onBindViewHolder(@NonNull IngredientRecyclerViewHolder holder, int position) {
         // set text for the item row
         holder.getIngredientTextView().setText(ingredientList.get(position).getIngredient());
-        holder.getPortionSizeTextView().setText(String.valueOf(ingredientList.get(position).getPortionSize()));
+        holder.getAmountTextView().setText(String.valueOf(ingredientList.get(position).getAmount()));
         holder.getSupermarketTextView().setText(ingredientList.get(position).getSupermarket());
         holder.getCostTextView().setText(String.valueOf(ingredientList.get(position).getCost()));
 

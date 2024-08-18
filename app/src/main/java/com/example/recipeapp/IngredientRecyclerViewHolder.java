@@ -9,14 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 public class IngredientRecyclerViewHolder extends RecyclerView.ViewHolder {
 
     private TextView ingredientTextView;
-    private TextView portionSizeTextView;
+    private TextView amountTextView;
     private TextView supermarketTextView;
     private TextView costTextView;
 
     public IngredientRecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
         ingredientTextView = itemView.findViewById(R.id.ingredient_textView);
-        portionSizeTextView = itemView.findViewById(R.id.portionSize_textView);
+        amountTextView = itemView.findViewById(R.id.amount_textView);
         supermarketTextView = itemView.findViewById(R.id.supermarket_textView);
         costTextView = itemView.findViewById(R.id.cost_textView);
     }
@@ -25,8 +25,8 @@ public class IngredientRecyclerViewHolder extends RecyclerView.ViewHolder {
         return ingredientTextView;
     }
 
-    public TextView getPortionSizeTextView() {
-        return portionSizeTextView;
+    public TextView getAmountTextView() {
+        return amountTextView;
     }
 
     public TextView getSupermarketTextView() {

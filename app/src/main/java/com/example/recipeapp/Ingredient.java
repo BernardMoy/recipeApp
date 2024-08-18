@@ -2,13 +2,13 @@ package com.example.recipeapp;
 
 public class Ingredient {
     private String ingredientName;
-    private float portionSize;
+    private float amount;
     private String supermarket;
     private float cost;
 
-    public Ingredient(String ingredientName, float portionSize, String supermarket, float cost){
+    public Ingredient(String ingredientName, float amount, String supermarket, float cost){
         this.ingredientName = ingredientName;
-        this.portionSize = portionSize;
+        this.amount = amount;
         this.supermarket = supermarket;
         this.cost = cost;
     }
@@ -17,8 +17,8 @@ public class Ingredient {
         return ingredientName;
     }
 
-    public float getPortionSize() {
-        return portionSize;
+    public float getAmount() {
+        return amount;
     }
 
     public String getSupermarket() {

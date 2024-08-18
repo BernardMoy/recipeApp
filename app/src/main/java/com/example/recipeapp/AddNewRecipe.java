@@ -136,6 +136,19 @@ public class AddNewRecipe extends AppCompatActivity {
         textView.setText("");
     }
 
+    // method for clearing new ingredient
+    public void clearNewIngredient(View v){
+        TextView ingredientEditText = (TextView) findViewById(R.id.recipeIngredient_edittext);
+        TextView amountEditText = (TextView) findViewById(R.id.recipeAmount_edittext);
+        TextView supermarketEditText = (TextView) findViewById(R.id.recipeSupermarket_edittext);
+        TextView costEditText = (TextView) findViewById(R.id.recipeCost_edittext);
+        // reset fields
+        ingredientEditText.setText("");
+        amountEditText.setText("");
+        supermarketEditText.setText("");
+        costEditText.setText("");
+    }
+
     // method when the plus button after writing a new tag is pressed
     public void addNewTag(View v){
         TextView textview = (TextView) findViewById(R.id.recipeNewTag_edittext);
@@ -165,12 +178,12 @@ public class AddNewRecipe extends AppCompatActivity {
     public void addNewIngredient(View v){
         // get fields that are submitted
         TextView ingredientEditText = (TextView) findViewById(R.id.recipeIngredient_edittext);
-        TextView portionSizeEditText = (TextView) findViewById(R.id.recipePortionSize_edittext);
+        TextView amountEditText = (TextView) findViewById(R.id.recipeAmount_edittext);
         TextView supermarketEditText = (TextView) findViewById(R.id.recipeSupermarket_edittext);
         TextView costEditText = (TextView) findViewById(R.id.recipeCost_edittext);
 
         String ingredient = ingredientEditText.getText().toString();
-        String portionSizeStr = portionSizeEditText.getText().toString();
+        String amountStr = amountEditText.getText().toString();
         String supermarket = supermarketEditText.getText().toString();
         String costStr = costEditText.getText().toString();
 
@@ -181,7 +194,7 @@ public class AddNewRecipe extends AppCompatActivity {
         }
 
         // empty portion size
-        if (portionSizeStr.isEmpty()){
+        if (amountStr.isEmpty()){
             Toast.makeText(AddNewRecipe.this, "Amount is empty", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -199,11 +212,11 @@ public class AddNewRecipe extends AppCompatActivity {
         }
 
         // casts
-        float portionSize = Float.parseFloat(portionSizeStr);
+        float amount = Float.parseFloat(amountStr);
         float cost = Float.parseFloat(costStr);
 
         // construct ingredient and add to arraylist
-        Ingredient newIngredient = new Ingredient(ingredient, portionSize, supermarket, cost);
+        Ingredient newIngredient = new Ingredient(ingredient, amount, supermarket, cost);
         ingredientList.add(newIngredient);
 
         // modify the recycler view that displays list of items
@@ -213,7 +226,7 @@ public class AddNewRecipe extends AppCompatActivity {
 
         // reset fields
         ingredientEditText.setText("");
-        portionSizeEditText.setText("");
+        amountEditText.setText("");
         supermarketEditText.setText("");
         costEditText.setText("");
     }
