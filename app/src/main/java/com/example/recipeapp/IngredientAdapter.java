@@ -1,5 +1,6 @@
 package com.example.recipeapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -54,6 +55,10 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientRecyclerVi
                 int position = holder.getAdapterPosition();
                 ingredientList.remove(position);
                 notifyItemRemoved(position);
+
+                // Update cost through a reference to activity using passed in context
+                AddNewRecipe a = (AddNewRecipe) ctx;
+                a.updateCost();
             }
         });
     }
