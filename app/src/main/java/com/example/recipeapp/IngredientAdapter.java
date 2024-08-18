@@ -1,6 +1,7 @@
 package com.example.recipeapp;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -33,6 +34,14 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientRecyclerVi
         holder.getAmountTextView().setText(String.valueOf(ingredientList.get(position).getAmount()));
         holder.getSupermarketTextView().setText(ingredientList.get(position).getSupermarket());
         holder.getCostTextView().setText(String.valueOf(ingredientList.get(position).getCost()));
+
+        // set alternating row colours
+        if (position % 2 == 0){
+            holder.getIngredientTextView().setBackgroundResource(R.color.lightColor);
+            holder.getAmountTextView().setBackgroundResource(R.color.lightColor);
+            holder.getSupermarketTextView().setBackgroundResource(R.color.lightColor);
+            holder.getCostTextView().setBackgroundResource(R.color.lightColor);
+        }
 
     }
 
