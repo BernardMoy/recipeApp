@@ -229,5 +229,27 @@ public class AddNewRecipe extends AppCompatActivity {
         amountEditText.setText("");
         supermarketEditText.setText("");
         costEditText.setText("");
+
+        // update the cost displayed at the bottom
+        updateCost();
+    }
+
+    public void updateCost(){
+        // adjust the total weighted cost
+        TextView totalCost = (TextView) findViewById(R.id.totalCost_textView);
+
+        // If no ingredients
+        if (ingredientList.isEmpty()){
+            String totalCostString = "Total weighted cost: 0";
+            totalCost.setText(totalCostString);
+        }
+
+        // Else, calculate sum
+        float total = 0.0f;
+        for (Ingredient i : ingredientList){
+            total += i.getCost()*i.getAmount();
+        }
+        String totalCostString = "Total weighted cost: " + String.valueOf(total);
+        totalCost.setText(totalCostString);
     }
 }
