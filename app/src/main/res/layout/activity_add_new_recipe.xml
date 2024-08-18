@@ -86,6 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="Recipe Image"
+                android:layout_gravity="center_vertical"
                 android:textSize="@dimen/content_font_size" />
 
             <ImageView
@@ -129,6 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="Recipe Name"
+                android:layout_gravity="center_vertical"
                 android:textSize="@dimen/content_font_size" />
 
             <EditText
@@ -168,6 +170,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="Description"
+                android:layout_gravity="center_vertical"
                 android:textSize="@dimen/content_font_size" />
 
             <EditText
@@ -207,6 +210,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="Tags"
+                android:layout_gravity="center_vertical"
                 android:textSize="@dimen/content_font_size" />
 
             <EditText
@@ -280,6 +284,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="Preparation time (Minutes)"
+                android:layout_gravity="center_vertical"
                 android:textSize="@dimen/content_font_size" />
 
             <EditText
@@ -319,6 +324,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="Recipe Link"
+                android:layout_gravity="center_vertical"
                 android:textSize="@dimen/content_font_size" />
 
             <EditText
@@ -357,26 +363,108 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="Ingredients"
+                android:layout_gravity="center_vertical"
                 android:textSize="@dimen/content_font_size" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/content_margin"
+                android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/imageButton11"
-                android:layout_width="@dimen/image_button_size"
-                android:layout_height="@dimen/image_button_size"
-                android:backgroundTint="@android:color/transparent"
-                android:contentDescription="Add"
-                app:srcCompat="@drawable/add_circle_icon"
-                app:tint="@color/primaryColor" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageButton
+                        android:id="@+id/imageButton11"
+                        android:layout_width="@dimen/image_button_size"
+                        android:layout_height="@dimen/image_button_size"
+                        android:backgroundTint="@android:color/transparent"
+                        android:contentDescription="Add"
+                        app:srcCompat="@drawable/add_circle_icon"
+                        app:tint="@color/primaryColor" />
 
-            <ImageButton
-                android:id="@+id/imageButton12"
-                android:layout_width="@dimen/image_button_size"
-                android:layout_height="@dimen/image_button_size"
-                android:backgroundTint="@android:color/transparent"
-                android:contentDescription="Clear"
-                app:srcCompat="@drawable/cancel_icon"
-                app:tint="@color/secondaryColor" />
+                    <ImageButton
+                        android:id="@+id/imageButton12"
+                        android:layout_width="@dimen/image_button_size"
+                        android:layout_height="@dimen/image_button_size"
+                        android:backgroundTint="@android:color/transparent"
+                        android:contentDescription="Clear"
+                        app:srcCompat="@drawable/cancel_icon"
+                        app:tint="@color/secondaryColor" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/recipeIngredient_edittext"
+                        android:layout_width="0dp"
+                        android:layout_weight="5"
+                        android:layout_height="@dimen/small_box_size"
+                        android:background="@drawable/custom_edit_text"
+                        android:layout_marginBottom="@dimen/content_margin"
+                        android:layout_marginEnd="@dimen/content_margin"
+                        android:hint="Ingredient name"
+                        android:inputType="textMultiLine"
+                        android:paddingLeft="@dimen/content_margin"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/content_font_size" />
+
+                    <EditText
+                        android:id="@+id/recipePortionSize_edittext"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="@dimen/small_box_size"
+                        android:background="@drawable/custom_edit_text"
+                        android:layout_marginBottom="@dimen/content_margin"
+                        android:hint="Amount"
+                        android:inputType="textMultiLine"
+                        android:paddingStart="@dimen/content_margin"
+                        android:paddingEnd="@dimen/content_margin"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/content_font_size" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/recipeSupermarket_edittext"
+                        android:layout_width="0dp"
+                        android:layout_weight="5"
+                        android:layout_height="@dimen/small_box_size"
+                        android:background="@drawable/custom_edit_text"
+                        android:layout_marginBottom="@dimen/content_margin"
+                        android:layout_marginEnd="@dimen/content_margin"
+                        android:hint="Supermarket"
+                        android:inputType="textMultiLine"
+                        android:paddingLeft="@dimen/content_margin"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/content_font_size" />
+
+                    <EditText
+                        android:id="@+id/recipeCost_edittext"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="@dimen/small_box_size"
+                        android:background="@drawable/custom_edit_text"
+                        android:layout_marginBottom="@dimen/content_margin"
+                        android:hint="Cost"
+                        android:inputType="textMultiLine"
+                        android:paddingStart="@dimen/content_margin"
+                        android:paddingEnd="@dimen/content_margin"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/content_font_size" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
 
         </LinearLayout>
         <LinearLayout
