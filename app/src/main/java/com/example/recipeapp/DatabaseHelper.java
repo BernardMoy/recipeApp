@@ -27,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         String createRecipes =
                 "CREATE TABLE Recipes (" +
                 "recipe_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "name VARCHAR(255) NOT NULL, " +
+                "name VARCHAR(100) NOT NULL, " +
                 "image BLOB, " +
                 "description TEXT," +
                 "link TEXT," +

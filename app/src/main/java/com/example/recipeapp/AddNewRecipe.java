@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -266,21 +267,30 @@ public class AddNewRecipe extends AppCompatActivity {
     // method when the save button is clicked: Add data to database
     public void addRecipeToDatabase(View v){
         String name = ((TextView) findViewById(R.id.recipeName_edittext)).getText().toString();
+        // name have to be less than 100 chars
+        if (name.length() > 100){
+            Toast.makeText(AddNewRecipe.this, "Recipe name is at most 100 characters", Toast.LENGTH_SHORT).show();
+            return;
+        }
         ImageView recipeImage = (ImageView) findViewById(R.id.recipeImage);
         String description = ((TextView) findViewById(R.id.recipeDesc_edittext)).getText().toString();
         String link = ((TextView) findViewById(R.id.recipeLink_edittext)).getText().toString();
         String prepTimeString = ((TextView) findViewById(R.id.recipePrepTime_edittext)).getText().toString();
+        // handle empty prep time
         float prepTime = 0.0f;
         if (!prepTimeString.isEmpty()){
-            Log.d("DEBUG", prepTimeString);
             prepTime = Float.parseFloat(prepTimeString);
         }
 
-        // convert image to byte array to be stored as blob
-        Bitmap bitmap = ((BitmapDrawable) recipeImage.getDrawable()).getBitmap();
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] recipeImageByteArray = byteArrayOutputStream.toByteArray();
+        // convert image to byte array to be stored as blob in the db
+        byte[] recipeImageByteArray = {};
+        BitmapDrawable recipeImageDrawable = (BitmapDrawable) recipeImage.getDrawable();
+        if (recipeImageDrawable != null){
+            Bitmap bitmap = recipeImageDrawable.getBitmap();
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            recipeImageByteArray = byteArrayOutputStream.toByteArray();
+        }
 
         // tags and ingredients are stored in tagList and ingredientList
         DatabaseHelper db = new DatabaseHelper(AddNewRecipe.this);
