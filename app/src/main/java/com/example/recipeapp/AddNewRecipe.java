@@ -255,4 +255,19 @@ public class AddNewRecipe extends AppCompatActivity {
             totalCost.setText(totalCostString);
         }
     }
+
+
+    // method when the save button is clicked: Add data to database
+    public void addRecipeToDatabase(){
+        String name = findViewById(R.id.recipeName_edittext).toString();
+        String description = findViewById(R.id.recipeDesc_edittext).toString();
+        String link = findViewById(R.id.recipeLink_edittext).toString();
+        String prepTimeString = findViewById(R.id.recipePrepTime_edittext).toString();
+        float prepTime = 0.0f;
+        if (!prepTimeString.isEmpty()){
+            prepTime = Float.parseFloat(prepTimeString);
+        }
+        // tags and ingredients are stored in tagList and ingredientList
+        
+    }
 }

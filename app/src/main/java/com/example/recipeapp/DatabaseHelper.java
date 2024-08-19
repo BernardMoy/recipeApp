@@ -29,6 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 "recipe_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "name VARCHAR(255) NOT NULL, " +
                 "description TEXT," +
+                "link TEXT," +
                 "prep_time FLOAT DEFAULT 0.0,"+
                 "is_favourited BOOLEAN DEFAULT FALSE," +
                 "times_cooked INTEGER DEFAULT 0" +
@@ -42,13 +43,14 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
     // method to add new recipe
-    public void addRecipe(String name, String description, float prepTime, List<String> tags, List<Ingredient> ingredients){
+    public void addRecipe(String name, String description, String link, float prepTime, List<String> tags, List<Ingredient> ingredients){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         // set new values submitted
         contentValues.put("name", name);
         contentValues.put("description", description);
+        contentValues.put("link", link);
         contentValues.put("prep_time", prepTime);
 
         long result = db.insert("Recipes", null, contentValues);
