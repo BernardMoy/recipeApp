@@ -16,7 +16,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     private static final String DATABASE_NAME = "recipeApp.db";
     private static final int DATABASE_VERSION = 1;
 
-    public DatabaseHelper(@Nullable Context context){
+    public DatabaseHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
@@ -28,9 +28,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 "CREATE TABLE Recipes (" +
                 "recipe_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "name VARCHAR(255) NOT NULL, " +
+                "image BLOB, " +
                 "description TEXT," +
                 "link TEXT," +
-                "prep_time FLOAT DEFAULT 0.0,"+
+                "prep_time FLOAT,"+
                 "is_favourited BOOLEAN DEFAULT FALSE," +
                 "times_cooked INTEGER DEFAULT 0" +
                 ");";
@@ -42,25 +43,26 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS Recipes;");
     }
 
+    // reset database
+    public void reset(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS Recipes;");
+        onCreate(db);     // recreate the database
+    }
+
     // method to add new recipe
-    public void addRecipe(String name, String description, String link, float prepTime, List<String> tags, List<Ingredient> ingredients){
+    public long addRecipe(String name, byte[] image, String description, String link, float prepTime, List<String> tagList, List<Ingredient> ingredientList){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         // set new values submitted
         contentValues.put("name", name);
+        contentValues.put("image", image);
         contentValues.put("description", description);
         contentValues.put("link", link);
         contentValues.put("prep_time", prepTime);
 
         long result = db.insert("Recipes", null, contentValues);
-
-        // add to database failed
-        if (result == -1){
-            Toast.makeText(context, "Data adding failed", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Toast.makeText(context, "New recipe added", Toast.LENGTH_SHORT).show();
-        }
+        return result;
     }
 }

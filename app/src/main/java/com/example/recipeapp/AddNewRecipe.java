@@ -1,6 +1,9 @@
 package com.example.recipeapp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -27,8 +30,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Objects;
+
+import kotlin.UByteArray;
 
 public class AddNewRecipe extends AppCompatActivity {
 
@@ -258,16 +264,42 @@ public class AddNewRecipe extends AppCompatActivity {
 
 
     // method when the save button is clicked: Add data to database
-    public void addRecipeToDatabase(){
-        String name = findViewById(R.id.recipeName_edittext).toString();
-        String description = findViewById(R.id.recipeDesc_edittext).toString();
-        String link = findViewById(R.id.recipeLink_edittext).toString();
-        String prepTimeString = findViewById(R.id.recipePrepTime_edittext).toString();
+    public void addRecipeToDatabase(View v){
+        String name = ((TextView) findViewById(R.id.recipeName_edittext)).getText().toString();
+        ImageView recipeImage = (ImageView) findViewById(R.id.recipeImage);
+        String description = ((TextView) findViewById(R.id.recipeDesc_edittext)).getText().toString();
+        String link = ((TextView) findViewById(R.id.recipeLink_edittext)).getText().toString();
+        String prepTimeString = ((TextView) findViewById(R.id.recipePrepTime_edittext)).getText().toString();
         float prepTime = 0.0f;
         if (!prepTimeString.isEmpty()){
+            Log.d("DEBUG", prepTimeString);
             prepTime = Float.parseFloat(prepTimeString);
         }
+
+        // convert image to byte array to be stored as blob
+        Bitmap bitmap = ((BitmapDrawable) recipeImage.getDrawable()).getBitmap();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] recipeImageByteArray = byteArrayOutputStream.toByteArray();
+
         // tags and ingredients are stored in tagList and ingredientList
-        
+        DatabaseHelper db = new DatabaseHelper(AddNewRecipe.this);
+        long status = db.addRecipe(name, recipeImageByteArray, description, link, prepTime, tagList, ingredientList);
+
+        // exit activity if successful
+        // add to database failed
+        if (status == -1){
+            Toast.makeText(this, "Data adding failed", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(this, "New recipe added", Toast.LENGTH_SHORT).show();
+            getOnBackPressedDispatcher().onBackPressed();
+        }
+    }
+
+    // temp method to reset the database
+    public void resetDb(View v){
+        DatabaseHelper db = new DatabaseHelper(AddNewRecipe.this);
+        db.reset();
     }
 }

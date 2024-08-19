@@ -42,12 +42,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/close_icon" />
 
-
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonDone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Done"
+        android:onClick="addRecipeToDatabase"
         android:drawableEnd="@drawable/check_icon"
         android:drawableTint="@color/white"
         android:backgroundTint="@color/primaryColor"
@@ -57,6 +57,21 @@
         app:cornerRadius="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonDel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/secondaryColor"
+        android:layout_marginStart="@dimen/content_margin"
+        android:layout_marginEnd="@dimen/content_margin"
+        android:text="Del"
+        android:onClick="resetDb"
+        app:cornerRadius="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintEnd_toStartOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/imageButton"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
