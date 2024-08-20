@@ -155,6 +155,7 @@
                 android:textSize="@dimen/content_font_size"
                 android:background="@drawable/custom_edit_text"
                 android:hint=" Name"
+                android:maxLength="100"
                 android:textColor="@color/gray"
                 android:drawableStart="@drawable/brush_icon"
                 android:drawableTint="@color/gray"
@@ -233,6 +234,7 @@
                 android:layout_height="match_parent"
                 android:inputType="text"
                 android:textSize="@dimen/content_font_size"
+                android:maxLength="20"
                 android:background="@drawable/custom_edit_text"
                 android:hint=" New tag"
                 android:textColor="@color/gray"
@@ -398,6 +400,7 @@
                         android:layout_height="@dimen/small_box_size"
                         android:background="@drawable/custom_edit_text"
                         android:layout_marginEnd="@dimen/content_margin"
+                        android:maxLength="50"
                         android:hint="Ingredient name"
                         android:inputType="textMultiLine"
                         android:paddingLeft="@dimen/content_margin"
@@ -414,6 +417,7 @@
                         android:inputType="numberDecimal"
                         android:paddingStart="@dimen/content_margin"
                         android:paddingEnd="@dimen/content_margin"
+                        android:maxLength="50"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/content_font_size" />
 

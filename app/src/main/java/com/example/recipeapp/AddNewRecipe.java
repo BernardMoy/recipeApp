@@ -200,27 +200,19 @@ public class AddNewRecipe extends AppCompatActivity {
             return;
         }
 
-        // empty portion size
-        if (amountStr.isEmpty()){
-            Toast.makeText(AddNewRecipe.this, "Amount is empty", Toast.LENGTH_SHORT).show();
-            return;
+        // empty portion size and type cast
+        float amount = 0.0f;
+        if (!amountStr.isEmpty()){
+            amount = Float.parseFloat(amountStr);
         }
 
-        // empty supermarket
-        if (supermarket.isEmpty()){
-            Toast.makeText(AddNewRecipe.this, "Supermarket is empty", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        // empty supermarket --> nullable
 
         // empty cost
-        if (costStr.isEmpty()){
-            Toast.makeText(AddNewRecipe.this, "Cost is empty", Toast.LENGTH_SHORT).show();
-            return;
+        float cost = 0.0f;
+        if (!costStr.isEmpty()){
+            cost = Float.parseFloat(costStr);
         }
-
-        // casts
-        float amount = Float.parseFloat(amountStr);
-        float cost = Float.parseFloat(costStr);
 
         // construct ingredient and add to arraylist
         Ingredient newIngredient = new Ingredient(ingredient, amount, supermarket, cost);
@@ -233,10 +225,9 @@ public class AddNewRecipe extends AppCompatActivity {
         IngredientAdapter ingredientRecyclerViewAdapter = new IngredientAdapter(this, ingredientList);
         ingredientsRecyclerView.setAdapter(ingredientRecyclerViewAdapter);
 
-        // reset fields
+        // reset fields except supermarket
         ingredientEditText.setText("");
         amountEditText.setText("");
-        supermarketEditText.setText("");
         costEditText.setText("");
 
         updateCost();
@@ -267,16 +258,16 @@ public class AddNewRecipe extends AppCompatActivity {
     // method when the save button is clicked: Add data to database
     public void addRecipeToDatabase(View v){
         String name = ((TextView) findViewById(R.id.recipeName_edittext)).getText().toString();
-        // name have to be less than 100 chars
-        if (name.length() > 100){
-            Toast.makeText(AddNewRecipe.this, "Recipe name is at most 100 characters", Toast.LENGTH_SHORT).show();
+        // name cannot be empty
+        if (name.isEmpty()){
+            Toast.makeText(AddNewRecipe.this, "Recipe name is empty", Toast.LENGTH_SHORT).show();
             return;
         }
         ImageView recipeImage = (ImageView) findViewById(R.id.recipeImage);
         String description = ((TextView) findViewById(R.id.recipeDesc_edittext)).getText().toString();
         String link = ((TextView) findViewById(R.id.recipeLink_edittext)).getText().toString();
         String prepTimeString = ((TextView) findViewById(R.id.recipePrepTime_edittext)).getText().toString();
-        // handle empty prep time
+        // if prep time is null, set it to 0.0f
         float prepTime = 0.0f;
         if (!prepTimeString.isEmpty()){
             prepTime = Float.parseFloat(prepTimeString);
