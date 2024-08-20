@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         // create the database schema
         String createRecipes =
-                "CREATE TABLE Recipes (" +
+                "CREATE TABLE IF NOT EXISTS Recipes (" +
                 "recipe_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "name VARCHAR(100) NOT NULL, " +
                 "image BLOB, " +
@@ -35,34 +35,131 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 "is_favourited BOOLEAN DEFAULT FALSE," +
                 "times_cooked INTEGER DEFAULT 0" +
                 ");";
+
+        String createTags =
+                "CREATE TABLE IF NOT EXISTS Tags (" +
+                    "tag_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "name VARCHAR(20) NOT NULL" +
+                    ");";
+
+        String createIngredients =
+                "CREATE TABLE IF NOT EXISTS Ingredients (" +
+                    "ingredient_id INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                    "name VARCHAR(100) NOT NULL," +
+                    "amount FLOAT," +
+                    "supermarket VARCHAR(100)," +
+                    "cost FLOAT" +
+                    ");";
+
+        String createRecipeTags =
+                "CREATE TABLE IF NOT EXISTS Recipe_tags(" +
+                        "recipe_id INTEGER," +
+                        "tag_id INTEGER," +
+                        "FOREIGN KEY (recipe_id) REFERENCES Recipes(recipe_id) ON DELETE CASCADE," +
+                        "FOREIGN KEY (tag_id) REFERENCES Tags(tag_id) ON DELETE CASCADE" +
+                        ");";
+
+        String createRecipeIngredients =
+                "CREATE TABLE IF NOT EXISTS Recipe_ingredients(" +
+                        "recipe_id INTEGER," +
+                        "ingredient_id INTEGER," +
+                        "FOREIGN KEY (recipe_id) REFERENCES Recipes(recipe_id) ON DELETE CASCADE," +
+                        "FOREIGN KEY (ingredient_id) REFERENCES Ingredients(ingredient_id) ON DELETE CASCADE" +
+                        ");";
+
         db.execSQL(createRecipes);
+        db.execSQL(createTags);
+        db.execSQL(createIngredients);
+        db.execSQL(createRecipeTags);
+        db.execSQL(createRecipeIngredients);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("DROP TABLE IF EXISTS Recipes;");
+        db.execSQL("DROP TABLE IF EXISTS Tags;");
+        db.execSQL("DROP TABLE IF EXISTS Ingredients;");
+        db.execSQL("DROP TABLE IF EXISTS Recipe_tags;");
+        db.execSQL("DROP TABLE IF EXISTS Recipe_ingredients;");
     }
 
     // reset database
     public void reset(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS Recipes;");
+        db.execSQL("DROP TABLE IF EXISTS Tags;");
+        db.execSQL("DROP TABLE IF EXISTS Ingredients;");
+        db.execSQL("DROP TABLE IF EXISTS Recipe_tags;");
+        db.execSQL("DROP TABLE IF EXISTS Recipe_ingredients;");
         onCreate(db);     // recreate the database
+        Toast.makeText(context, "Database reset", Toast.LENGTH_SHORT).show();
     }
 
     // method to add new recipe
-    public long addRecipe(String name, byte[] image, String description, String link, float prepTime, List<String> tagList, List<Ingredient> ingredientList){
+    public boolean addRecipe(String name, byte[] image, String description, String link, float prepTime, List<String> tagList, List<Ingredient> ingredientList){
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
+
+        ContentValues contentValuesRecipes = new ContentValues();
+        ContentValues contentValuesTags = new ContentValues();
+        ContentValues contentValuesIngredients = new ContentValues();
+        ContentValues contentValuesRecipeTags = new ContentValues();
+        ContentValues contentValuesRecipeIngredients = new ContentValues();
 
         // set new values submitted
-        contentValues.put("name", name);
-        contentValues.put("image", image);
-        contentValues.put("description", description);
-        contentValues.put("link", link);
-        contentValues.put("prep_time", prepTime);
+        contentValuesRecipes.put("name", name);
+        contentValuesRecipes.put("image", image);
+        contentValuesRecipes.put("description", description);
+        contentValuesRecipes.put("link", link);
+        contentValuesRecipes.put("prep_time", prepTime);
 
-        long result = db.insert("Recipes", null, contentValues);
-        return result;
+        // insert into recipes - returns the auto incremented id
+        long resultRecipes = db.insert("Recipes", null, contentValuesRecipes);
+        if (resultRecipes == -1){
+            return false;
+        }
+
+        // insert into tags and recipe tags
+        for (String tag : tagList){
+            contentValuesTags.put("name", tag);
+            long resultTags = db.insert("Tags", null, contentValuesTags);
+            if (resultTags == -1){
+                return false;
+            }
+
+            contentValuesRecipeTags.put("recipe_id", resultRecipes);
+            contentValuesRecipeTags.put("tag_id", resultTags);
+            long resultRecipeTags = db.insert("Recipe_tags", null, contentValuesRecipeTags);
+            if (resultRecipeTags == -1){
+                return false;
+            }
+        }
+
+        // insert into ingredients and recipe ingredients
+        for (Ingredient ingredient : ingredientList){
+            String ingredientName = ingredient.getIngredient();
+            Float amount = ingredient.getAmount();
+            String supermarket = ingredient.getSupermarket();
+            Float cost = ingredient.getCost();
+
+            contentValuesIngredients.put("name", ingredientName);
+            contentValuesIngredients.put("amount", amount);
+            contentValuesIngredients.put("supermarket", supermarket);
+            contentValuesIngredients.put("cost", cost);
+
+            long resultIngredients = db.insert("Ingredients", null, contentValuesIngredients);
+            if (resultIngredients == -1){
+                return false;
+            }
+
+            contentValuesRecipeIngredients.put("recipe_id", resultRecipes);
+            contentValuesRecipeIngredients.put("ingredient_id", resultIngredients);
+            long resultRecipeIngredients = db.insert("Recipe_ingredients", null, contentValuesRecipeIngredients);
+            if (resultRecipeIngredients == -1){
+                return false;
+            }
+
+        }
+
+        return true;
     }
 }

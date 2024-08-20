@@ -294,11 +294,11 @@ public class AddNewRecipe extends AppCompatActivity {
 
         // tags and ingredients are stored in tagList and ingredientList
         DatabaseHelper db = new DatabaseHelper(AddNewRecipe.this);
-        long status = db.addRecipe(name, recipeImageByteArray, description, link, prepTime, tagList, ingredientList);
+        boolean status  = db.addRecipe(name, recipeImageByteArray, description, link, prepTime, tagList, ingredientList);
 
         // exit activity if successful
         // add to database failed
-        if (status == -1){
+        if (!status){
             Toast.makeText(this, "Data adding failed", Toast.LENGTH_SHORT).show();
         }
         else{
