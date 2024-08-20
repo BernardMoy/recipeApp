@@ -33,6 +33,7 @@ import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 
 import kotlin.UByteArray;
@@ -240,7 +241,7 @@ public class AddNewRecipe extends AppCompatActivity {
 
         // If no ingredients
         if (ingredientList.isEmpty()){
-            String totalCostString = "Total weighted cost: 0";
+            String totalCostString = getResources().getString(R.string.total_weighted_cost_default);
             totalCost.setText(totalCostString);
         }
 
@@ -249,7 +250,7 @@ public class AddNewRecipe extends AppCompatActivity {
             for (Ingredient i : ingredientList){
                 total += i.getCost()*i.getAmount();
             }
-            String totalCostString = "Total weighted cost: " + String.valueOf(total);
+            String totalCostString = "Total weighted cost: " + String.format(Locale.US, "%.2f", total);
             totalCost.setText(totalCostString);
         }
     }

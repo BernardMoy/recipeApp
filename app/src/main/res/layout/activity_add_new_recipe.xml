@@ -535,6 +535,15 @@
                         android:layout_weight="2"
                         android:textColor="@color/white"
                         android:textSize="@dimen/content_font_size" />
+
+                    <TextView
+                        android:gravity="center_horizontal"
+                        android:layout_width="@dimen/image_button_size"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:background="@color/secondaryColor"
+                        android:textSize="@dimen/content_font_size" />
+
                 </TableRow>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -556,7 +565,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginStart="10dp"
-            android:text="Total weighted cost: 0"
+            android:text = "@string/total_weighted_cost_default"
             android:layout_marginEnd="@dimen/content_margin"
             android:textSize="@dimen/content_font_size" />
 
