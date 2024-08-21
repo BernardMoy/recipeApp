@@ -166,7 +166,10 @@ public class RecipeFragment extends Fragment {
                 Cursor cursor2 = db.getTagsPreview(recipeId);
                 if (cursor2.getCount() > 0){
                     cursor2.moveToNext();
-                    tag = cursor2.getString(0);
+                    // Set tag only if the first tag is not null
+                    if (cursor2.getString(0) != null){
+                        tag = cursor2.getString(0);
+                    }
                     tagPlus = cursor2.getInt(1) - 1;
                 }
 

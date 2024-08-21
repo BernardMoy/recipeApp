@@ -3,10 +3,14 @@ package com.example.recipeapp;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -34,11 +38,32 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
 
         holder.getName().setText(recipePreviewList.get(position).getName());
 
+        String firstTag = recipePreviewList.get(position).getTag();
+        Log.d("DEBUG", String.valueOf(firstTag == null));
+        if (!firstTag.isEmpty()){
+            // first tag is not empty: There are tags (>=1)
+            holder.getTag().setText(recipePreviewList.get(position).getTag());
 
-        holder.getTag().setText(recipePreviewList.get(position).getTag());
+            int tagPlus = recipePreviewList.get(position).getTagPlus();
+            if (tagPlus != 0){
+                // There is more than one tag (>1)
+                String tagPlusString = " +" + String.valueOf(tagPlus);
+                holder.getTagPlus().setText(tagPlusString);
+            } else {
+                // There is only one tag: Set tagplus to be nothing (=1)
+                holder.getTagPlus().setText("");
+            }
+        } else {
+            // There are no tags at all (=0)
+            // format the first tag textview into regular text saying no tags
+            holder.getTag().setText("No tags");
+            holder.getTag().setTextColor(ContextCompat.getColor(ctx, R.color.gray));
+            holder.getTag().setBackgroundColor(Color.TRANSPARENT);
+            holder.getTag().setPadding(0,0,0,0);
+            // remove the tag plus text
+            holder.getTagPlus().setText("");
+        }
 
-        String tagPlusString = " +" + String.valueOf(recipePreviewList.get(position).getTagPlus());
-        holder.getTagPlus().setText(tagPlusString);
 
         holder.getCost().setText(String.valueOf(recipePreviewList.get(position).getCost()));
 
