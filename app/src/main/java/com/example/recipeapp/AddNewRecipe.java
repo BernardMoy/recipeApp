@@ -298,10 +298,4 @@ public class AddNewRecipe extends AppCompatActivity {
             getOnBackPressedDispatcher().onBackPressed();
         }
     }
-
-    // temp method to reset the database
-    public void resetDb(View v){
-        DatabaseHelper db = new DatabaseHelper(AddNewRecipe.this);
-        db.reset();
-    }
 }

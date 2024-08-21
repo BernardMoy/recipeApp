@@ -90,4 +90,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    // function to reset the database through the temp delete button
+    // temp method to reset the database
+    public void resetDb(View v){
+        DatabaseHelper db = new DatabaseHelper(this);
+        db.reset();
+    }
+
 }
