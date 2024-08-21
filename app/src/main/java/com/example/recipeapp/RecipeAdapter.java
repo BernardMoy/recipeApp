@@ -39,7 +39,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
         holder.getName().setText(recipePreviewList.get(position).getName());
 
         String firstTag = recipePreviewList.get(position).getTag();
-        Log.d("DEBUG", String.valueOf(firstTag == null));
         if (!firstTag.isEmpty()){
             // first tag is not empty: There are tags (>=1)
             holder.getTag().setText(recipePreviewList.get(position).getTag());

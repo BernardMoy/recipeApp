@@ -163,15 +163,26 @@ public class RecipeFragment extends Fragment {
                 // Extract the first tag and also the count
                 String tag = "";
                 int tagPlus = 0;
-                Cursor cursor2 = db.getTagsPreview(recipeId);
+                Cursor cursor2 = db.getTagsCount(recipeId);
                 if (cursor2.getCount() > 0){
                     cursor2.moveToNext();
-                    // Set tag only if the first tag is not null
-                    if (cursor2.getString(0) != null){
-                        tag = cursor2.getString(0);
+                    // Get the tag count
+                    int tagCount = cursor2.getInt(0);
+                    if (tagCount > 1){
+                        tagPlus = tagCount - 1;
                     }
-                    tagPlus = cursor2.getInt(1) - 1;
+                    // If there are at least one tag, extract it
+                    if (tagCount > 0){
+                        Cursor cursor4 = db.getTagPreview(recipeId);
+                        if (cursor4.getCount() > 0){
+                            cursor4.moveToNext();
+                            tag = cursor4.getString(0);
+                        }
+                    }
                 }
+                // no tag: Tag = "", tagPlus = 0
+                // one tag: Tag = tag, tagPlus = 0
+                // >one tag: Tag = tag, tagPlus > 0
 
                 // Extract the total weighted cost
                 float cost = 0.0f;

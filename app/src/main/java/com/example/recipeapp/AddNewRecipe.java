@@ -284,7 +284,7 @@ public class AddNewRecipe extends AppCompatActivity {
             recipeImageByteArray = byteArrayOutputStream.toByteArray();
         }
 
-        // tags and ingredients are stored in tagList and ingredientList
+        // tags and ingredients are stored in tagList and ingredientList which is passed in HERE
         DatabaseHelper db = new DatabaseHelper(AddNewRecipe.this);
         boolean status  = db.addRecipe(name, recipeImageByteArray, description, link, prepTime, tagList, ingredientList);
 

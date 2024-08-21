@@ -178,19 +178,35 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return cursor;
     }
 
-    // method to extract tags when given a recipeId
-    public Cursor getTagsPreview(int recipeId){
+    // method to extract the tags count
+    public Cursor getTagsCount(int recipeId){
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Extract all tags data
-        String queryTags = "SELECT T.name, COUNT(*) " +
+        String queryTagsCount = "SELECT COUNT(*) " +
+                "FROM Tags T JOIN Recipe_tags RT ON T.tag_id = RT.tag_id " +
+                "WHERE RT.recipe_id = ?;";
+
+        Cursor cursor = null;
+        if (db != null){
+            cursor = db.rawQuery(queryTagsCount, new String[]{String.valueOf(recipeId)});
+        }
+        return cursor;
+    }
+
+    // method to extract the first tag when given a recipeid
+    public Cursor getTagPreview(int recipeId){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Extract all tags data
+        String queryTag = "SELECT T.name " +
                 "FROM Tags T JOIN Recipe_tags RT ON T.tag_id = RT.tag_id " +
                 "WHERE RT.recipe_id = ? " +
                 "LIMIT 1;";
 
         Cursor cursor = null;
         if (db != null){
-            cursor = db.rawQuery(queryTags, new String[]{String.valueOf(recipeId)});
+            cursor = db.rawQuery(queryTag, new String[]{String.valueOf(recipeId)});
         }
         return cursor;
     }
@@ -199,7 +215,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public Cursor getWeightedCost(int recipeId){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String queryCost = "SELECT SUM(I.cost*I.amount) " +
+        String queryCost = "SELECT ROUND(SUM(I.cost*I.amount), 2) " +
                 "FROM Ingredients I JOIN Recipe_ingredients RI ON I.ingredient_id = RI.ingredient_id " +
                 "WHERE RI.recipe_id = ?;";
 
