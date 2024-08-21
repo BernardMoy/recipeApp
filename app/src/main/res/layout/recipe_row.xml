@@ -86,18 +86,18 @@
             android:id="@+id/recipeRow_cost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" 7.65"
-            android:textColor="@color/gray"
-            android:drawableStart="@drawable/money_icon"
-            android:drawableTint="@color/gray"
-            android:textSize="@dimen/content_font_size"
             android:layout_marginStart="@dimen/title_margin"
             android:layout_marginTop="@dimen/content_margin"
+            app:drawableStartCompat="@drawable/money_icon"
+            android:text=" 7.65"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/content_font_size"
+            app:drawableTint="@color/gray"
             app:layout_constraintStart_toEndOf="@+id/recipeRow_tagPlus"
-            app:layout_constraintTop_toBottomOf="@+id/recipeRow_name"/>
+            app:layout_constraintTop_toBottomOf="@+id/recipeRow_name" />
 
         <ImageButton
-            android:id="@+id/recipeEdit_button"
+            android:id="@+id/recipeRow_edit"
             android:layout_width="@dimen/image_button_size"
             android:layout_height="@dimen/image_button_size"
             android:background="@color/primaryColor"

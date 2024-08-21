@@ -31,14 +31,25 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RecipeRecyclerViewHolder holder, int position) {
+
         holder.getName().setText(recipePreviewList.get(position).getName());
+
+
         holder.getTag().setText(recipePreviewList.get(position).getTag());
+
         String tagPlusString = " +" + String.valueOf(recipePreviewList.get(position).getTagPlus());
         holder.getTagPlus().setText(tagPlusString);
+
         holder.getCost().setText(String.valueOf(recipePreviewList.get(position).getCost()));
-        holder.getPrepTime().setText(String.valueOf(recipePreviewList.get(position).getPrepTime()));
-        holder.getTimesCooked().setText(String.valueOf(recipePreviewList.get(position).getTimesCooked()));
+
+        String prepTimeString = String.valueOf(recipePreviewList.get(position).getPrepTime()) + " minutes";
+        holder.getPrepTime().setText(prepTimeString);
+
+        String timesCookedString = String.valueOf(String.valueOf(recipePreviewList.get(position).getTimesCooked())) + " times cooked";
+        holder.getTimesCooked().setText(timesCookedString);
+
         byte[] imageByteArray = recipePreviewList.get(position).getImage();
+
         Bitmap bitmap = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray.length);
         holder.getImage().setImageBitmap(bitmap);
     }
