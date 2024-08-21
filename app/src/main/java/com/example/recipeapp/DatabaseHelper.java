@@ -2,12 +2,14 @@ package com.example.recipeapp;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
@@ -161,5 +163,50 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         }
 
         return true;
+    }
+
+    // method to extract information needed to display the recipes
+    public Cursor getRecipes(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Extract all recipe data
+        String queryRecipe = "SELECT recipe_id, name, prep_time, times_cooked, is_favourited, image FROM Recipes";
+        Cursor cursor = null;
+        if (db != null){
+            cursor = db.rawQuery(queryRecipe, null);
+        }
+        return cursor;
+    }
+
+    // method to extract tags when given a recipeId
+    public Cursor getTagsPreview(int recipeId){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Extract all tags data
+        String queryTags = "SELECT T.name, COUNT(*) " +
+                "FROM Tags T JOIN Recipe_tags RT ON T.tag_id = RT.tag_id " +
+                "WHERE RT.recipe_id = ? " +
+                "LIMIT 1;";
+
+        Cursor cursor = null;
+        if (db != null){
+            cursor = db.rawQuery(queryTags, new String[]{String.valueOf(recipeId)});
+        }
+        return cursor;
+    }
+
+    // method to extract the weighted cost
+    public Cursor getWeightedCost(int recipeId){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String queryCost = "SELECT SUM(I.cost*I.amount) " +
+                "FROM Ingredients I JOIN Recipe_ingredients RI ON I.ingredient_id = RI.ingredient_id " +
+                "WHERE RI.recipe_id = ?;";
+
+        Cursor cursor = null;
+        if (db != null){
+            cursor = db.rawQuery(queryCost, new String[]{String.valueOf(recipeId)});
+        }
+        return cursor;
     }
 }

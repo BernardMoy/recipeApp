@@ -5,119 +5,77 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Recipe {
-    private String recipeName;
-    private ArrayList<String> tags;
+
+    // for displaying recipes in an activity for displaying it.
+
+    private String name;
+    private byte[] image;
     private String description;
-    private int prepTime;
-    private HashMap<Ingredient, Float> requiredIngredients;
-    private HashMap<Ingredient, Float> optionalIngredients;
-    private String recipeLink;
-    private int recipeImage;
-    private boolean favourite;
+    private String link;
+    private float prepTime;
+    private boolean isFavourited;
     private int timesCooked;
 
-    public Recipe(String recipeName, ArrayList<String> tags, String description, int prepTime,
-                  HashMap<Ingredient, Float> requiredIngredients, HashMap<Ingredient, Float> optionalIngredients,
-                  String recipeLink, int recipeImage){
-        this.recipeName = recipeName;
-        this.tags = tags;
+    private ArrayList<String> tagList;
+    private ArrayList<Ingredient> ingredientList;
+
+    public Recipe(String name, byte[] image, String description, String link, float prepTime,
+                  boolean isFavourited, int timesCooked,
+                  ArrayList<String> tagList, ArrayList<Ingredient> ingredientList){
+        this.name = name;
+        this.image = image;
         this.description = description;
+        this.link = link;
         this.prepTime = prepTime;
-        this.requiredIngredients = requiredIngredients;
-        this.optionalIngredients = optionalIngredients;
-        this.recipeLink = recipeLink;
-        this.recipeImage = recipeImage;
-        this.favourite = false;
-        this.timesCooked = 0;
+        this.tagList = tagList;
+        this.ingredientList = ingredientList;
+        this.isFavourited = isFavourited;
+        this.timesCooked = timesCooked;
     }
 
-    public void markFavourite(){
-        this.favourite = true;
-    }
-    public void markUnFavourite(){
-        this.favourite = false;
+    public String getName() {
+        return name;
     }
 
-    public void setRecipeName(String recipeName) {
-        this.recipeName = recipeName;
-    }
-
-    public void setTags(ArrayList<String> tags) {
-        this.tags = tags;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setOptionalIngredients(HashMap<Ingredient, Float> optionalIngredients) {
-        this.optionalIngredients = optionalIngredients;
-    }
-
-    public void setRequiredIngredients(HashMap<Ingredient, Float> requiredIngredients) {
-        this.requiredIngredients = requiredIngredients;
-    }
-
-    public void setPrepTime(int prepTime) {
-        this.prepTime = prepTime;
-    }
-
-    public void setRecipeImage(int recipeImage) {
-        this.recipeImage = recipeImage;
-    }
-
-    public void setRecipeLink(String recipeLink) {
-        this.recipeLink = recipeLink;
-    }
-
-    public void incrementTimesCooked(){
-        timesCooked++;
-    }
-
-    public int getPrepTime() {
-        return prepTime;
-    }
-
-    public int getRecipeImage() {
-        return recipeImage;
+    public byte[] getImage() {
+        return image;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public String getRecipeLink() {
-        return recipeLink;
+    public String getLink() {
+        return link;
     }
 
-    public String getRecipeName() {
-        return recipeName;
+    public float getPrepTime() {
+        return prepTime;
     }
 
-    public ArrayList<String> getTags() {
-        return tags;
-    }
-
-    public HashMap<Ingredient, Float> getOptionalIngredients() {
-        return optionalIngredients;
-    }
-
-    public HashMap<Ingredient, Float> getRequiredIngredients() {
-        return requiredIngredients;
-    }
-    public boolean getFavourite(){
-        return this.favourite;
+    public boolean isFavourited() {
+        return isFavourited;
     }
 
     public int getTimesCooked() {
         return timesCooked;
     }
 
+    public ArrayList<String> getTagList() {
+        return tagList;
+    }
+
+    public ArrayList<Ingredient> getIngredientList() {
+        return ingredientList;
+    }
+
+    // calculate the total weighed cost
     public float calculateCost(){
-        float cost = 0;
-        for (Map.Entry<Ingredient, Float> entry : requiredIngredients.entrySet()){
-            cost += entry.getKey().getCost()*entry.getValue();
+        float total = 0.0f;
+        for (Ingredient i : ingredientList){
+            total += i.getCost() * i.getAmount();
         }
-        return cost;
+
+        return total;
     }
 }

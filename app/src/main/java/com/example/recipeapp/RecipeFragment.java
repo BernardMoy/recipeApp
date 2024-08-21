@@ -1,8 +1,12 @@
 package com.example.recipeapp;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,15 +36,8 @@ public class RecipeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-
-    ArrayList<Recipe> recipes = new ArrayList<>();
-    // Load sample recipes data
-    Recipe r1 = new Recipe("Apple", null, "", 0,
-            null, null, "", 0);
-    Recipe r2 = new Recipe("Orange", null, "", 0,
-            null, null, "", 0);
-    Recipe r3 = new Recipe("Banana", null, "", 0,
-            null, null, "", 0);
+    private ArrayList<RecipePreview> recipePreviewArrayList;
+    RecyclerView recipeRecyclerView;
 
     ListView listView;   // listview to display recipes
     AutoCompleteTextView autoCompleteTextView;
@@ -80,11 +77,10 @@ public class RecipeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Load sample data
-        recipes.add(r1);
-        recipes.add(r2);
-        recipes.add(r3);
 
+
+
+        /*
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_recipe, container, false);
 
@@ -128,6 +124,66 @@ public class RecipeFragment extends Fragment {
 
         // the final return object
         return view;
+        */
+
+
+        View view = inflater.inflate(R.layout.fragment_recipe, container, false);
+
+        // load recipe recycler view
+        recipeRecyclerView = (RecyclerView) view.findViewById(R.id.recipe_recyclerView);
+
+        // load recipe preview arraylist from db
+        recipePreviewArrayList = displayRecipesFromDatabase();
+        // set up recycler view
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        recipeRecyclerView.setLayoutManager(linearLayoutManager);
+        RecipeAdapter recipeAdapter = new RecipeAdapter(getActivity().getApplicationContext(), recipePreviewArrayList);
+        recipeRecyclerView.setAdapter(recipeAdapter);
+
+        return view;
+    }
+
+    public ArrayList<RecipePreview> displayRecipesFromDatabase(){
+        ArrayList<RecipePreview> recipePreviewArrayList = new ArrayList<>();
+
+        // extract all recipes data from the database
+        DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext());
+        Cursor cursor = db.getRecipes();
+
+        // if have data
+        if (cursor.getCount() > 0){
+            while (cursor.moveToNext()){
+                int recipeId = cursor.getInt(0);
+                String name = cursor.getString(1);
+                float prepTime = cursor.getFloat(2);
+                int timesCooked = cursor.getInt(3);
+                boolean isFavourited = (cursor.getInt(4) == 1);
+                byte[] image = cursor.getBlob(5);
+
+                // Extract the first tag and also the count
+                String tag = "";
+                int tagPlus = 0;
+                Cursor cursor2 = db.getTagsPreview(recipeId);
+                if (cursor2.getCount() > 0){
+                    cursor2.moveToNext();
+                    tag = cursor2.getString(0);
+                    tagPlus = cursor2.getInt(1) - 1;
+                }
+
+                // Extract the total weighted cost
+                float cost = 0.0f;
+                Cursor cursor3 = db.getWeightedCost(recipeId);
+                if (cursor3.getCount() > 0){
+                    cursor3.moveToNext();
+                    cost = cursor3.getFloat(0);
+                }
+
+                // Construct recipe preview object
+                RecipePreview recipePreview = new RecipePreview(recipeId, name, tag, tagPlus, cost, prepTime, isFavourited, timesCooked, image);
+                recipePreviewArrayList.add(recipePreview);
+            }
+        }
+        return recipePreviewArrayList;
     }
 
 }
