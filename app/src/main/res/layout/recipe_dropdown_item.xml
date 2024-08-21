@@ -2,6 +2,7 @@
     android:id="@+id/textView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp"
+    android:padding="@dimen/content_margin"
     android:textColor="@color/black"
-    android:textSize="15sp" />
+    android:background="@color/veryLightColor"
+    android:textSize="@dimen/content_font_size" />

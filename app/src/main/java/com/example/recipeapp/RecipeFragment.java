@@ -104,6 +104,9 @@ public class RecipeFragment extends Fragment {
                 return false;
             }
         });
+        */
+
+        View view = inflater.inflate(R.layout.fragment_recipe, container, false);
 
         // Load the dropdown menu for ordering
         autoCompleteTextView = view.findViewById(R.id.recipe_dropDown);
@@ -122,12 +125,6 @@ public class RecipeFragment extends Fragment {
             }
         });
 
-        // the final return object
-        return view;
-        */
-
-
-        View view = inflater.inflate(R.layout.fragment_recipe, container, false);
 
         // load recipe recycler view
         recipeRecyclerView = (RecyclerView) view.findViewById(R.id.recipe_recyclerView);
