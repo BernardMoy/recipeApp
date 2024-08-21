@@ -42,10 +42,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
 
         holder.getCost().setText(String.valueOf(recipePreviewList.get(position).getCost()));
 
-        String prepTimeString = String.valueOf(recipePreviewList.get(position).getPrepTime()) + " minutes";
+        String prepTimeString = " " + String.valueOf(recipePreviewList.get(position).getPrepTime()) + " minutes";
         holder.getPrepTime().setText(prepTimeString);
 
-        String timesCookedString = String.valueOf(String.valueOf(recipePreviewList.get(position).getTimesCooked())) + " times cooked";
+        String timesCookedString = " " + String.valueOf(String.valueOf(recipePreviewList.get(position).getTimesCooked())) + " times cooked";
         holder.getTimesCooked().setText(timesCookedString);
 
         byte[] imageByteArray = recipePreviewList.get(position).getImage();

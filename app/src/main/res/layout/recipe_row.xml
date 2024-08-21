@@ -63,8 +63,8 @@
             android:textSize="@dimen/content_font_size"
             android:layout_marginStart="@dimen/title_margin"
             android:layout_marginTop="@dimen/content_margin"
-            app:drawableStartCompat="@drawable/time_icon"
-            app:drawableTint="@color/gray"
+            android:drawableStart="@drawable/time_icon"
+            android:drawableTint="@color/gray"
             app:layout_constraintStart_toEndOf="@+id/recipeRow_image"
             app:layout_constraintTop_toBottomOf="@+id/recipeRow_tag"/>
 
@@ -77,8 +77,8 @@
             android:textSize="@dimen/content_font_size"
             android:layout_marginStart="@dimen/title_margin"
             android:layout_marginTop="@dimen/content_margin"
-            app:drawableStartCompat="@drawable/calendar_repeat_icon"
-            app:drawableTint="@color/gray"
+            android:drawableStart="@drawable/calendar_repeat_icon"
+            android:drawableTint="@color/gray"
             app:layout_constraintStart_toEndOf="@+id/recipeRow_prepTime"
             app:layout_constraintTop_toBottomOf="@+id/recipeRow_tag"/>
 
@@ -88,11 +88,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/title_margin"
             android:layout_marginTop="@dimen/content_margin"
-            app:drawableStartCompat="@drawable/money_icon"
+            android:drawableStart="@drawable/money_icon"
             android:text=" 7.65"
             android:textColor="@color/gray"
             android:textSize="@dimen/content_font_size"
-            app:drawableTint="@color/gray"
+            android:drawableTint="@color/gray"
             app:layout_constraintStart_toEndOf="@+id/recipeRow_tagPlus"
             app:layout_constraintTop_toBottomOf="@+id/recipeRow_name" />
 
@@ -102,9 +102,10 @@
             android:layout_height="@dimen/image_button_size"
             android:background="@color/primaryColor"
             android:contentDescription="Edit recipe"
+            android:src="@drawable/edit_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/edit_icon"
-            app:tint="@color/white" />
+            android:tint="@color/white"
+            tools:ignore="UseAppTint" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
