@@ -98,7 +98,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
         protected FilterResults performFiltering(CharSequence constraint) {
             ArrayList<RecipePreview> filteredRecipePreviewList = new ArrayList<>();
 
-            if (constraint == null | constraint.length() == 0){
+            if (constraint == null || constraint.length() == 0){
                 filteredRecipePreviewList.addAll(recipePreviewListFull);
 
             } else {

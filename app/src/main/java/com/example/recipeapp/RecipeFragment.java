@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Filter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -162,7 +163,6 @@ public class RecipeFragment extends Fragment {
         RecipeAdapter recipeAdapter = new RecipeAdapter(getActivity().getApplicationContext(), recipePreviewArrayList);
         recipeRecyclerView.setAdapter(recipeAdapter);
 
-
         // Set up listener for search view
         SearchView searchView = (SearchView) view.findViewById(R.id.recipes_searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -174,7 +174,17 @@ public class RecipeFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String s) {
                 // when text is changed, filter search results
-                recipeAdapter.getFilter().filter(s);
+                Filter recipeFilter = recipeAdapter.getFilter();
+
+                recipeFilter.filter(s, new Filter.FilterListener() {
+                    @Override
+                    public void onFilterComplete(int i) {
+                        // Updates the recipe count after filtering
+                        String countString = String.valueOf(i) + " results";
+                        TextView textView = (TextView) view.findViewById(R.id.recipeCount_textView);
+                        textView.setText(countString);
+                    }
+                });
                 return false;
             }
         });
