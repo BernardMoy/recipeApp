@@ -238,4 +238,17 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         }
         return cursor;
     }
+
+    // method to extract all tags
+    public Cursor getTags(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Extract all recipe data
+        String queryRecipe = "SELECT name FROM Tags;";
+        Cursor cursor = null;
+        if (db != null){
+            cursor = db.rawQuery(queryRecipe, null);
+        }
+        return cursor;
+    }
 }
