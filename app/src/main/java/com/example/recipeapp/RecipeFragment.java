@@ -145,7 +145,7 @@ public class RecipeFragment extends Fragment {
         TextView textView = (TextView) view.findViewById(R.id.recipeCount_textView);
         textView.setText(countString);
 
-        // If there are any recipes, set the empty recipe text to be GONE
+        // If there are no recipes, display empty recipe message
         TextView emptyRecipeTextView = view.findViewById(R.id.emptyRecipes_textView);
         if (count > 0){
             emptyRecipeTextView.setVisibility(View.GONE);

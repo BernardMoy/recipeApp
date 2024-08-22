@@ -14,6 +14,7 @@ import java.util.List;
 public class StringAdapter extends RecyclerView.Adapter<StringRecyclerViewHolder> {
 
     // Used to display a single list of strings in a format.
+    // Which is deleted when clicked on.
 
     private Context ctx;
     private List<String> stringList;
@@ -38,8 +39,10 @@ public class StringAdapter extends RecyclerView.Adapter<StringRecyclerViewHolder
             @Override
             public void onClick(View view) {
                 int position = holder.getAdapterPosition();
-                stringList.remove(position);
-                notifyItemRemoved(position);
+                if (position != -1){  // prevent clicking too fast
+                    stringList.remove(position);
+                    notifyItemRemoved(position);
+                }
             }
         });
     }
