@@ -8,23 +8,28 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder> {
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder> implements Filterable {
 
     // display a list of recipes in the recipe fragment page
     private Context ctx;
     private ArrayList<RecipePreview> recipePreviewList;
+    private ArrayList<RecipePreview> recipePreviewListFull;   // An arraylist that contains all original data
 
     public RecipeAdapter(Context ctx, ArrayList<RecipePreview> recipePreviewList){
         this.ctx = ctx;
-        this.recipePreviewList = recipePreviewList;
+        this.recipePreviewListFull = recipePreviewList;
+        this.recipePreviewList = new ArrayList<>(recipePreviewListFull);
     }
 
     @NonNull
@@ -82,4 +87,43 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
     public int getItemCount() {
         return recipePreviewList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return recipePreviewsFilter;
+    }
+
+    private final Filter recipePreviewsFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<RecipePreview> filteredRecipePreviewList = new ArrayList<>();
+
+            if (constraint == null | constraint.length() == 0){
+                filteredRecipePreviewList.addAll(recipePreviewListFull);
+
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (RecipePreview recipePreview : recipePreviewListFull){
+                    // Filtering logic goes here
+                    if (recipePreview.getName().toLowerCase().contains(filterPattern)){
+                        filteredRecipePreviewList.add(recipePreview);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredRecipePreviewList;
+            results.count = filteredRecipePreviewList.size();
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            // recipePreviewList is the list to be displayed
+            recipePreviewList.clear();
+            recipePreviewList.addAll((ArrayList) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 }

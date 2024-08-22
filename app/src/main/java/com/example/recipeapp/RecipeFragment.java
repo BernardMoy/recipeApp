@@ -161,6 +161,23 @@ public class RecipeFragment extends Fragment {
         recipeRecyclerView.setLayoutManager(linearLayoutManager);
         RecipeAdapter recipeAdapter = new RecipeAdapter(getActivity().getApplicationContext(), recipePreviewArrayList);
         recipeRecyclerView.setAdapter(recipeAdapter);
+
+
+        // Set up listener for search view
+        SearchView searchView = (SearchView) view.findViewById(R.id.recipes_searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                // when text is changed, filter search results
+                recipeAdapter.getFilter().filter(s);
+                return false;
+            }
+        });
     }
 
     public int displayRecipesCountFromDatabase(){
