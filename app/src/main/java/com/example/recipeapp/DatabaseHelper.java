@@ -178,6 +178,19 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return cursor;
     }
 
+    // method to return the recipe count. Used to display on the recipe fragment page
+    public Cursor getRecipesCount(){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String queryRecipesCount = "SELECT COUNT(*) FROM Recipes;";
+        Cursor cursor = null;
+        if (db != null){
+            cursor = db.rawQuery(queryRecipesCount, null);
+        }
+        return cursor;
+    }
+
     // method to extract the tags count
     public Cursor getTagsCount(int recipeId){
         SQLiteDatabase db = this.getReadableDatabase();

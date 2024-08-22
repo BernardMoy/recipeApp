@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -125,10 +126,24 @@ public class RecipeFragment extends Fragment {
             }
         });
 
+        return view;
+    }
+
+    @Override
+    public void onResume(){
+        // Updates the recipe displayed whenever the page is loaded
+        super.onResume();
+
+        View view = getView();
+
+        // Updates the recipe count displayed
+        int count = displayRecipesCountFromDatabase();
+        String countString = String.valueOf(count) + " results";
+        TextView textView = (TextView) view.findViewById(R.id.recipeCount_textView);
+        textView.setText(countString);
 
         // load recipe recycler view
         recipeRecyclerView = (RecyclerView) view.findViewById(R.id.recipe_recyclerView);
-
         // load recipe preview arraylist from db
         recipePreviewArrayList = displayRecipesFromDatabase();
         // set up recycler view
@@ -136,8 +151,19 @@ public class RecipeFragment extends Fragment {
         recipeRecyclerView.setLayoutManager(linearLayoutManager);
         RecipeAdapter recipeAdapter = new RecipeAdapter(getActivity().getApplicationContext(), recipePreviewArrayList);
         recipeRecyclerView.setAdapter(recipeAdapter);
+    }
 
-        return view;
+    public int displayRecipesCountFromDatabase(){
+        DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext());
+        Cursor cursor = db.getRecipesCount();
+
+        // there is guaranteed to have one data
+        if (cursor.getCount() > 0){
+            cursor.moveToNext();
+            return cursor.getInt(0);
+        } else {
+            return 0;
+        }
     }
 
     public ArrayList<RecipePreview> displayRecipesFromDatabase(){

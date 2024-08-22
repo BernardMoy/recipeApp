@@ -43,13 +43,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/imageButton2"
-                android:layout_width="@dimen/image_button_size"
-                android:layout_height="@dimen/image_button_size"
-                android:src="@drawable/refresh_icon"
-                android:background="@android:color/transparent"
-                android:layout_marginStart="@dimen/content_margin"
+            <TextView
+                android:id="@+id/recipeCount_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 results"
+                android:layout_marginStart="@dimen/title_margin"
+                android:textColor="@color/gray"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -59,6 +59,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id = "@+id/recipe_recyclerView"
+            android:layout_marginStart="@dimen/content_margin"
+            android:layout_marginEnd="@dimen/content_margin"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
