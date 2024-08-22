@@ -13,7 +13,7 @@ import java.util.List;
 public class TagFilterAdapter extends RecyclerView.Adapter<TagFilterRecyclerViewHolder> {
 
     // This is known as recipeTagsFilter_ (Button / recyclerview etc).
-    
+
     // Used to display a single list of strings in a format.
     // Which is deleted when clicked on.
 

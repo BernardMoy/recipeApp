@@ -1,10 +1,11 @@
 package com.example.recipeapp;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,14 +18,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -53,6 +51,7 @@ public class RecipeFragment extends Fragment {
     private ImageButton recipeTagsFilterButton;
     private ArrayList<String> tagList;
     private RecyclerView recipeTagsFilterRecyclerView;
+    private boolean tagFilterMenuOpened;
 
 
     public RecipeFragment() {
@@ -140,27 +139,52 @@ public class RecipeFragment extends Fragment {
         // set on click listener for the button of search bar filter
         recipeTagsFilterButton = view.findViewById(R.id.recipeTagsFilter_button);
         recipeTagsFilterRecyclerView = view.findViewById(R.id.recipeTagsFilter_recyclerView);
+        // state is initially false
+        tagFilterMenuOpened = false;
 
         recipeTagsFilterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext());
-
-                // Extract all tags and fill the tagList
-                tagList = new ArrayList<>();
-
-                Cursor cursor = db.getTags();
-                if (cursor.getCount() > 0){
-                    while (cursor.moveToNext()){
-                        tagList.add(cursor.getString(0));
-                    }
-                }
-
-                // populate the tags recyclerView
+                // Get current context
                 Context ctx = getActivity().getApplicationContext();
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(ctx, 4, GridLayoutManager.VERTICAL, false);
-                recipeTagsFilterRecyclerView.setLayoutManager(gridLayoutManager);
-                recipeTagsFilterRecyclerView.setAdapter(new TagFilterAdapter(ctx, tagList));
+
+                // conditional button for opening and closing
+                if (!tagFilterMenuOpened){
+                    // visuals
+                    recipeTagsFilterButton.setImageResource(R.drawable.arrow_drop_up_icon);
+                    recipeTagsFilterButton.setBackgroundColor(ContextCompat.getColor(ctx, R.color.secondaryColor));
+
+                    DatabaseHelper db = new DatabaseHelper(ctx);
+
+                    // Extract all tags and fill the tagList
+                    tagList = new ArrayList<>();
+
+                    Cursor cursor = db.getTags();
+                    if (cursor.getCount() > 0){
+                        while (cursor.moveToNext()){
+                            tagList.add(cursor.getString(0));
+                        }
+                    }
+
+                    // populate the tags recyclerView
+                    GridLayoutManager gridLayoutManager = new GridLayoutManager(ctx, 4, GridLayoutManager.VERTICAL, false);
+                    recipeTagsFilterRecyclerView.setLayoutManager(gridLayoutManager);
+                    recipeTagsFilterRecyclerView.setAdapter(new TagFilterAdapter(ctx, tagList));
+
+                    // toggle the state
+                    tagFilterMenuOpened = true;
+
+                } else {
+                    // visuals
+                    recipeTagsFilterButton.setImageResource(R.drawable.arrow_drop_down_icon);
+                    recipeTagsFilterButton.setBackgroundColor(ContextCompat.getColor(ctx, R.color.veryLightColor));
+
+                    // remove all entries of recyclerview
+                    recipeTagsFilterRecyclerView.setAdapter(new TagFilterAdapter(ctx, new ArrayList<>()));
+
+                    // toggle the state
+                    tagFilterMenuOpened = false;
+                }
             }
         });
         return view;
