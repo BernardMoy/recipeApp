@@ -1,10 +1,12 @@
 package com.example.recipeapp;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,7 +17,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.Filter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -41,10 +45,14 @@ public class RecipeFragment extends Fragment {
     private String mParam2;
 
     private ArrayList<RecipePreview> recipePreviewArrayList;
-    RecyclerView recipeRecyclerView;
+    private RecyclerView recipeRecyclerView;
 
-    ListView listView;   // listview to display recipes
-    AutoCompleteTextView autoCompleteTextView;
+    private ListView listView;   // listview to display recipes
+    private AutoCompleteTextView autoCompleteTextView;
+
+    private ImageButton recipeTagsFilterButton;
+    private ArrayList<String> tagList;
+    private RecyclerView recipeTagsFilterRecyclerView;
 
 
     public RecipeFragment() {
@@ -129,6 +137,32 @@ public class RecipeFragment extends Fragment {
             }
         });
 
+        // set on click listener for the button of search bar filter
+        recipeTagsFilterButton = view.findViewById(R.id.recipeTagsFilter_button);
+        recipeTagsFilterRecyclerView = view.findViewById(R.id.recipeTagsFilter_recyclerView);
+
+        recipeTagsFilterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext());
+
+                // Extract all tags and fill the tagList
+                tagList = new ArrayList<>();
+
+                Cursor cursor = db.getTags();
+                if (cursor.getCount() > 0){
+                    while (cursor.moveToNext()){
+                        tagList.add(cursor.getString(0));
+                    }
+                }
+
+                // populate the tags recyclerView
+                Context ctx = getActivity().getApplicationContext();
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(ctx, 4, GridLayoutManager.VERTICAL, false);
+                recipeTagsFilterRecyclerView.setLayoutManager(gridLayoutManager);
+                recipeTagsFilterRecyclerView.setAdapter(new TagFilterAdapter(ctx, tagList));
+            }
+        });
         return view;
     }
 
