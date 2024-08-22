@@ -19,6 +19,8 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 /**
@@ -141,6 +143,14 @@ public class RecipeFragment extends Fragment {
         String countString = String.valueOf(count) + " results";
         TextView textView = (TextView) view.findViewById(R.id.recipeCount_textView);
         textView.setText(countString);
+
+        // If there are any recipes, set the empty recipe text to be GONE
+        TextView emptyRecipeTextView = view.findViewById(R.id.emptyRecipes_textView);
+        if (count > 0){
+            emptyRecipeTextView.setVisibility(View.GONE);
+        } else {
+            emptyRecipeTextView.setVisibility(View.VISIBLE);
+        }
 
         // load recipe recycler view
         recipeRecyclerView = (RecyclerView) view.findViewById(R.id.recipe_recyclerView);
