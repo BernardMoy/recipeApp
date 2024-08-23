@@ -28,14 +28,12 @@ public class TagFilterAdapter extends RecyclerView.Adapter<TagFilterRecyclerView
     @NonNull
     @Override
     public TagFilterRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new TagFilterRecyclerViewHolder(LayoutInflater.from(ctx).inflate(R.layout.item_box, parent, false));
+        return new TagFilterRecyclerViewHolder(LayoutInflater.from(ctx).inflate(R.layout.item_box_gray, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull TagFilterRecyclerViewHolder holder, int position) {
         holder.getTextView().setText(stringList.get(position));
-
-        // Logic when the box is clicked on
     }
 
     @Override

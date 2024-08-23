@@ -186,7 +186,7 @@ public class RecipeFragment extends Fragment {
 
                 } else {
                     // visuals
-                    recipeTagsFilterButton.setImageResource(R.drawable.arrow_drop_down_icon);
+                    recipeTagsFilterButton.setImageResource(R.drawable.filter_list_icon);
                     recipeTagsFilterButton.setBackgroundColor(ContextCompat.getColor(ctx, R.color.veryLightColor));
                     recipeTagsFilterHintButton.setVisibility(View.GONE);
                     recipeTagsFilterRecyclerView.setVisibility(View.GONE);
