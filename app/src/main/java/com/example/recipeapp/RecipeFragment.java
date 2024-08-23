@@ -57,6 +57,8 @@ public class RecipeFragment extends Fragment {
     private boolean tagFilterMenuOpened;
     private TextView recipeTagsFilterHintButton;
 
+    private RecipeAdapter recipeAdapter;  // The adapter for displaying a list of recipe previews
+
     private TagFilterAdapter tagFilterAdapter;
 
 
@@ -114,6 +116,7 @@ public class RecipeFragment extends Fragment {
             }
         });
 
+        // Sets on click listener for the recipe tags filter button.
         // make the hint button and recyclerview not visible
         recipeTagsFilterHintButton = view.findViewById(R.id.searchFilter_hint);
         recipeTagsFilterHintButton.setVisibility(View.GONE);
@@ -174,41 +177,9 @@ public class RecipeFragment extends Fragment {
                 }
             }
         });
-        return view;
-    }
 
-    @Override
-    public void onResume(){
-        // Updates the recipe displayed whenever the page is loaded
-        super.onResume();
 
-        View view = getView();
-
-        // Updates the recipe count displayed
-        int count = displayRecipesCountFromDatabase();
-        String countString = String.valueOf(count) + " results";
-        TextView textView = (TextView) view.findViewById(R.id.recipeCount_textView);
-        textView.setText(countString);
-
-        // If there are no recipes, display empty recipe message
-        TextView emptyRecipeTextView = view.findViewById(R.id.emptyRecipes_textView);
-        if (count > 0){
-            emptyRecipeTextView.setVisibility(View.GONE);
-        } else {
-            emptyRecipeTextView.setVisibility(View.VISIBLE);
-        }
-
-        // load recipe recycler view
-        recipeRecyclerView = (RecyclerView) view.findViewById(R.id.recipe_recyclerView);
-        // load recipe preview arraylist from db
-        recipePreviewArrayList = displayRecipesFromDatabase();
-        // set up recycler view
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false);
-        recipeRecyclerView.setLayoutManager(linearLayoutManager);
-        RecipeAdapter recipeAdapter = new RecipeAdapter(getActivity().getApplicationContext(), recipePreviewArrayList);
-        recipeRecyclerView.setAdapter(recipeAdapter);
-
-        // Set up listener for search view
+        // Set up query text listener for search view.
         SearchView searchView = (SearchView) view.findViewById(R.id.recipes_searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -234,7 +205,7 @@ public class RecipeFragment extends Fragment {
             }
         });
 
-        // Set up listener for tag filter recycler view
+        // Set up on click listener for tag filter recycler view
         RecyclerView tagsFilterRecyclerView = view.findViewById(R.id.recipeTagsFilter_recyclerView);
         tagsFilterRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
 
@@ -269,6 +240,42 @@ public class RecipeFragment extends Fragment {
 
             }
         });
+        return view;
+    }
+
+    // Called everytime when the recipe menu reloads
+    @Override
+    public void onResume(){
+        // Updates the recipe displayed whenever the page is loaded
+        super.onResume();
+
+        View view = getView();
+
+        // Updates the recipe count displayed
+        int count = displayRecipesCountFromDatabase();
+        String countString = String.valueOf(count) + " results";
+        TextView textView = (TextView) view.findViewById(R.id.recipeCount_textView);
+        textView.setText(countString);
+
+        // If there are no recipes, display empty recipe message
+        TextView emptyRecipeTextView = view.findViewById(R.id.emptyRecipes_textView);
+        if (count > 0){
+            emptyRecipeTextView.setVisibility(View.GONE);
+        } else {
+            emptyRecipeTextView.setVisibility(View.VISIBLE);
+        }
+
+        // load recipe recycler view
+        recipeRecyclerView = (RecyclerView) view.findViewById(R.id.recipe_recyclerView);
+        // load recipe preview arraylist from db
+        recipePreviewArrayList = displayRecipesFromDatabase();
+        // set up recycler view
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        recipeRecyclerView.setLayoutManager(linearLayoutManager);
+
+        // crete a new adapter from the modified recipe preview array list
+        recipeAdapter = new RecipeAdapter(getActivity().getApplicationContext(), recipePreviewArrayList);
+        recipeRecyclerView.setAdapter(recipeAdapter);
     }
 
     public int displayRecipesCountFromDatabase(){
