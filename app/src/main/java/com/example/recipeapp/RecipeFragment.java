@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -12,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -49,10 +52,12 @@ public class RecipeFragment extends Fragment {
     private AutoCompleteTextView autoCompleteTextView;
 
     private ImageButton recipeTagsFilterButton;
-    private ArrayList<String> tagList;
+    private ArrayList<String> tagList;  // an arraylist that stores all tags across all recipes
     private RecyclerView recipeTagsFilterRecyclerView;
     private boolean tagFilterMenuOpened;
     private TextView recipeTagsFilterHintButton;
+
+    private TagFilterAdapter tagFilterAdapter;
 
 
     public RecipeFragment() {
@@ -89,34 +94,6 @@ public class RecipeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
-
-        /*
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_recipe, container, false);
-
-        // Inflate the list of items
-        listView = (ListView) view.findViewById(R.id.recipes_listView);
-        RecipeAdapter recipeAdapter = new RecipeAdapter(getContext().getApplicationContext(), recipes);
-        listView.setAdapter(recipeAdapter);
-
-        // set up listener for search view
-        SearchView searchView = (SearchView) view.findViewById(R.id.recipes_searchView);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                // when text is changed, filter search results
-                recipeAdapter.getFilter().filter(newText);
-                return false;
-            }
-        });
-        */
 
         View view = inflater.inflate(R.layout.fragment_recipe, container, false);
 
@@ -178,7 +155,8 @@ public class RecipeFragment extends Fragment {
                     // populate the tags recyclerView
                     GridLayoutManager gridLayoutManager = new GridLayoutManager(ctx, 4, GridLayoutManager.VERTICAL, false);
                     recipeTagsFilterRecyclerView.setLayoutManager(gridLayoutManager);
-                    recipeTagsFilterRecyclerView.setAdapter(new TagFilterAdapter(ctx, tagList));
+                    tagFilterAdapter = new TagFilterAdapter(ctx, tagList); // to be referenced later
+                    recipeTagsFilterRecyclerView.setAdapter(tagFilterAdapter);
                     recipeTagsFilterRecyclerView.setVisibility(View.VISIBLE);
 
                     // toggle the state
@@ -253,6 +231,42 @@ public class RecipeFragment extends Fragment {
                     }
                 });
                 return false;
+            }
+        });
+
+        // Set up listener for tag filter recycler view
+        RecyclerView tagsFilterRecyclerView = view.findViewById(R.id.recipeTagsFilter_recyclerView);
+        tagsFilterRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+
+            GestureDetector gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+                    return true;
+                }
+            });
+
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                View childView = rv.findChildViewUnder(e.getX(), e.getY());
+                if (childView != null && gestureDetector.onTouchEvent(e)) {
+                    int position = rv.getChildAdapterPosition(childView);
+                    if (position != RecyclerView.NO_POSITION) {
+                        String clickedTag = tagList.get(position);
+                        Log.d("TAG CLICKED", clickedTag);
+                    }
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
             }
         });
     }
