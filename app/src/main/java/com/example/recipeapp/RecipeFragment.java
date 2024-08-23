@@ -52,6 +52,7 @@ public class RecipeFragment extends Fragment {
     private ArrayList<String> tagList;
     private RecyclerView recipeTagsFilterRecyclerView;
     private boolean tagFilterMenuOpened;
+    private TextView recipeTagsFilterHintButton;
 
 
     public RecipeFragment() {
@@ -136,9 +137,15 @@ public class RecipeFragment extends Fragment {
             }
         });
 
+        // make the hint button and recyclerview not visible
+        recipeTagsFilterHintButton = view.findViewById(R.id.searchFilter_hint);
+        recipeTagsFilterHintButton.setVisibility(View.GONE);
+
         // set on click listener for the button of search bar filter
         recipeTagsFilterButton = view.findViewById(R.id.recipeTagsFilter_button);
         recipeTagsFilterRecyclerView = view.findViewById(R.id.recipeTagsFilter_recyclerView);
+        recipeTagsFilterRecyclerView.setVisibility(View.GONE);
+
         // state is initially false
         tagFilterMenuOpened = false;
 
@@ -153,6 +160,8 @@ public class RecipeFragment extends Fragment {
                     // visuals
                     recipeTagsFilterButton.setImageResource(R.drawable.arrow_drop_up_icon);
                     recipeTagsFilterButton.setBackgroundColor(ContextCompat.getColor(ctx, R.color.secondaryColor));
+                    recipeTagsFilterHintButton.setVisibility(View.VISIBLE);
+
 
                     DatabaseHelper db = new DatabaseHelper(ctx);
 
@@ -170,6 +179,7 @@ public class RecipeFragment extends Fragment {
                     GridLayoutManager gridLayoutManager = new GridLayoutManager(ctx, 4, GridLayoutManager.VERTICAL, false);
                     recipeTagsFilterRecyclerView.setLayoutManager(gridLayoutManager);
                     recipeTagsFilterRecyclerView.setAdapter(new TagFilterAdapter(ctx, tagList));
+                    recipeTagsFilterRecyclerView.setVisibility(View.VISIBLE);
 
                     // toggle the state
                     tagFilterMenuOpened = true;
@@ -178,9 +188,8 @@ public class RecipeFragment extends Fragment {
                     // visuals
                     recipeTagsFilterButton.setImageResource(R.drawable.arrow_drop_down_icon);
                     recipeTagsFilterButton.setBackgroundColor(ContextCompat.getColor(ctx, R.color.veryLightColor));
-
-                    // remove all entries of recyclerview
-                    recipeTagsFilterRecyclerView.setAdapter(new TagFilterAdapter(ctx, new ArrayList<>()));
+                    recipeTagsFilterHintButton.setVisibility(View.GONE);
+                    recipeTagsFilterRecyclerView.setVisibility(View.GONE);
 
                     // toggle the state
                     tagFilterMenuOpened = false;
