@@ -28,6 +28,9 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +62,7 @@ public class RecipeFragment extends Fragment {
 
     private RecipeAdapter recipeAdapter;  // The adapter for displaying a list of recipe previews
 
+    private Set<String> selectedTagsSet;   // a hashset to store all selected tags from filters (Order does not matter)
     private TagFilterAdapter tagFilterAdapter;
 
 
@@ -206,6 +210,7 @@ public class RecipeFragment extends Fragment {
         });
 
         // Set up on click listener for tag filter recycler view
+        selectedTagsSet = new HashSet<>();
         RecyclerView tagsFilterRecyclerView = view.findViewById(R.id.recipeTagsFilter_recyclerView);
         tagsFilterRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
 
@@ -222,8 +227,19 @@ public class RecipeFragment extends Fragment {
                 if (childView != null && gestureDetector.onTouchEvent(e)) {
                     int position = rv.getChildAdapterPosition(childView);
                     if (position != RecyclerView.NO_POSITION) {
+                        // Get the string of the tag at that position
                         String clickedTag = tagList.get(position);
                         Log.d("TAG CLICKED", clickedTag);
+
+                        // Add the selected item to the list
+                        selectedTagsSet.add(clickedTag);
+
+                        // get the view associated with that child view position
+                        TextView item = (TextView) rv.getChildAt(position);
+
+                        // change the appearance of boxes
+                        item.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.primaryColor));
+                        item.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
                     }
                     return true;
                 }
