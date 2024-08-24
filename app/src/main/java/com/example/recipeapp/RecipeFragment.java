@@ -226,15 +226,27 @@ public class RecipeFragment extends Fragment {
                         String clickedTag = tagList.get(position);
                         Log.d("TAG CLICKED", clickedTag);
 
-                        // Add the selected item to the set
-                        selectedTagsSet.add(clickedTag);
-
-                        // get the view associated with that child view position
                         TextView item = (TextView) rv.getChildAt(position);
 
-                        // change the appearance of boxes depending whether or not they are in set
-                        item.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.primaryColor));
-                        item.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                        // case when selected tag in selected list (Already selected)
+                        if (selectedTagsSet.contains(clickedTag)){
+                            // deselect it
+                            selectedTagsSet.remove(clickedTag);
+
+                            // change the appearance of boxes depending whether or not they are in set
+                            item.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightColor));
+                            item.setTextColor(ContextCompat.getColor(getContext(), R.color.primaryColor));
+
+                        } else {
+                            // Add the selected item to the set
+                            selectedTagsSet.add(clickedTag);
+
+                            // change the appearance of boxes depending whether or not they are in set
+                            item.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.primaryColor));
+                            item.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                        }
+
+                        // Filter the *recipeAdapter* according to the selected tag list.
                     }
                     return true;
                 }
