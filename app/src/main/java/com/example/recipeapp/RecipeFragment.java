@@ -120,6 +120,10 @@ public class RecipeFragment extends Fragment {
             }
         });
 
+        // load recipe recycler view
+        recipeRecyclerView = (RecyclerView) view.findViewById(R.id.recipe_recyclerView);
+
+
         // Sets on click listener for the recipe tags filter button.
         // make the hint button and recyclerview not visible
         recipeTagsFilterHintButton = view.findViewById(R.id.searchFilter_hint);
@@ -132,6 +136,8 @@ public class RecipeFragment extends Fragment {
 
         // state is initially false
         tagFilterMenuOpened = false;
+        // recycler view is initially not visible
+        recipeTagsFilterRecyclerView.setVisibility(View.GONE);
 
         recipeTagsFilterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,24 +152,6 @@ public class RecipeFragment extends Fragment {
                     recipeTagsFilterButton.setBackgroundColor(ContextCompat.getColor(ctx, R.color.secondaryColor));
                     recipeTagsFilterHintButton.setVisibility(View.VISIBLE);
 
-
-                    DatabaseHelper db = new DatabaseHelper(ctx);
-
-                    // Extract all tags and fill the tagList
-                    tagList = new ArrayList<>();
-
-                    Cursor cursor = db.getTags();
-                    if (cursor.getCount() > 0){
-                        while (cursor.moveToNext()){
-                            tagList.add(cursor.getString(0));
-                        }
-                    }
-
-                    // populate the tags recyclerView
-                    GridLayoutManager gridLayoutManager = new GridLayoutManager(ctx, 4, GridLayoutManager.VERTICAL, false);
-                    recipeTagsFilterRecyclerView.setLayoutManager(gridLayoutManager);
-                    tagFilterAdapter = new TagFilterAdapter(ctx, tagList); // to be referenced later
-                    recipeTagsFilterRecyclerView.setAdapter(tagFilterAdapter);
                     recipeTagsFilterRecyclerView.setVisibility(View.VISIBLE);
 
                     // toggle the state
@@ -231,13 +219,13 @@ public class RecipeFragment extends Fragment {
                         String clickedTag = tagList.get(position);
                         Log.d("TAG CLICKED", clickedTag);
 
-                        // Add the selected item to the list
+                        // Add the selected item to the set
                         selectedTagsSet.add(clickedTag);
 
                         // get the view associated with that child view position
                         TextView item = (TextView) rv.getChildAt(position);
 
-                        // change the appearance of boxes
+                        // change the appearance of boxes depending whether or not they are in set
                         item.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.primaryColor));
                         item.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
                     }
@@ -267,7 +255,7 @@ public class RecipeFragment extends Fragment {
 
         View view = getView();
 
-        // Updates the recipe count displayed
+        // 1. Updates the recipe count displayed
         int count = displayRecipesCountFromDatabase();
         String countString = String.valueOf(count) + " results";
         TextView textView = (TextView) view.findViewById(R.id.recipeCount_textView);
@@ -281,9 +269,8 @@ public class RecipeFragment extends Fragment {
             emptyRecipeTextView.setVisibility(View.VISIBLE);
         }
 
-        // load recipe recycler view
-        recipeRecyclerView = (RecyclerView) view.findViewById(R.id.recipe_recyclerView);
-        // load recipe preview arraylist from db
+
+        // 2. Update the recipe recyclerview: load recipe preview arraylist from db
         recipePreviewArrayList = displayRecipesFromDatabase();
         // set up recycler view
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false);
@@ -292,6 +279,26 @@ public class RecipeFragment extends Fragment {
         // crete a new adapter from the modified recipe preview array list
         recipeAdapter = new RecipeAdapter(getActivity().getApplicationContext(), recipePreviewArrayList);
         recipeRecyclerView.setAdapter(recipeAdapter);
+
+
+        // 3. Update the recipe tags filter recyclerview: load the recipe tag filter recycler view
+        Context ctx = getContext();
+        DatabaseHelper db = new DatabaseHelper(ctx);
+
+        // Extract all tags and fill the tagList
+        tagList = new ArrayList<>();
+
+        Cursor cursor = db.getTags();
+        if (cursor.getCount() > 0){
+            while (cursor.moveToNext()){
+                tagList.add(cursor.getString(0));
+            }
+        }
+        // populate the tags recyclerView
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(ctx, 4, GridLayoutManager.VERTICAL, false);
+        recipeTagsFilterRecyclerView.setLayoutManager(gridLayoutManager);
+        tagFilterAdapter = new TagFilterAdapter(ctx, tagList); // to be referenced later
+        recipeTagsFilterRecyclerView.setAdapter(tagFilterAdapter);
     }
 
     public int displayRecipesCountFromDatabase(){
