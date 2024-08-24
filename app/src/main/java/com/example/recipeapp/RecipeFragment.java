@@ -69,8 +69,10 @@ public class RecipeFragment extends Fragment {
     private TagFilterAdapter recipeTagsFilterAdapter;
 
     // For managing selected tags from the list above
-    private Set<String> selectedTagsSet;   // a hashset to store all selected tags from filters (Order does not matter)
+    private HashSet<String> selectedTagsSet;   // a hashset to store all selected tags from filters (Order does not matter)
 
+    // the string for filtering recipe names
+    private String searchString;
 
 
 
@@ -178,7 +180,7 @@ public class RecipeFragment extends Fragment {
             }
         });
 
-
+        searchString = "";
         // Set up query text listener for search view.
         SearchView searchView = (SearchView) view.findViewById(R.id.recipes_searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -189,18 +191,10 @@ public class RecipeFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String s) {
+                // update class variable
+                searchString = s;
                 // when text is changed, filter search results
-                Filter recipeFilter = recipeAdapter.getFilter();
-
-                recipeFilter.filter(s, new Filter.FilterListener() {
-                    @Override
-                    public void onFilterComplete(int i) {
-                        // Updates the recipe count after filtering
-                        String countString = String.valueOf(i) + " results";
-                        TextView textView = (TextView) view.findViewById(R.id.recipeCount_textView);
-                        textView.setText(countString);
-                    }
-                });
+                filterRecipes(view);
                 return false;
             }
         });
@@ -232,6 +226,8 @@ public class RecipeFragment extends Fragment {
                         if (selectedTagsSet.contains(clickedTag)){
                             // deselect it
                             selectedTagsSet.remove(clickedTag);
+                            // update the adapter
+                            recipeAdapter.setSelectedTagList(selectedTagsSet);
 
                             // change the appearance of boxes depending whether or not they are in set
                             item.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightColor));
@@ -240,13 +236,16 @@ public class RecipeFragment extends Fragment {
                         } else {
                             // Add the selected item to the set
                             selectedTagsSet.add(clickedTag);
+                            // update the adapter
+                            recipeAdapter.setSelectedTagList(selectedTagsSet);
 
                             // change the appearance of boxes depending whether or not they are in set
                             item.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.primaryColor));
                             item.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
                         }
 
-                        // Filter the *recipeAdapter* according to the selected tag list.
+                        // when a position is clicked or the view is reset (onResume()), filter recipes.
+                        filterRecipes(view);
                     }
                     return true;
                 }
@@ -316,6 +315,10 @@ public class RecipeFragment extends Fragment {
         // all tags will be deselected (through reloading the tag filter adapter)
         // reset the selected tags hashset
         selectedTagsSet = new HashSet<>();
+        // update the adapter
+        recipeAdapter.setSelectedTagList(selectedTagsSet);
+        // filter results
+        filterRecipes(view);
 
         // populate the tags filter recyclerView
         GridLayoutManager gridLayoutManager = new GridLayoutManager(ctx, 4, GridLayoutManager.VERTICAL, false);
@@ -392,6 +395,24 @@ public class RecipeFragment extends Fragment {
             }
         }
         return recipePreviewArrayList;
+    }
+
+    // method to update the recipeAdapter with a filter.
+    // Called when the search view is updated or a new tag is selected or deselected
+    public void filterRecipes(View view){
+        // when text is changed, filter search results
+        Filter recipeFilter = recipeAdapter.getFilter();
+
+        // filter based on the class variable searchString
+        recipeFilter.filter(searchString, new Filter.FilterListener() {
+            @Override
+            public void onFilterComplete(int i) {
+                // Updates the recipe count after filtering
+                String countString = String.valueOf(i) + " results";
+                TextView textView = (TextView) view.findViewById(R.id.recipeCount_textView);
+                textView.setText(countString);
+            }
+        });
     }
 
 }

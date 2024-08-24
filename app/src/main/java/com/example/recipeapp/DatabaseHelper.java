@@ -212,7 +212,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Extract all tags data
-        String queryTag = "SELECT T.name " +
+        String queryTag = "SELECT DISTINCT T.name " +
                 "FROM Tags T JOIN Recipe_tags RT ON T.tag_id = RT.tag_id " +
                 "WHERE RT.recipe_id = ? " +
                 "LIMIT 1;";
@@ -248,6 +248,22 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         Cursor cursor = null;
         if (db != null){
             cursor = db.rawQuery(queryRecipe, null);
+        }
+        return cursor;
+    }
+
+    // method to extract tags from recipe id
+    public Cursor getTagsFromRecipeId(int recipeId){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Extract all recipe data
+        String queryTag = "SELECT DISTINCT T.name " +
+                "FROM Tags T JOIN Recipe_tags RT ON T.tag_id = RT.tag_id " +
+                "WHERE RT.recipe_id = ? ";
+
+        Cursor cursor = null;
+        if (db != null){
+            cursor = db.rawQuery(queryTag, new String[]{String.valueOf(recipeId)});
         }
         return cursor;
     }

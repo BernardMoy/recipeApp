@@ -1,6 +1,9 @@
 package com.example.recipeapp;
 
+import static java.security.AccessController.getContext;
+
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -17,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder> implements Filterable {
@@ -26,10 +30,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
     private ArrayList<RecipePreview> recipePreviewList;
     private ArrayList<RecipePreview> recipePreviewListFull;   // An arraylist that contains all original data
 
+    // a list of tags that the selected item should have
+    private HashSet<String> selectedTagsSet;
+
     public RecipeAdapter(Context ctx, ArrayList<RecipePreview> recipePreviewList){
         this.ctx = ctx;
         this.recipePreviewListFull = recipePreviewList;
         this.recipePreviewList = new ArrayList<>(recipePreviewListFull);
+        this.selectedTagsSet = new HashSet<>();
     }
 
     @NonNull
@@ -99,14 +107,19 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
             ArrayList<RecipePreview> filteredRecipePreviewList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0){
-                filteredRecipePreviewList.addAll(recipePreviewListFull);
+                // Only filter by tags
+                for (RecipePreview recipePreview : recipePreviewListFull){
+                    if (validateRecipe(recipePreview)){
+                        filteredRecipePreviewList.add(recipePreview);
+                    }
+                }
 
             } else {
+                // filter by both string and tags
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for (RecipePreview recipePreview : recipePreviewListFull){
-                    // Filtering logic goes here
-                    if (recipePreview.getName().toLowerCase().contains(filterPattern)){
+                    if (recipePreview.getName().toLowerCase().contains(filterPattern) && validateRecipe(recipePreview)){
                         filteredRecipePreviewList.add(recipePreview);
                     }
                 }
@@ -126,4 +139,31 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
             notifyDataSetChanged();
         }
     };
+
+    public HashSet<String> getSelectedTagList() {
+        return selectedTagsSet;
+    }
+
+    public void setSelectedTagList(HashSet<String> selectedTagsSet) {
+        this.selectedTagsSet = selectedTagsSet;
+    }
+
+    // method to validate recipe based on additional constraints.
+    public boolean validateRecipe(RecipePreview recipePreview){
+        // validate its tags. It should contain all tags from selected tag list
+        // Extract all tags from db
+        DatabaseHelper db = new DatabaseHelper(ctx);
+        Cursor cursor = db.getTagsFromRecipeId(recipePreview.getRecipeId());
+
+        HashSet<String> actualTagsSet = new HashSet<>();
+
+        if (cursor.getCount() > 0){
+            while (cursor.moveToNext()){
+                String tag = cursor.getString(0);
+                actualTagsSet.add(tag);
+            }
+        }
+
+        return actualTagsSet.containsAll(selectedTagsSet);
+    }
 }
