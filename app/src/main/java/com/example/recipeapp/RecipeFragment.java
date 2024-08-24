@@ -48,22 +48,30 @@ public class RecipeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+
+
+    // For displaying recipe previews
     private ArrayList<RecipePreview> recipePreviewArrayList;
     private RecyclerView recipeRecyclerView;
-
-    private ListView listView;   // listview to display recipes
-    private AutoCompleteTextView autoCompleteTextView;
-
-    private ImageButton recipeTagsFilterButton;
-    private ArrayList<String> tagList;  // an arraylist that stores all tags across all recipes
-    private RecyclerView recipeTagsFilterRecyclerView;
-    private boolean tagFilterMenuOpened;
-    private TextView recipeTagsFilterHintButton;
-
     private RecipeAdapter recipeAdapter;  // The adapter for displaying a list of recipe previews
 
+    // For displaying ordering options
+    private AutoCompleteTextView autoCompleteTextView;
+
+    // For the opening recipe tags filter button UI
+    private ImageButton recipeTagsFilterButton;
+    private boolean tagFilterMenuOpened;
+    private TextView recipeFilterHintTextView;
+
+    // For displaying a list of all tags
+    private ArrayList<String> tagList;  // an arraylist that stores all tags across all recipes
+    private RecyclerView recipeTagsFilterRecyclerView;
+    private TagFilterAdapter recipeTagsFilterAdapter;
+
+    // For managing selected tags from the list above
     private Set<String> selectedTagsSet;   // a hashset to store all selected tags from filters (Order does not matter)
-    private TagFilterAdapter tagFilterAdapter;
+
+
 
 
     public RecipeFragment() {
@@ -126,8 +134,8 @@ public class RecipeFragment extends Fragment {
 
         // Sets on click listener for the recipe tags filter button.
         // make the hint button and recyclerview not visible
-        recipeTagsFilterHintButton = view.findViewById(R.id.searchFilter_hint);
-        recipeTagsFilterHintButton.setVisibility(View.GONE);
+        recipeFilterHintTextView = view.findViewById(R.id.searchFilter_hint);
+        recipeFilterHintTextView.setVisibility(View.GONE);
 
         // set on click listener for the button of search bar filter
         recipeTagsFilterButton = view.findViewById(R.id.recipeTagsFilter_button);
@@ -150,7 +158,7 @@ public class RecipeFragment extends Fragment {
                     // visuals
                     recipeTagsFilterButton.setImageResource(R.drawable.arrow_drop_up_icon);
                     recipeTagsFilterButton.setBackgroundColor(ContextCompat.getColor(ctx, R.color.secondaryColor));
-                    recipeTagsFilterHintButton.setVisibility(View.VISIBLE);
+                    recipeFilterHintTextView.setVisibility(View.VISIBLE);
 
                     recipeTagsFilterRecyclerView.setVisibility(View.VISIBLE);
 
@@ -161,7 +169,7 @@ public class RecipeFragment extends Fragment {
                     // visuals
                     recipeTagsFilterButton.setImageResource(R.drawable.filter_list_icon);
                     recipeTagsFilterButton.setBackgroundColor(ContextCompat.getColor(ctx, R.color.veryLightColor));
-                    recipeTagsFilterHintButton.setVisibility(View.GONE);
+                    recipeFilterHintTextView.setVisibility(View.GONE);
                     recipeTagsFilterRecyclerView.setVisibility(View.GONE);
 
                     // toggle the state
@@ -197,10 +205,9 @@ public class RecipeFragment extends Fragment {
             }
         });
 
-        // Set up on click listener for tag filter recycler view
+        // Set up on click listener for each box of the tag filter recycler view
         selectedTagsSet = new HashSet<>();
-        RecyclerView tagsFilterRecyclerView = view.findViewById(R.id.recipeTagsFilter_recyclerView);
-        tagsFilterRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+        recipeTagsFilterRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
 
             GestureDetector gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
                 @Override
@@ -294,11 +301,15 @@ public class RecipeFragment extends Fragment {
                 tagList.add(cursor.getString(0));
             }
         }
-        // populate the tags recyclerView
+        // all tags will be deselected (through reloading the tag filter adapter)
+        // reset the selected tags hashset
+        selectedTagsSet = new HashSet<>();
+
+        // populate the tags filter recyclerView
         GridLayoutManager gridLayoutManager = new GridLayoutManager(ctx, 4, GridLayoutManager.VERTICAL, false);
         recipeTagsFilterRecyclerView.setLayoutManager(gridLayoutManager);
-        tagFilterAdapter = new TagFilterAdapter(ctx, tagList); // to be referenced later
-        recipeTagsFilterRecyclerView.setAdapter(tagFilterAdapter);
+        recipeTagsFilterAdapter = new TagFilterAdapter(ctx, tagList); // to be referenced later
+        recipeTagsFilterRecyclerView.setAdapter(recipeTagsFilterAdapter);
     }
 
     public int displayRecipesCountFromDatabase(){
