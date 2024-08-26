@@ -11,4 +11,6 @@
     <color name = "veryLightColor">#E1ECF6</color>
 
     <color name = "backgroundColor"> #FEF7FF </color>
+
+    <color name = "starColor"> #EBC634 </color>
 </resources>

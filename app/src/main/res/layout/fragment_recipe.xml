@@ -114,6 +114,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <ToggleButton
+                android:id="@+id/fav_toggleButton"
+                android:layout_width="@dimen/image_button_size"
+                android:layout_height="@dimen/image_button_size"
+                android:layout_marginEnd="@dimen/content_margin"
+                android:text=""
+                android:textOff=""
+                android:textOn=""
+                android:background="@drawable/fav_button_selector"
+                app:layout_constraintEnd_toStartOf="@+id/recipe_dropDown"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

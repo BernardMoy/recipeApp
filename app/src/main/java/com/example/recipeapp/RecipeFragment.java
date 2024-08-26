@@ -21,11 +21,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -73,6 +75,9 @@ public class RecipeFragment extends Fragment {
 
     // the string for filtering recipe names
     private String searchString;
+
+    // toggle button for the fav symbol
+    private ToggleButton favToggleButton;
 
 
 
@@ -262,6 +267,19 @@ public class RecipeFragment extends Fragment {
 
             }
         });
+
+
+        // set up state change listener for the favourite toggle button
+        favToggleButton = view.findViewById(R.id.fav_toggleButton);
+        favToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    Log.d("State", "toggled");
+                }
+            }
+        });
+
         return view;
     }
 
