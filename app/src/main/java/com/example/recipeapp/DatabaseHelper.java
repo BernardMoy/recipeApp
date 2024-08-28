@@ -12,13 +12,13 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseHelper extends SQLiteOpenHelper{
+public class DatabaseHelper extends SQLiteOpenHelper {
 
     private Context context;
     private static final String DATABASE_NAME = "recipeApp.db";
     private static final int DATABASE_VERSION = 1;
 
-    public DatabaseHelper(Context context){
+    public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
@@ -28,30 +28,30 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         // create the database schema
         String createRecipes =
                 "CREATE TABLE IF NOT EXISTS Recipes (" +
-                "recipe_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "name VARCHAR(100) NOT NULL, " +
-                "image BLOB, " +
-                "description TEXT," +
-                "link TEXT," +
-                "prep_time FLOAT,"+
-                "is_favourited BOOLEAN DEFAULT FALSE," +
-                "times_cooked INTEGER DEFAULT 0" +
-                ");";
+                        "recipe_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "name VARCHAR(100) NOT NULL, " +
+                        "image BLOB, " +
+                        "description TEXT," +
+                        "link TEXT," +
+                        "prep_time FLOAT," +
+                        "is_favourited BOOLEAN DEFAULT FALSE," +
+                        "times_cooked INTEGER DEFAULT 0" +
+                        ");";
 
         String createTags =
                 "CREATE TABLE IF NOT EXISTS Tags (" +
-                    "tag_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "name VARCHAR(20) NOT NULL" +
-                    ");";
+                        "tag_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "name VARCHAR(20) NOT NULL" +
+                        ");";
 
         String createIngredients =
                 "CREATE TABLE IF NOT EXISTS Ingredients (" +
-                    "ingredient_id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                    "name VARCHAR(50) NOT NULL," +
-                    "amount FLOAT," +
-                    "supermarket VARCHAR(50)," +
-                    "cost FLOAT" +
-                    ");";
+                        "ingredient_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "name VARCHAR(50) NOT NULL," +
+                        "amount FLOAT," +
+                        "supermarket VARCHAR(50)," +
+                        "cost FLOAT" +
+                        ");";
 
         String createRecipeTags =
                 "CREATE TABLE IF NOT EXISTS Recipe_tags(" +
@@ -86,7 +86,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
     // reset database
-    public void reset(){
+    public void reset() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS Recipes;");
         db.execSQL("DROP TABLE IF EXISTS Tags;");
@@ -98,7 +98,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
     // method to add new recipe
-    public boolean addRecipe(String name, byte[] image, String description, String link, float prepTime, List<String> tagList, List<Ingredient> ingredientList){
+    public boolean addRecipe(String name, byte[] image, String description, String link, float prepTime, List<String> tagList, List<Ingredient> ingredientList) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValuesRecipes = new ContentValues();
@@ -116,28 +116,28 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         // insert into recipes - returns the auto incremented id
         long resultRecipes = db.insert("Recipes", null, contentValuesRecipes);
-        if (resultRecipes == -1){
+        if (resultRecipes == -1) {
             return false;
         }
 
         // insert into tags and recipe tags
-        for (String tag : tagList){
+        for (String tag : tagList) {
             contentValuesTags.put("name", tag);
             long resultTags = db.insert("Tags", null, contentValuesTags);
-            if (resultTags == -1){
+            if (resultTags == -1) {
                 return false;
             }
 
             contentValuesRecipeTags.put("recipe_id", resultRecipes);
             contentValuesRecipeTags.put("tag_id", resultTags);
             long resultRecipeTags = db.insert("Recipe_tags", null, contentValuesRecipeTags);
-            if (resultRecipeTags == -1){
+            if (resultRecipeTags == -1) {
                 return false;
             }
         }
 
         // insert into ingredients and recipe ingredients
-        for (Ingredient ingredient : ingredientList){
+        for (Ingredient ingredient : ingredientList) {
             String ingredientName = ingredient.getIngredient();
             Float amount = ingredient.getAmount();
             String supermarket = ingredient.getSupermarket();
@@ -149,14 +149,14 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             contentValuesIngredients.put("cost", cost);
 
             long resultIngredients = db.insert("Ingredients", null, contentValuesIngredients);
-            if (resultIngredients == -1){
+            if (resultIngredients == -1) {
                 return false;
             }
 
             contentValuesRecipeIngredients.put("recipe_id", resultRecipes);
             contentValuesRecipeIngredients.put("ingredient_id", resultIngredients);
             long resultRecipeIngredients = db.insert("Recipe_ingredients", null, contentValuesRecipeIngredients);
-            if (resultRecipeIngredients == -1){
+            if (resultRecipeIngredients == -1) {
                 return false;
             }
 
@@ -166,33 +166,33 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
     // method to extract information needed to display the recipes
-    public Cursor getRecipes(){
+    public Cursor getRecipes() {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Extract all recipe data
         String queryRecipe = "SELECT recipe_id, name, prep_time, times_cooked, is_favourited, image FROM Recipes";
         Cursor cursor = null;
-        if (db != null){
+        if (db != null) {
             cursor = db.rawQuery(queryRecipe, null);
         }
         return cursor;
     }
 
     // method to return the recipe count. Used to display on the recipe fragment page
-    public Cursor getRecipesCount(){
+    public Cursor getRecipesCount() {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
         String queryRecipesCount = "SELECT COUNT(*) FROM Recipes;";
         Cursor cursor = null;
-        if (db != null){
+        if (db != null) {
             cursor = db.rawQuery(queryRecipesCount, null);
         }
         return cursor;
     }
 
     // method to extract the tags count
-    public Cursor getTagsCount(int recipeId){
+    public Cursor getTagsCount(int recipeId) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Extract all tags data
@@ -201,14 +201,14 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 "WHERE RT.recipe_id = ?;";
 
         Cursor cursor = null;
-        if (db != null){
+        if (db != null) {
             cursor = db.rawQuery(queryTagsCount, new String[]{String.valueOf(recipeId)});
         }
         return cursor;
     }
 
     // method to extract the first tag when given a recipeid
-    public Cursor getTagPreview(int recipeId){
+    public Cursor getTagPreview(int recipeId) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Extract all tags data
@@ -218,14 +218,14 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 "LIMIT 1;";
 
         Cursor cursor = null;
-        if (db != null){
+        if (db != null) {
             cursor = db.rawQuery(queryTag, new String[]{String.valueOf(recipeId)});
         }
         return cursor;
     }
 
     // method to extract the weighted cost
-    public Cursor getWeightedCost(int recipeId){
+    public Cursor getWeightedCost(int recipeId) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String queryCost = "SELECT ROUND(SUM(I.cost*I.amount), 2) " +
@@ -233,27 +233,27 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 "WHERE RI.recipe_id = ?;";
 
         Cursor cursor = null;
-        if (db != null){
+        if (db != null) {
             cursor = db.rawQuery(queryCost, new String[]{String.valueOf(recipeId)});
         }
         return cursor;
     }
 
     // method to extract all tags
-    public Cursor getTags(){
+    public Cursor getTags() {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Extract all recipe data
         String queryRecipe = "SELECT DISTINCT name FROM Tags;";
         Cursor cursor = null;
-        if (db != null){
+        if (db != null) {
             cursor = db.rawQuery(queryRecipe, null);
         }
         return cursor;
     }
 
     // method to extract tags from recipe id
-    public Cursor getTagsFromRecipeId(int recipeId){
+    public Cursor getTagsFromRecipeId(int recipeId) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Extract all recipe data
@@ -262,9 +262,28 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 "WHERE RT.recipe_id = ? ";
 
         Cursor cursor = null;
-        if (db != null){
+        if (db != null) {
             cursor = db.rawQuery(queryTag, new String[]{String.valueOf(recipeId)});
         }
         return cursor;
     }
+
+    // method to mark recipes favourited or unfavourited.
+    public void updateRecipeFavourite(int recipeId){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // mark recipe as fav
+        String update = "UPDATE Recipes SET is_favourited = TRUE WHERE recipe_id = ?;";
+        Cursor cursor = db.rawQuery(update, new String[]{String.valueOf(recipeId)});
+        cursor.close();
+    }
+
+    public void updateRecipeUnFavourite(int recipeId){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String update = "UPDATE Recipes SET is_favourited = FALSE WHERE recipe_id = ?;";
+        Cursor cursor = db.rawQuery(update, new String[]{String.valueOf(recipeId)});
+        cursor.close();
+    }
+
 }
