@@ -27,9 +27,20 @@
             android:text="Recipe name"
             android:textAlignment="viewStart"
             android:textSize="@dimen/title_font_size"
-            app:layout_constraintEnd_toStartOf="@+id/recipeRow_edit"
+            app:layout_constraintEnd_toStartOf="@+id/recipeRow_toggleButton"
             app:layout_constraintStart_toEndOf="@+id/recipeRow_image"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ToggleButton
+            android:id="@+id/recipeRow_toggleButton"
+            android:layout_width="@dimen/image_button_size"
+            android:layout_height="@dimen/image_button_size"
+            android:text=""
+            android:textOff=""
+            android:textOn=""
+            android:background="@drawable/fav_button_selector"
+            app:layout_constraintEnd_toStartOf="@+id/recipeRow_edit"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/recipeRow_tag"
@@ -83,7 +94,7 @@
             android:text=" 4 times cooked"
             android:textColor="@color/gray"
             android:textSize="@dimen/content_font_size"
-            app:layout_constraintEnd_toEndOf="@+id/recipeRow_name"
+            app:layout_constraintEnd_toEndOf="@+id/recipeRow_toggleButton"
             app:layout_constraintStart_toEndOf="@+id/recipeRow_prepTime"
             app:layout_constraintTop_toBottomOf="@+id/recipeRow_tag" />
 

@@ -3,6 +3,7 @@ package com.example.recipeapp;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,7 @@ public class RecipeRecyclerViewHolder extends RecyclerView.ViewHolder {
     private TextView prepTime;
     private TextView timesCooked;
     private ImageView image;
+    private ToggleButton toggleButton;
 
     public RecipeRecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -27,6 +29,7 @@ public class RecipeRecyclerViewHolder extends RecyclerView.ViewHolder {
         prepTime = itemView.findViewById(R.id.recipeRow_prepTime);
         timesCooked = itemView.findViewById(R.id.recipeRow_timesCooked);
         image = itemView.findViewById(R.id.recipeRow_image);
+        toggleButton = itemView.findViewById(R.id.recipeRow_toggleButton);
     }
 
     public TextView getName() {
@@ -55,5 +58,9 @@ public class RecipeRecyclerViewHolder extends RecyclerView.ViewHolder {
 
     public ImageView getImage() {
         return image;
+    }
+
+    public ToggleButton getToggleButton() {
+        return toggleButton;
     }
 }
