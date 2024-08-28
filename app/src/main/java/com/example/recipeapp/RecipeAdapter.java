@@ -93,12 +93,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
         Bitmap bitmap = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray.length);
         holder.getImage().setImageBitmap(bitmap);
 
+        // discard the prev listener
+        holder.getToggleButton().setOnCheckedChangeListener(null);
+
         // change the displayed icon depending whether is favourited
-        if (recipePreviewList.get(position).isFavourited()){
-            holder.getToggleButton().setChecked(true);
-        } else {
-            holder.getToggleButton().setChecked(false);
-        }
+        RecipePreview currentRecipe = recipePreviewList.get(position);
+
+        holder.getToggleButton().setChecked(currentRecipe.isFavourited());
 
         // set on checked change listener for the fav toggle button
         holder.getToggleButton().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -109,12 +110,17 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                 int clickedRecipeId = recipePreviewList.get(pos).getRecipeId();
                 DatabaseHelper db = new DatabaseHelper(ctx);
 
+                Log.d("POS", String.valueOf(pos));
+
                 if (b) {
                     // Mark the recipe as favourite from the database
                     db.updateRecipeFavourite(clickedRecipeId);
+                    recipePreviewListFull.get(pos).setIsFavourited(true);
+
                 } else {
                     // Mark the recipe as un favourited
                     db.updateRecipeUnFavourite(clickedRecipeId);
+                    recipePreviewListFull.get(pos).setIsFavourited(false);
                 }
             }
         });

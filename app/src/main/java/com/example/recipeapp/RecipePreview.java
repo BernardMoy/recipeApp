@@ -53,6 +53,10 @@ public class RecipePreview {
         return isFavourited;
     }
 
+    public void setIsFavourited(Boolean b){
+        this.isFavourited = b;
+    }
+
     public int getTimesCooked() {
         return timesCooked;
     }
