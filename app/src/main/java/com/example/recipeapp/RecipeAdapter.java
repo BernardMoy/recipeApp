@@ -110,8 +110,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                 int clickedRecipeId = recipePreviewList.get(pos).getRecipeId();
                 DatabaseHelper db = new DatabaseHelper(ctx);
 
-                Log.d("POS", String.valueOf(pos));
-
                 if (b) {
                     // Mark the recipe as favourite from the database
                     db.updateRecipeFavourite(clickedRecipeId);
