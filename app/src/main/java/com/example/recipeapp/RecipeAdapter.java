@@ -91,23 +91,27 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
         Bitmap bitmap = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray.length);
         holder.getImage().setImageBitmap(bitmap);
 
+        // change the displayed icon depending whether is favourited
+        if (recipePreviewList.get(position).isFavourited()){
+            holder.getToggleButton().setChecked(true);
+        } else {
+            holder.getToggleButton().setChecked(false);
+        }
 
         // set on checked change listener for the fav toggle button
         holder.getToggleButton().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 // Extract the corresponding recipe id that is clicked
-                int position = holder.getAdapterPosition();
-                int clickedRecipeId = recipePreviewList.get(position).getRecipeId();
+                int pos = holder.getAdapterPosition();
+                int clickedRecipeId = recipePreviewList.get(pos).getRecipeId();
                 DatabaseHelper db = new DatabaseHelper(ctx);
 
                 if (b) {
                     // Mark the recipe as favourite from the database
-                    Log.d("FAV", String.valueOf(clickedRecipeId));
                     db.updateRecipeFavourite(clickedRecipeId);
                 } else {
                     // Mark the recipe as un favourited
-                    Log.d("UNFAV", String.valueOf(clickedRecipeId));
                     db.updateRecipeUnFavourite(clickedRecipeId);
                 }
             }

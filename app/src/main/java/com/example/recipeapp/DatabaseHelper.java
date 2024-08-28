@@ -274,16 +274,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // mark recipe as fav
         String update = "UPDATE Recipes SET is_favourited = TRUE WHERE recipe_id = ?;";
-        Cursor cursor = db.rawQuery(update, new String[]{String.valueOf(recipeId)});
-        cursor.close();
+        db.execSQL(update, new String[]{String.valueOf(recipeId)});
     }
 
     public void updateRecipeUnFavourite(int recipeId){
         SQLiteDatabase db = this.getWritableDatabase();
 
         String update = "UPDATE Recipes SET is_favourited = FALSE WHERE recipe_id = ?;";
-        Cursor cursor = db.rawQuery(update, new String[]{String.valueOf(recipeId)});
-        cursor.close();
+        db.execSQL(update, new String[]{String.valueOf(recipeId)});
     }
 
 }
