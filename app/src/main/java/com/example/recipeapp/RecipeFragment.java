@@ -112,6 +112,26 @@ public class RecipeFragment extends Fragment {
         }
     }
 
+    /**
+     * loads all the class variables when the app is initiated.
+     * buttons onclick listeners, search on query change listeners, tags filter on click listeners
+     * and fav toggle button on checked listener are set up here.
+     *
+     * Items are not being loaded here.
+     *
+     * Whenever filtering is needed, use filterRecipes(View view) function.
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate
+     * any views in the fragment,
+     * @param container If non-null, this is the parent view that the fragment's
+     * UI should be attached to.  The fragment should not add the view itself,
+     * but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     * from a previous saved state as given here.
+     *
+     * @return view created
+     *
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -274,16 +294,23 @@ public class RecipeFragment extends Fragment {
         favToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
-                    Log.d("State", "toggled");
-                }
+                // update the filtering options in the filter in adapter
+                recipeAdapter.setFavouriteFilterSelected(b);
+                filterRecipes(view);
             }
         });
 
         return view;
     }
 
-    // Called everytime when the recipe menu reloads
+    /**
+     * Called everytime when the recipe screen is reloaded, including
+     * exiting activity after a recipe is created / edited,
+     * moved from another fragment,
+     * and the initial loading.
+     *
+     * Whenever filtering is needed, call the filterRecipe(View view) function.
+     */
     @Override
     public void onResume(){
         // Updates the recipe displayed whenever the page is loaded

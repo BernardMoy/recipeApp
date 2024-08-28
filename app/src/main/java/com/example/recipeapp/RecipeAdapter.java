@@ -30,6 +30,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
     private Context ctx;
     private ArrayList<RecipePreview> recipePreviewList;
     private ArrayList<RecipePreview> recipePreviewListFull;   // An arraylist that contains all original data
+    private boolean favouriteFilterSelected;  // Store whether the favourite icon in the search filter is selected
 
     // a list of tags that the selected item should have
     private HashSet<String> selectedTagsSet;
@@ -39,6 +40,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
         this.recipePreviewListFull = recipePreviewList;
         this.recipePreviewList = new ArrayList<>(recipePreviewListFull);
         this.selectedTagsSet = new HashSet<>();
+        this.favouriteFilterSelected = false;
     }
 
     @NonNull
@@ -146,6 +148,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for (RecipePreview recipePreview : recipePreviewListFull){
+                    // additional filter requirements are in the validateRecipe method
                     if (recipePreview.getName().toLowerCase().contains(filterPattern) && validateRecipe(recipePreview)){
                         filteredRecipePreviewList.add(recipePreview);
                     }
@@ -175,8 +178,22 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
         this.selectedTagsSet = selectedTagsSet;
     }
 
+    public boolean isFavouriteFilterSelected() {
+        return favouriteFilterSelected;
+    }
+
+    public void setFavouriteFilterSelected(boolean favouriteFilterSelected) {
+        this.favouriteFilterSelected = favouriteFilterSelected;
+    }
+
+
     // method to validate recipe based on additional constraints.
     public boolean validateRecipe(RecipePreview recipePreview){
+        // depending on whether the tag filter is checked, filter recipe by whether it is favourited
+        if (favouriteFilterSelected && !recipePreview.isFavourited()){
+            return false;
+        }
+
         // validate its tags. It should contain all tags from selected tag list
         // Extract all tags from db
         DatabaseHelper db = new DatabaseHelper(ctx);
@@ -191,6 +208,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
             }
         }
 
-        return actualTagsSet.containsAll(selectedTagsSet);
+        boolean tagsValidated = actualTagsSet.containsAll(selectedTagsSet);
+        return tagsValidated;
     }
 }
