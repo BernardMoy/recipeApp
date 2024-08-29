@@ -43,8 +43,8 @@ public class AddNewRecipe extends AppCompatActivity {
     // Result launcher for the image picker
     ActivityResultLauncher<Intent> resultLauncher;
 
-    RecyclerView tagsRecyclerView;
-    RecyclerView ingredientsRecyclerView;
+    private RecyclerView tagsRecyclerView;
+    private RecyclerView ingredientsRecyclerView;
 
     // stores current tags that are added
     private ArrayList<String> tagList;
@@ -66,14 +66,6 @@ public class AddNewRecipe extends AppCompatActivity {
             return insets;
         });
 
-        // Get the put extra string for the recipe title text
-        if (getIntent().hasExtra("recipe_title_text")) {
-            recipeTitle = getIntent().getStringExtra("recipe_title_text");
-
-            // Set the textview string
-            TextView tv = (TextView) findViewById(R.id.recipeTitleText);
-            tv.setText(recipeTitle);
-        }
 
         // register result for the image picker
         registerResult();

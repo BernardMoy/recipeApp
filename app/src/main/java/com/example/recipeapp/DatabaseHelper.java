@@ -284,4 +284,56 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(update, new String[]{String.valueOf(recipeId)});
     }
 
+
+    /*
+    These methods are used to extract, and update data in the addNewRecipe activity
+    that is triggered by clicking on an item in the recyclerview.
+    These are not used when creating a recipe.
+     */
+
+    // methods to extract recipe data (Those attributes in Recipes table) when given a recipe ID. Used to display recipe data.
+    public Cursor getRecipeFromId(int recipeId){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT name, image, description, link, prep_time " +
+                "FROM Recipes WHERE recipe_id = ?;";
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, new String[]{String.valueOf(recipeId)});
+        }
+        return cursor;
+    }
+
+    public Cursor getTagsFromId(int recipeId){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT T.name " +
+                "FROM Recipes R JOIN Recipe_tags RT ON R.recipe_id = RT.recipe_id " +
+                "JOIN Tags T ON RT.tag_id = T.tag_id " +
+                "WHERE recipe_id = ?;";
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, new String[]{String.valueOf(recipeId)});
+        }
+        return cursor;
+    }
+
+    public Cursor getIngredientsFromId(int recipeId){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT I.name, I.amount, I.supermarket, I.cost " +
+                "FROM Recipes R JOIN Recipe_ingredients RI ON R.recipe_id = RI.recipe_id " +
+                "JOIN Ingredients I ON RI.ingredient_id = I.ingredient_id " +
+                "WHERE recipe_id = ?;";
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, new String[]{String.valueOf(recipeId)});
+        }
+        return cursor;
+    }
+
+    // Use getWeightedCost() to extract the weighted cost of ingredients
 }
