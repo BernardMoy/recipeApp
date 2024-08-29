@@ -61,7 +61,7 @@ public class RecipeFragment extends Fragment {
     private AutoCompleteTextView autoCompleteTextView;
 
     // For the opening recipe tags filter button UI
-    private ImageButton recipeTagsFilterButton;
+    private ToggleButton recipeTagsFilterButton;
     private boolean tagFilterMenuOpened;
     private TextView recipeFilterHintTextView;
 
@@ -169,41 +169,25 @@ public class RecipeFragment extends Fragment {
         recipeTagsFilterRecyclerView = view.findViewById(R.id.recipeTagsFilter_recyclerView);
         recipeTagsFilterRecyclerView.setVisibility(View.GONE);
 
-        // state is initially false
-        tagFilterMenuOpened = false;
+
         // recycler view is initially not visible
         recipeTagsFilterRecyclerView.setVisibility(View.GONE);
 
-        recipeTagsFilterButton.setOnClickListener(new View.OnClickListener() {
+        recipeTagsFilterButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                // Get current context
-                Context ctx = getActivity().getApplicationContext();
-
-                // conditional button for opening and closing
-                if (!tagFilterMenuOpened){
-                    // visuals
-                    recipeTagsFilterButton.setImageResource(R.drawable.arrow_drop_up_icon);
-                    recipeTagsFilterButton.setBackgroundColor(ContextCompat.getColor(ctx, R.color.secondaryColor));
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
                     recipeFilterHintTextView.setVisibility(View.VISIBLE);
-
                     recipeTagsFilterRecyclerView.setVisibility(View.VISIBLE);
 
-                    // toggle the state
-                    tagFilterMenuOpened = true;
-
                 } else {
-                    // visuals
-                    recipeTagsFilterButton.setImageResource(R.drawable.filter_list_icon);
-                    recipeTagsFilterButton.setBackgroundColor(ContextCompat.getColor(ctx, R.color.veryLightColor));
                     recipeFilterHintTextView.setVisibility(View.GONE);
                     recipeTagsFilterRecyclerView.setVisibility(View.GONE);
 
-                    // toggle the state
-                    tagFilterMenuOpened = false;
                 }
             }
         });
+
 
         searchString = "";
         // Set up query text listener for search view.
