@@ -311,7 +311,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT T.name " +
                 "FROM Recipes R JOIN Recipe_tags RT ON R.recipe_id = RT.recipe_id " +
                 "JOIN Tags T ON RT.tag_id = T.tag_id " +
-                "WHERE recipe_id = ?;";
+                "WHERE R.recipe_id = ?;";
 
         Cursor cursor = null;
         if (db != null) {
@@ -326,7 +326,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT I.name, I.amount, I.supermarket, I.cost " +
                 "FROM Recipes R JOIN Recipe_ingredients RI ON R.recipe_id = RI.recipe_id " +
                 "JOIN Ingredients I ON RI.ingredient_id = I.ingredient_id " +
-                "WHERE recipe_id = ?;";
+                "WHERE R.recipe_id = ?;";
 
         Cursor cursor = null;
         if (db != null) {

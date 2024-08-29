@@ -1,16 +1,22 @@
 package com.example.recipeapp;
 
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -77,9 +83,63 @@ public class EditRecipe extends AppCompatActivity {
                 link = cursor.getString(3);
                 prepTime = cursor.getFloat(4);
 
-                // modify the text views
-                TextView recipeNameEditText = findViewById(R.id.recipeName_edittext);
+                // modify the text views and image view
+                TextView recipeNameEditText = (TextView) findViewById(R.id.recipeName_edittext);
                 recipeNameEditText.setText(name);
+
+                ImageView recipeImageView = (ImageView) findViewById(R.id.recipeImage);
+                Bitmap bm = BitmapFactory.decodeByteArray(image, 0, image.length);
+                recipeImageView.setImageBitmap(bm);
+
+                TextView recipeDescEditText = (TextView) findViewById(R.id.recipeDesc_edittext);
+                recipeDescEditText.setText(description);
+
+                TextView recipePrepTimeEditText = (TextView) findViewById(R.id.recipePrepTime_edittext);
+                recipePrepTimeEditText.setText(String.valueOf(prepTime));
+
+                TextView recipeLinkEditText = (TextView) findViewById(R.id.recipeLink_edittext);
+                recipeLinkEditText.setText(link);
+
+
+                // Extract tags data
+                Cursor cursorTags = db.getTagsFromId(recipeId);
+                if (cursorTags.getCount() > 0){
+                    while (cursorTags.moveToNext()){
+                        tagList.add(cursorTags.getString(0));
+                    }
+                }
+                // modify the recyclerview of tags that are displayed
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false);
+                tagsRecyclerView.setLayoutManager(gridLayoutManager);
+                tagsRecyclerView.setAdapter(new StringAdapter(this, tagList));
+
+
+                // Extract ingredients data
+                Cursor cursorIngredients = db.getIngredientsFromId(recipeId);
+                if (cursorIngredients.getCount() > 0){
+                    while (cursorIngredients.moveToNext()){
+                        String ingredientName = cursorIngredients.getString(0);
+                        Float ingredientAmount = cursorIngredients.getFloat(1);
+                        String ingredientSupermarket = cursorIngredients.getString(2);
+                        Float ingredientCost = cursorIngredients.getFloat(3);
+
+                        Ingredient ingredient = new Ingredient(ingredientName, ingredientAmount, ingredientSupermarket, ingredientCost);
+                        ingredientList.add(ingredient);
+                    }
+                }
+
+                // modify the recycler view that displays list of items
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+                ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
+
+                IngredientAdapter ingredientRecyclerViewAdapter = new IngredientAdapter(this, ingredientList);
+                ingredientsRecyclerView.setAdapter(ingredientRecyclerViewAdapter);
+
+
+                // Extract cost data
+
+            } else {
+                Toast.makeText(getApplicationContext(), "Recipe not found", Toast.LENGTH_SHORT).show();
             }
 
         }
