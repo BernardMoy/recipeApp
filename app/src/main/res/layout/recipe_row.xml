@@ -39,7 +39,7 @@
             android:textOff=""
             android:textOn=""
             android:background="@drawable/fav_button_selector"
-            app:layout_constraintEnd_toStartOf="@+id/recipeRow_edit"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
@@ -112,16 +112,6 @@
             app:layout_constraintStart_toEndOf="@+id/recipeRow_tagPlus"
             app:layout_constraintTop_toBottomOf="@+id/recipeRow_name" />
 
-        <ImageButton
-            android:id="@+id/recipeRow_edit"
-            android:layout_width="@dimen/image_button_size"
-            android:layout_height="@dimen/image_button_size"
-            android:background="@color/primaryColor"
-            android:contentDescription="Edit recipe"
-            android:src="@drawable/edit_icon"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:tint="@color/white"
-            tools:ignore="UseAppTint" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>

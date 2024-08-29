@@ -19,10 +19,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/recipeTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Recipe"
+        android:text="Title text"
         android:textSize="@dimen/title_font_size"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"

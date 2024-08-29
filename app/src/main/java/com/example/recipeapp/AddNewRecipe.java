@@ -52,6 +52,9 @@ public class AddNewRecipe extends AppCompatActivity {
     // stores current list of ingredients
     private ArrayList<Ingredient> ingredientList;
 
+    // store the recipe title text
+    private String recipeTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +65,15 @@ public class AddNewRecipe extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Get the put extra string for the recipe title text
+        if (getIntent().hasExtra("recipe_title_text")) {
+            recipeTitle = getIntent().getStringExtra("recipe_title_text");
+
+            // Set the textview string
+            TextView tv = (TextView) findViewById(R.id.recipeTitleText);
+            tv.setText(recipeTitle);
+        }
 
         // register result for the image picker
         registerResult();
