@@ -371,6 +371,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String del1 = "DELETE FROM Recipe_tags WHERE recipe_id = ?;";
         db.execSQL(del1, new String[]{String.valueOf(recipeId)});
 
+        // these tags are those tags with recipe id = given one because those that are in are deleted above
         String del2 = "DELETE FROM Tags WHERE tag_id NOT IN (SELECT tag_id FROM Recipe_tags);";
         db.execSQL(del2);
 
