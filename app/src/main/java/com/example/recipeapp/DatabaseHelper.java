@@ -344,7 +344,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // update the recipe (name image desc link prepTime)
     // when the done button is clicked when editing a recipe.
-    public int updateRecipeFromId(int recipeId, String name, byte[] image, String description, String link, float prepTime){
+    public boolean updateRecipeFromId(int recipeId, String name, byte[] image, String description, String link, float prepTime){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -352,21 +352,91 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("image", image);
         contentValues.put("description", description);
         contentValues.put("link", link);
-        contentValues.put("prepTime", prepTime);
+        contentValues.put("prep_time", prepTime);
 
         String whereClause = "recipe_id = ?";
         String[] whereArgs = new String[]{String.valueOf(recipeId)};
 
         // use the update method to update sql
         // return the number of rows affected
-        return db.update("Recipes", contentValues, whereClause, whereArgs);
+        db.update("Recipes", contentValues, whereClause, whereArgs);
+
+        return true;
     }
 
-    public void updateRecipeTagsFromId(int recipeId, ArrayList<String> tagList){
+    public boolean updateRecipeTagsFromId(int recipeId, ArrayList<String> tagList){
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        // first delete all old tags data
+        String del1 = "DELETE FROM Recipe_tags WHERE recipe_id = ?;";
+        db.execSQL(del1, new String[]{String.valueOf(recipeId)});
+
+        String del2 = "DELETE FROM Tags WHERE tag_id NOT IN (SELECT tag_id FROM Recipe_tags);";
+        db.execSQL(del2);
+
+        // then insert new tags data
+        ContentValues contentValuesTags = new ContentValues();
+        ContentValues contentValuesRecipeTags = new ContentValues();
+
+        // insert into tags and recipe tags
+        for (String tag : tagList) {
+            contentValuesTags.put("name", tag);
+            long resultTags = db.insert("Tags", null, contentValuesTags);
+            if (resultTags == -1) {
+                return false;
+            }
+
+            contentValuesRecipeTags.put("recipe_id", recipeId);
+            contentValuesRecipeTags.put("tag_id", resultTags);
+            long resultRecipeTags = db.insert("Recipe_tags", null, contentValuesRecipeTags);
+            if (resultRecipeTags == -1) {
+                return false;
+            }
+        }
+
+        // return true if successful
+        return true;
     }
 
-    public void updateRecipeIngredientsFromId(int recipeId, ArrayList<Ingredient> ingredientList){
+    public boolean updateRecipeIngredientsFromId(int recipeId, ArrayList<Ingredient> ingredientList){
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        // first delete all old tags data
+        String del1 = "DELETE FROM Recipe_ingredients WHERE recipe_id = ?;";
+        db.execSQL(del1, new String[]{String.valueOf(recipeId)});
+
+        String del2 = "DELETE FROM Ingredients WHERE ingredient_id NOT IN (SELECT ingredient_id FROM Recipe_ingredients);";
+        db.execSQL(del2);
+
+
+        ContentValues contentValuesIngredients = new ContentValues();
+        ContentValues contentValuesRecipeIngredients = new ContentValues();
+
+        // insert into ingredients and recipe ingredients
+        for (Ingredient ingredient : ingredientList) {
+            String ingredientName = ingredient.getIngredient();
+            Float amount = ingredient.getAmount();
+            String supermarket = ingredient.getSupermarket();
+            Float cost = ingredient.getCost();
+
+            contentValuesIngredients.put("name", ingredientName);
+            contentValuesIngredients.put("amount", amount);
+            contentValuesIngredients.put("supermarket", supermarket);
+            contentValuesIngredients.put("cost", cost);
+
+            long resultIngredients = db.insert("Ingredients", null, contentValuesIngredients);
+            if (resultIngredients == -1) {
+                return false;
+            }
+
+            contentValuesRecipeIngredients.put("recipe_id", recipeId);
+            contentValuesRecipeIngredients.put("ingredient_id", resultIngredients);
+            long resultRecipeIngredients = db.insert("Recipe_ingredients", null, contentValuesRecipeIngredients);
+            if (resultRecipeIngredients == -1) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

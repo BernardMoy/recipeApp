@@ -423,7 +423,17 @@ public class AddNewRecipe extends AppCompatActivity {
 
         } else {
             // update recipe from recipeId
-           
+            boolean status = db.updateRecipeFromId(recipeId, name, recipeImageByteArray, description, link, prepTime);
+            status = status && db.updateRecipeTagsFromId(recipeId, tagList);
+            status = status && db.updateRecipeIngredientsFromId(recipeId, ingredientList);
+
+            if (!status){
+                Toast.makeText(this, "Data adding failed", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(this, "Recipe saved", Toast.LENGTH_SHORT).show();
+                getOnBackPressedDispatcher().onBackPressed();
+            }
 
         }
     }
