@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 if (menuItem.getItemId() == R.id.add_recipe_popup){
                     Log.d("PopUp", "Add recipe option clicked");
                     Intent i = new Intent(MainActivity.this, AddNewRecipe.class);
+                    i.putExtra("title_text", "New recipe");
                     startActivity(i);
                 }
                 else if (menuItem.getItemId() == R.id.add_shopping_list_popup){
