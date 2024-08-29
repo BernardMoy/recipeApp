@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class EditRecipe extends AppCompatActivity {
 
@@ -83,7 +84,7 @@ public class EditRecipe extends AppCompatActivity {
                 link = cursor.getString(3);
                 prepTime = cursor.getFloat(4);
 
-                // modify the text views and image view
+                // 1. Extract basic recipe data
                 TextView recipeNameEditText = (TextView) findViewById(R.id.recipeName_edittext);
                 recipeNameEditText.setText(name);
 
@@ -101,7 +102,7 @@ public class EditRecipe extends AppCompatActivity {
                 recipeLinkEditText.setText(link);
 
 
-                // Extract tags data
+                // 2. Extract tags data
                 Cursor cursorTags = db.getTagsFromId(recipeId);
                 if (cursorTags.getCount() > 0){
                     while (cursorTags.moveToNext()){
@@ -114,7 +115,7 @@ public class EditRecipe extends AppCompatActivity {
                 tagsRecyclerView.setAdapter(new StringAdapter(this, tagList));
 
 
-                // Extract ingredients data
+                // 3. Extract ingredients data
                 Cursor cursorIngredients = db.getIngredientsFromId(recipeId);
                 if (cursorIngredients.getCount() > 0){
                     while (cursorIngredients.moveToNext()){
@@ -136,7 +137,16 @@ public class EditRecipe extends AppCompatActivity {
                 ingredientsRecyclerView.setAdapter(ingredientRecyclerViewAdapter);
 
 
-                // Extract cost data
+                // 4. Extract cost data
+                Cursor cursorCost = db.getWeightedCost(recipeId);
+                if (cursorCost.getCount() > 0){
+                    cursorCost.moveToNext();
+                    float weightedCost = cursorCost.getFloat(0);
+
+                    TextView totalCostTextView = (TextView) findViewById(R.id.totalCost_textView);
+                    String totalCostString = "Total weighted cost: " + String.format(Locale.US, "%.2f", weightedCost);
+                    totalCostTextView.setText(totalCostString);
+                }
 
             } else {
                 Toast.makeText(getApplicationContext(), "Recipe not found", Toast.LENGTH_SHORT).show();
