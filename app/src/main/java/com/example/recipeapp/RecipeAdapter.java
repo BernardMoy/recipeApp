@@ -1,8 +1,10 @@
 package com.example.recipeapp;
 
+import static androidx.core.content.ContextCompat.startActivity;
 import static java.security.AccessController.getContext;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -120,6 +122,24 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                     db.updateRecipeUnFavourite(clickedRecipeId);
                     recipePreviewListFull.get(pos).setIsFavourited(false);
                 }
+            }
+        });
+
+
+        // Set up listener for the entire recyclerview: When it is clicked, addNewRecipe activity is launched
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Extract the corresponding recipe id that is clicked
+                int pos = holder.getAdapterPosition();
+                int clickedRecipeId = recipePreviewList.get(pos).getRecipeId();
+
+                Log.d("CLICKED", String.valueOf(clickedRecipeId));
+
+                // Start intent with passed parameters of recipe
+                Intent i = new Intent(ctx, AddNewRecipe.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                ctx.startActivity(i);
             }
         });
     }
