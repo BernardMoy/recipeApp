@@ -47,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Done"
-        android:onClick="addRecipeToDatabase"
+        android:onClick="updateRecipeToDatabase"
         android:drawableEnd="@drawable/check_icon"
         android:drawableTint="@color/white"
         android:backgroundTint="@color/primaryColor"

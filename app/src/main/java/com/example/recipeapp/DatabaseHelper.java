@@ -286,7 +286,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     /*
-    These methods are used to extract, and update data in the addNewRecipe activity
+    These methods are used to extract data in the addNewRecipe activity
     that is triggered by clicking on an item in the recyclerview.
     These are not used when creating a recipe.
      */
@@ -336,4 +336,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Use getWeightedCost() to extract the weighted cost of ingredients
+
+    /*
+    These methods are used to update data when the done button
+    in the addnewrecipe activity is clicked.
+     */
+
+    // update the recipe (name image desc link prepTime)
+    // when the done button is clicked when editing a recipe.
+    public int updateRecipeFromId(int recipeId, String name, byte[] image, String description, String link, float prepTime){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name", name);
+        contentValues.put("image", image);
+        contentValues.put("description", description);
+        contentValues.put("link", link);
+        contentValues.put("prepTime", prepTime);
+
+        String whereClause = "recipe_id = ?";
+        String[] whereArgs = new String[]{String.valueOf(recipeId)};
+
+        // use the update method to update sql
+        // return the number of rows affected
+        return db.update("Recipes", contentValues, whereClause, whereArgs);
+    }
+
+    public void updateRecipeTagsFromId(int recipeId, ArrayList<String> tagList){
+
+    }
+
+    public void updateRecipeIngredientsFromId(int recipeId, ArrayList<Ingredient> ingredientList){
+
+    }
 }

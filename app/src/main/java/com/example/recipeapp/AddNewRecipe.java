@@ -56,7 +56,12 @@ public class AddNewRecipe extends AppCompatActivity {
     // store the recipe title text
     private String recipeTitle;
 
-    // stores the recipe id if passed
+    /*
+    Note that the same activity (AddNewRecipe) is used to creating new recipe and editing a recipe.
+    RecipeId is default to -1, and if an intent (recipe_id) is passed, it will be set to the corresponding recipe id.
+
+    If recipeId == -1, it is in "Creating new recipe" mode, otherwise it is updating/editing recipe.
+     */
     private int recipeId;
 
     @Override
@@ -74,7 +79,7 @@ public class AddNewRecipe extends AppCompatActivity {
         // register result for the image picker
         registerResult();
 
-        // set tags to new empty array
+        // set tags and ingredients to new empty array
         tagList = new ArrayList<>();
         ingredientList = new ArrayList<>();
 
@@ -89,10 +94,13 @@ public class AddNewRecipe extends AppCompatActivity {
             titleTextTextView.setText(titleText);
 
         } else {
-            Toast.makeText(getApplicationContext(), "UI did not load properly", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Recipe did not load properly", Toast.LENGTH_SHORT).show();
         }
 
-        // Get the recipe id passed
+        // set the initial value of recipe id to -1
+        recipeId = -1;
+
+        // Get the recipe id passed, if it exists
         if (getIntent().hasExtra("recipe_id")) {
             recipeId = getIntent().getIntExtra("recipe_id", -1);
             Log.d("HELLO", String.valueOf(recipeId));
@@ -117,8 +125,10 @@ public class AddNewRecipe extends AppCompatActivity {
                 recipeNameEditText.setText(name);
 
                 ImageView recipeImageView = (ImageView) findViewById(R.id.recipeImage);
-                Bitmap bm = BitmapFactory.decodeByteArray(image, 0, image.length);
-                recipeImageView.setImageBitmap(bm);
+                if (image.length != 0){
+                    Bitmap bm = BitmapFactory.decodeByteArray(image, 0, image.length);
+                    recipeImageView.setImageBitmap(bm);
+                }
 
                 TextView recipeDescEditText = (TextView) findViewById(R.id.recipeDesc_edittext);
                 recipeDescEditText.setText(description);
@@ -130,7 +140,7 @@ public class AddNewRecipe extends AppCompatActivity {
                 recipeLinkEditText.setText(link);
 
 
-                // 2. Extract tags data
+                // 2. Extract tags data (taglist and ingredientlist are reset initially)
                 Cursor cursorTags = db.getTagsFromId(recipeId);
                 if (cursorTags.getCount() > 0){
                     while (cursorTags.moveToNext()){
@@ -365,7 +375,8 @@ public class AddNewRecipe extends AppCompatActivity {
 
 
     // method when the save button is clicked: Add data to database
-    public void addRecipeToDatabase(View v){
+    public void updateRecipeToDatabase(View v){
+
         String name = ((TextView) findViewById(R.id.recipeName_edittext)).getText().toString();
         // name cannot be empty
         if (name.isEmpty()){
@@ -394,16 +405,26 @@ public class AddNewRecipe extends AppCompatActivity {
 
         // tags and ingredients are stored in tagList and ingredientList which is passed in HERE
         DatabaseHelper db = new DatabaseHelper(AddNewRecipe.this);
-        boolean status  = db.addRecipe(name, recipeImageByteArray, description, link, prepTime, tagList, ingredientList);
 
-        // exit activity if successful
-        // add to database failed
-        if (!status){
-            Toast.makeText(this, "Data adding failed", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Toast.makeText(this, "New recipe added", Toast.LENGTH_SHORT).show();
-            getOnBackPressedDispatcher().onBackPressed();
+        // Create recipe or update recipe depending on whether recipeId is -1
+        if (recipeId == -1) {
+            // Create recipe
+            boolean status  = db.addRecipe(name, recipeImageByteArray, description, link, prepTime, tagList, ingredientList);
+
+            // exit activity if successful
+            // add to database failed
+            if (!status){
+                Toast.makeText(this, "Data adding failed", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(this, "New recipe added", Toast.LENGTH_SHORT).show();
+                getOnBackPressedDispatcher().onBackPressed();
+            }
+
+        } else {
+            // update recipe from recipeId
+           
+
         }
     }
 }
