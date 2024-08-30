@@ -440,4 +440,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return true;
     }
+
+    // method to delete a recipe from the delete button in the recycler view.
+    public void deleteRecipeFromId(int recipeId){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // delete the rows from recipe_tags and recipe_ingredients
+        String delTag1 = "DELETE FROM Recipe_tags WHERE recipe_id = ?;";
+        db.execSQL(delTag1, new String[]{String.valueOf(recipeId)});
+
+        String delIng1 = "DELETE FROM Recipe_ingredients WHERE recipe_id = ?;";
+        db.execSQL(delIng1, new String[]{String.valueOf(recipeId)});
+
+        // delete the tags and ingredients associated with that recipe
+        String delTag2 = "DELETE FROM Tags WHERE tag_id NOT IN (SELECT tag_id FROM Recipe_tags);";
+        db.execSQL(delTag2);
+
+        String delIng2 = "DELETE FROM Ingredients WHERE ingredient_id NOT IN (SELECT ingredient_id FROM Recipe_ingredients);";
+        db.execSQL(delIng2);
+
+        // delete the recipe itself
+        String del = "DELETE FROM Recipes WHERE recipe_id = ?;";
+        db.execSQL(del);
+    }
 }
