@@ -1,9 +1,14 @@
 package com.example.recipeapp;
 
+import static androidx.core.content.ContextCompat.getDrawable;
 import static androidx.core.content.ContextCompat.startActivity;
 import static java.security.AccessController.getContext;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -13,9 +18,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -37,6 +45,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
     // a list of tags that the selected item should have
     private HashSet<String> selectedTagsSet;
 
+    // two buttons for the dialog that pops up when delete button is clicked
+    private Button cancelButton;
+    private Button deleteButton;
+
+
     public RecipeAdapter(Context ctx, ArrayList<RecipePreview> recipePreviewList){
         this.ctx = ctx;
         this.recipePreviewListFull = recipePreviewList;
@@ -54,6 +67,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
     @Override
     public void onBindViewHolder(@NonNull RecipeRecyclerViewHolder holder, int position) {
 
+        // Set variables
         holder.getName().setText(recipePreviewList.get(position).getName());
 
         String firstTag = recipePreviewList.get(position).getTag();
@@ -122,6 +136,47 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                     db.updateRecipeUnFavourite(clickedRecipeId);
                     recipePreviewListFull.get(pos).setIsFavourited(false);
                 }
+            }
+        });
+
+        // set up listener for the delete button of a recipe
+        holder.getDeleteButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int pos = holder.getAdapterPosition();
+
+                Dialog dialog = new Dialog(ctx);
+                dialog.setContentView(R.layout.confirm_window);
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().setBackgroundDrawable(getDrawable(ctx, R.drawable.custom_edit_text));
+                dialog.setCancelable(false);     // wont disappear when clicked outside of it
+
+                // load the two buttons
+                cancelButton = dialog.findViewById(R.id.confirmRecipeCancel_button);
+                deleteButton = dialog.findViewById(R.id.confirmRecipeDelete_button);
+
+                // Set on click listeners for the two buttons
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // Remove the dialog
+                        dialog.dismiss();
+                    }
+                });
+
+                deleteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // Delete the recipe here
+
+                        int recipeId = recipePreviewList.get(pos).getRecipeId();
+
+                        Log.d("Delete", String.valueOf(pos));
+                    }
+                });
+
+                // show dialog
+                dialog.show();
             }
         });
 

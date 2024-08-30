@@ -1,5 +1,6 @@
 package com.example.recipeapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
@@ -324,7 +325,7 @@ public class RecipeFragment extends Fragment {
         recipeRecyclerView.setLayoutManager(linearLayoutManager);
 
         // crete a new adapter from the modified recipe preview array list
-        recipeAdapter = new RecipeAdapter(getActivity().getApplicationContext(), recipePreviewArrayList);
+        recipeAdapter = new RecipeAdapter(getActivity(), recipePreviewArrayList);
         recipeRecyclerView.setAdapter(recipeAdapter);
 
 

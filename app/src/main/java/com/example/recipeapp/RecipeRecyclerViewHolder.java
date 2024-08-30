@@ -1,6 +1,7 @@
 package com.example.recipeapp;
 
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -19,6 +20,7 @@ public class RecipeRecyclerViewHolder extends RecyclerView.ViewHolder {
     private TextView timesCooked;
     private ImageView image;
     private ToggleButton toggleButton;
+    private ImageButton deleteButton;
 
     public RecipeRecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -30,6 +32,7 @@ public class RecipeRecyclerViewHolder extends RecyclerView.ViewHolder {
         timesCooked = itemView.findViewById(R.id.recipeRow_timesCooked);
         image = itemView.findViewById(R.id.recipeRow_image);
         toggleButton = itemView.findViewById(R.id.recipeRow_toggleButton);
+        deleteButton = itemView.findViewById(R.id.recipeDelete_button);
     }
 
     public TextView getName() {
@@ -62,5 +65,9 @@ public class RecipeRecyclerViewHolder extends RecyclerView.ViewHolder {
 
     public ToggleButton getToggleButton() {
         return toggleButton;
+    }
+
+    public ImageButton getDeleteButton() {
+        return deleteButton;
     }
 }
