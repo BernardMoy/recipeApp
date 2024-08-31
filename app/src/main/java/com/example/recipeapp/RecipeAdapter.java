@@ -123,18 +123,20 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 // Extract the corresponding recipe id that is clicked
                 int pos = holder.getAdapterPosition();
+
+                // must use recipePreviewList instead of full. Operation is done on filtered results.
                 int clickedRecipeId = recipePreviewList.get(pos).getRecipeId();
                 DatabaseHelper db = new DatabaseHelper(ctx);
 
                 if (b) {
                     // Mark the recipe as favourite from the database
                     db.updateRecipeFavourite(clickedRecipeId);
-                    recipePreviewListFull.get(pos).setIsFavourited(true);
+                    recipePreviewList.get(pos).setIsFavourited(true);
 
                 } else {
                     // Mark the recipe as un favourited
                     db.updateRecipeUnFavourite(clickedRecipeId);
-                    recipePreviewListFull.get(pos).setIsFavourited(false);
+                    recipePreviewList.get(pos).setIsFavourited(false);
                 }
             }
         });
@@ -168,10 +170,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                     @Override
                     public void onClick(View view) {
                         // Delete the recipe here
-
                         int recipeId = recipePreviewList.get(pos).getRecipeId();
 
-                        Log.d("Delete", String.valueOf(pos));
+                        DatabaseHelper db = new DatabaseHelper(ctx);
+
                     }
                 });
 
