@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -173,7 +174,33 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                         int recipeId = recipePreviewList.get(pos).getRecipeId();
 
                         DatabaseHelper db = new DatabaseHelper(ctx);
+                        db.deleteRecipeFromId(recipeId);
 
+                        // update the recipe Preview lists
+                        for (int i = 0; i < recipePreviewList.size(); i++){
+                            if (recipePreviewList.get(i).getRecipeId() == recipeId){
+                                recipePreviewList.remove(i);
+                                break;
+                            }
+                        }
+
+                        for (int i = 0; i < recipePreviewListFull.size(); i++){
+                            if (recipePreviewListFull.get(i).getRecipeId() == recipeId){
+                                recipePreviewListFull.remove(i);
+                                break;
+                            }
+                        }
+
+                        // Updates the recipe count displayed
+                        String countString = String.valueOf(recipePreviewList.size()) + " results";
+                        TextView textView = (TextView) ((Activity) ctx).findViewById(R.id.recipeCount_textView);
+                        textView.setText(countString);
+
+                        // update the recyclerview
+                        notifyItemRemoved(pos);
+
+                        // Remove the dialog
+                        dialog.dismiss();
                     }
                 });
 
@@ -239,7 +266,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                     }
                 }
             }
-
             FilterResults results = new FilterResults();
             results.values = filteredRecipePreviewList;
             results.count = filteredRecipePreviewList.size();

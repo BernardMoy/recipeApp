@@ -462,6 +462,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // delete the recipe itself
         String del = "DELETE FROM Recipes WHERE recipe_id = ?;";
-        db.execSQL(del);
+        db.execSQL(del, new String[]{String.valueOf(recipeId)});
     }
 }
