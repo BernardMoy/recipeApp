@@ -7,18 +7,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+// the database helper for recipes.
+public class DatabaseHelperRecipes extends SQLiteOpenHelper {
 
     private Context context;
     private static final String DATABASE_NAME = "recipeApp.db";
     private static final int DATABASE_VERSION = 1;
 
-    public DatabaseHelper(Context context) {
+    public DatabaseHelperRecipes(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }

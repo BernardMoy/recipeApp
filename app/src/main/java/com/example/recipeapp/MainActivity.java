@@ -6,18 +6,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.PopupMenu;
 
 import com.example.recipeapp.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -98,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     // function to reset the database through the temp delete button
     // temp method to reset the database
     public void resetDb(View v){
-        DatabaseHelper db = new DatabaseHelper(this);
+        DatabaseHelperRecipes db = new DatabaseHelperRecipes(this);
         db.reset();
     }
 }

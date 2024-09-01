@@ -1,8 +1,6 @@
 package com.example.recipeapp;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -24,16 +22,12 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
 import android.widget.Filter;
-import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -331,7 +325,7 @@ public class RecipeFragment extends Fragment {
 
         // 3. Update the recipe tags filter recyclerview: load the recipe tag filter recycler view
         Context ctx = getContext();
-        DatabaseHelper db = new DatabaseHelper(ctx);
+        DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
 
         // Extract all tags and fill the tagList
         tagList = new ArrayList<>();
@@ -358,7 +352,7 @@ public class RecipeFragment extends Fragment {
     }
 
     public int displayRecipesCountFromDatabase(){
-        DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext());
+        DatabaseHelperRecipes db = new DatabaseHelperRecipes(getActivity().getApplicationContext());
         Cursor cursor = db.getRecipesCount();
 
         // there is guaranteed to have one data
@@ -374,7 +368,7 @@ public class RecipeFragment extends Fragment {
         ArrayList<RecipePreview> recipePreviewArrayList = new ArrayList<>();
 
         // extract all recipes data from the database
-        DatabaseHelper db = new DatabaseHelper(getActivity().getApplicationContext());
+        DatabaseHelperRecipes db = new DatabaseHelperRecipes(getActivity().getApplicationContext());
         Cursor cursor = db.getRecipes();
 
         // if have data

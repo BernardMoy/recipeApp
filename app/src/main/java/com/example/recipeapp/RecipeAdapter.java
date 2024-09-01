@@ -1,39 +1,30 @@
 package com.example.recipeapp;
 
 import static androidx.core.content.ContextCompat.getDrawable;
-import static androidx.core.content.ContextCompat.startActivity;
-import static java.security.AccessController.getContext;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder> implements Filterable {
 
@@ -127,7 +118,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
 
                 // must use recipePreviewList instead of full. Operation is done on filtered results.
                 int clickedRecipeId = recipePreviewList.get(pos).getRecipeId();
-                DatabaseHelper db = new DatabaseHelper(ctx);
+                DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
 
                 if (b) {
                     // Mark the recipe as favourite from the database
@@ -173,7 +164,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                         // Delete the recipe here
                         int recipeId = recipePreviewList.get(pos).getRecipeId();
 
-                        DatabaseHelper db = new DatabaseHelper(ctx);
+                        DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
                         db.deleteRecipeFromId(recipeId);
 
                         // update the recipe Preview lists
@@ -307,7 +298,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
 
         // validate its tags. It should contain all tags from selected tag list
         // Extract all tags from db
-        DatabaseHelper db = new DatabaseHelper(ctx);
+        DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
         Cursor cursor = db.getTagsFromRecipeId(recipePreview.getRecipeId());
 
         HashSet<String> actualTagsSet = new HashSet<>();

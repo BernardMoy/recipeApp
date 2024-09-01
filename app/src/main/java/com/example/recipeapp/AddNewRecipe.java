@@ -5,15 +5,12 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,14 +27,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
-
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Objects;
-
-import kotlin.UByteArray;
 
 public class AddNewRecipe extends AppCompatActivity {
 
@@ -107,7 +99,7 @@ public class AddNewRecipe extends AppCompatActivity {
 
 
             // Get information from the database name, image, description, link, prep_time
-            DatabaseHelper db = new DatabaseHelper(getApplicationContext());
+            DatabaseHelperRecipes db = new DatabaseHelperRecipes(getApplicationContext());
             Cursor cursor = db.getRecipeFromId(recipeId);
 
             if (cursor.getCount() > 0){
@@ -404,7 +396,7 @@ public class AddNewRecipe extends AppCompatActivity {
         }
 
         // tags and ingredients are stored in tagList and ingredientList which is passed in HERE
-        DatabaseHelper db = new DatabaseHelper(AddNewRecipe.this);
+        DatabaseHelperRecipes db = new DatabaseHelperRecipes(AddNewRecipe.this);
 
         // Create recipe or update recipe depending on whether recipeId is -1
         if (recipeId == -1) {
