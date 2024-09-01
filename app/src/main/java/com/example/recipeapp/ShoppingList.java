@@ -22,6 +22,7 @@ public class ShoppingList {
         return listName;
     }
 
+    // for ingredients in a shopping list -- their amount cannot be less than 1
     public ArrayList<Ingredient> getListIngredients() {
         return listIngredients;
     }
@@ -31,9 +32,10 @@ public class ShoppingList {
     }
 
     public float getTotalCost(){
-        float totalCost = 0;
+        float totalCost = 0.0f;
         for (int i = 0 ; i < listIngredients.size(); i++){
-            totalCost += listIngredients.get(i).getCost();
+            Ingredient ingredient = listIngredients.get(i);
+            totalCost += ingredient.getCost() * ingredient.getAmount();
         }
         return totalCost;
     }
