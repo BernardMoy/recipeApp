@@ -5,6 +5,7 @@
     <string name="recipe_dropDown_hint">Order by</string>
     <string name="floating_action_button_description">Add new item</string>
     <string name="total_weighted_cost_default"> Total weighted cost: 0.00 </string>
+    <string name="total_cost_default"> Total cost: 0.00 </string>
 
     <string-array name="orderBy">
         <item>Latest added</item>

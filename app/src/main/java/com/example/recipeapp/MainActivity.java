@@ -83,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if (menuItem.getItemId() == R.id.add_shopping_list_popup){
                     Log.d("PopUp", "Add shopping list option clicked");
+                    Intent i = new Intent(MainActivity.this, AddNewShoppingList.class);
+                    i.putExtra("title_text", "New shopping list");
+                    startActivity(i);
                 }
                 return true;
             }
@@ -93,8 +96,13 @@ public class MainActivity extends AppCompatActivity {
 
     // function to reset the database through the temp delete button
     // temp method to reset the database
-    public void resetDb(View v){
+    public void resetRecipeDb(View v){
         DatabaseHelperRecipes db = new DatabaseHelperRecipes(this);
         db.reset();
+    }
+
+    // function to reset shopping list db
+    public void resetShoppingListDb(View v){
+
     }
 }

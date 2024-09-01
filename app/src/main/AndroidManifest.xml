@@ -13,6 +13,9 @@
         android:theme="@style/Theme.RecipeApp"
         tools:targetApi="31">
         <activity
+            android:name=".AddNewShoppingList"
+            android:exported="false" />
+        <activity
             android:name=".EditRecipe"
             android:exported="false" />
         <activity

@@ -50,8 +50,22 @@
         android:background="@color/secondaryColor"
         android:padding="@dimen/content_margin"
         android:tint="@color/white"
-        android:onClick="resetDb"
+        android:onClick="resetRecipeDb"
         app:layout_constraintStart_toEndOf="@+id/imageButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/delete_icon"
+        tools:ignore="UseAppTint" />
+
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/content_margin"
+        android:background="@color/Red"
+        android:padding="@dimen/content_margin"
+        android:tint="@color/white"
+        android:onClick="resetShoppingListDb"
+        app:layout_constraintStart_toEndOf="@+id/imageButton3"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/delete_icon"
         tools:ignore="UseAppTint" />
