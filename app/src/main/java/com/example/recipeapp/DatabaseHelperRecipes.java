@@ -14,7 +14,7 @@ import java.util.List;
 public class DatabaseHelperRecipes extends SQLiteOpenHelper {
 
     private Context context;
-    private static final String DATABASE_NAME = "recipeApp.db";
+    private static final String DATABASE_NAME = "recipeAppRecipes.db";
     private static final int DATABASE_VERSION = 1;
 
     public DatabaseHelperRecipes(Context context) {
@@ -47,9 +47,9 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
                 "CREATE TABLE IF NOT EXISTS Ingredients (" +
                         "ingredient_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "name VARCHAR(50) NOT NULL," +
-                        "amount FLOAT," +
+                        "amount FLOAT CHECK(amount >= 0)," +
                         "supermarket VARCHAR(50)," +
-                        "cost FLOAT" +
+                        "cost FLOAT CHECK(cost >= 0)" +
                         ");";
 
         String createRecipeTags =

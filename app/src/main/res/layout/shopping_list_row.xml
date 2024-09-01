@@ -1,0 +1,78 @@
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:background="@drawable/custom_edit_text"
+        android:layout_marginBottom="@dimen/content_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/shoppingListRow_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/title_margin"
+            android:layout_weight="1"
+            android:text="Shopping list name"
+            android:textAlignment="viewStart"
+            android:textSize="@dimen/title_font_size"
+            app:layout_constraintEnd_toStartOf="@+id/shoppingListRow_toggleButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/shoppingListDelete_button"
+            android:layout_width="@dimen/image_button_size"
+            android:layout_height="@dimen/image_button_size"
+            android:background="@color/secondaryColor"
+            android:contentDescription="Delete shoppingList"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/delete_icon"
+            android:tint="@color/white"
+            tools:ignore="UseAppTint" />
+
+        <ToggleButton
+            android:id="@+id/shoppingListRow_toggleButton"
+            android:layout_width="@dimen/image_button_size"
+            android:layout_height="@dimen/image_button_size"
+            android:text=""
+            android:textOff=""
+            android:textOn=""
+            android:background="@drawable/fav_button_selector"
+            app:layout_constraintEnd_toStartOf="@id/shoppingListDelete_button"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+        <TextView
+            android:id="@+id/shoppingListRow_tagPlus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 items"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/content_font_size"
+            android:layout_marginStart="@dimen/title_margin"
+            android:layout_marginTop="@dimen/content_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shoppingListRow_name"/>
+
+
+        <TextView
+            android:id="@+id/shoppingListRow_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/title_margin"
+            android:layout_marginTop="@dimen/content_margin"
+            android:drawableStart="@drawable/money_icon"
+            android:text=" 7.65"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/content_font_size"
+            android:drawableTint="@color/gray"
+            app:layout_constraintStart_toEndOf="@+id/shoppingListRow_tagPlus"
+            app:layout_constraintTop_toBottomOf="@+id/shoppingListRow_name" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
