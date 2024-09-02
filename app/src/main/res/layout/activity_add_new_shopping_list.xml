@@ -271,18 +271,12 @@
             </LinearLayout>
         </LinearLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/shoppingListSupermarkets_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:itemCount="2" />
 
-
-
-        <TextView
-            android:id="@+id/totalCost_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginStart="10dp"
-            android:text = "@string/total_cost_default"
-            android:layout_marginEnd="@dimen/content_margin"
-            android:textSize="@dimen/content_font_size" />
 
     </LinearLayout>
 
