@@ -37,8 +37,9 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
                 "CREATE TABLE IF NOT EXISTS Ingredients (" +
                         "ingredient_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "name VARCHAR(100) NOT NULL, " +
-                        "amount FLOAT CHECK(amount >= 1), " +
-                        "cost FLOAT CHECK(cost >= 0)" +
+                        "amount INT CHECK(amount >= 1), " +
+                        "cost FLOAT CHECK(cost >= 0), " +
+                        "checked BOOLEAN DEFAULT FALSE " +
                         ");";
 
         String createShoppingListSupermarketIngredients =

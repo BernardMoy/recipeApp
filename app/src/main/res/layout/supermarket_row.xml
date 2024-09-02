@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="top"
+    android:layout_marginBottom="@dimen/content_margin"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/content_margin"
+        android:layout_marginBottom="@dimen/content_margin"
+        android:background="@color/supermarketRowColor">
+
+        <TextView
+            android:id="@+id/supermarketName_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/content_margin"
+            android:paddingEnd="@dimen/content_margin"
+            android:text="Tesco"
+            android:textSize="@dimen/title_font_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/supermarketCount_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/content_margin"
+            android:paddingEnd="@dimen/content_margin"
+            android:text="14 items"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/content_font_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/supermarketName_textView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/supermarketTotalCost_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/money_icon"
+            android:drawableTint="@color/gray"
+            android:paddingStart="@dimen/content_margin"
+            android:paddingEnd="@dimen/content_margin"
+            android:text="14.2"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/content_font_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/content_margin"
+        android:layout_marginEnd="@dimen/content_margin">
+
+        <TableRow
+            android:background="@color/primaryColor">
+
+            <TextView
+                android:gravity="center_horizontal"
+                android:text="Ingredient"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:textColor="@color/white"
+                android:textSize="@dimen/content_font_size" />
+
+
+            <TextView
+                android:gravity="center_horizontal"
+                android:text="Amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textColor="@color/white"
+                android:textSize="@dimen/content_font_size" />
+
+            <TextView
+                android:gravity="center_horizontal"
+                android:text="Supermarket"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:textColor="@color/white"
+                android:textSize="@dimen/content_font_size" />
+
+            <TextView
+                android:gravity="center_horizontal"
+                android:text="Cost"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textColor="@color/white"
+                android:textSize="@dimen/content_font_size" />
+
+            <TextView
+                android:gravity="center_horizontal"
+                android:layout_width="@dimen/image_button_size"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:background="@color/secondaryColor"
+                android:textSize="@dimen/content_font_size" />
+
+        </TableRow>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/shoppingListIngredients_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:itemCount="2"
+            android:background="@color/lightGray"
+            />
+
+    </TableLayout>
+
+</LinearLayout>

@@ -9,6 +9,7 @@
     <color name = "secondaryColor">#103473</color>
     <color name = "lightColor">#D2E0F1</color>
     <color name = "veryLightColor">#E1ECF6</color>
+    <color name = "supermarketRowColor">#FFF0B4</color>
 
     <color name = "backgroundColor"> #FEF7FF </color>
 
