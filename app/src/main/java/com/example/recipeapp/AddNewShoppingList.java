@@ -3,6 +3,7 @@ package com.example.recipeapp;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 
 public class AddNewShoppingList extends AppCompatActivity {
 
@@ -24,7 +25,7 @@ public class AddNewShoppingList extends AppCompatActivity {
     private TextView ingredientSupermarketEditText;
 
     // hashmap for storing ingredients classified by supermarkets.
-    private LinkedHashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap;
+    private HashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class AddNewShoppingList extends AppCompatActivity {
         ingredientSupermarketEditText = findViewById(R.id.shoppingListSupermarket_edittext);
 
         // load the hashmap
-        shoppingListIngredientsHashMap = new LinkedHashMap<>();
+        shoppingListIngredientsHashMap = new HashMap<>();
     }
 
     // methods for the inputs
@@ -68,6 +69,46 @@ public class AddNewShoppingList extends AppCompatActivity {
     // method to add new ingredient - sort by supermarkets
     public void addNewIngredient(View v){
 
+        String supermarket = ingredientSupermarketEditText.getText().toString();
+
+        String ingredientName = ingredientNameEditText.getText().toString();
+        String amountStr = ingredientAmountEditText.getText().toString();
+        String costStr = ingredientCostEditText.getText().toString();
+
+
+        // check if ingredient name is null
+        if (ingredientName.isEmpty()){
+            Toast.makeText(AddNewShoppingList.this, "Ingredient name is empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // empty portion size and type cast
+        int amount = 0;
+        if (!amountStr.isEmpty()){
+            amount = Integer.parseInt(amountStr);
+        }
+
+        // empty cost
+        float cost = 0.0f;
+        if (!costStr.isEmpty()){
+            cost = Float.parseFloat(costStr);
+        }
+
+
+        // create new shopping list ingredient
+        ShoppingListIngredient ingredient = new ShoppingListIngredient(ingredientName, amount, cost);
+
+        // check if supermarket is already in the hashmap
+        if (shoppingListIngredientsHashMap.containsKey(supermarket)){
+            // add to existing key
+            shoppingListIngredientsHashMap.get(supermarket).add(ingredient);
+
+        } else {
+            // create new key
+            ArrayList<ShoppingListIngredient> newList = new ArrayList<>();
+            newList.add(ingredient);
+            shoppingListIngredientsHashMap.put(supermarket, newList);
+        }
     }
 
     // Return to previous activity
@@ -77,6 +118,14 @@ public class AddNewShoppingList extends AppCompatActivity {
 
     // when the done button is clicked
     public void updateShoppingListToDatabase(View v){
+        // check shopping list name is null
+        String shoppingListName = nameEditText.getText().toString();
+        if (shoppingListName.isEmpty()){
+            Toast.makeText(AddNewShoppingList.this, "Shopping list name is empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String shoppingListDescription = descriptionEditText.getText().toString();
 
     }
 }

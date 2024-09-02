@@ -9,17 +9,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 public class ShoppingListSupermarketAdapter extends RecyclerView.Adapter<ShoppingListSupermarketRecyclerViewHolder> {
 
     // variables
     private Context ctx;
-    private LinkedHashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap;
+    private HashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap;
 
 
-    public ShoppingListSupermarketAdapter(Context ctx, LinkedHashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap){
+    public ShoppingListSupermarketAdapter(Context ctx, HashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap){
         this.ctx = ctx;
         this.shoppingListIngredientsHashMap = shoppingListIngredientsHashMap;
     }
