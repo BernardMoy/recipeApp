@@ -26,7 +26,7 @@ public class ShoppingListSupermarketAdapter extends RecyclerView.Adapter<Shoppin
     @NonNull
     @Override
     public ShoppingListSupermarketRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ShoppingListSupermarketRecyclerViewHolder(LayoutInflater.from(ctx).inflate(R.layout.supermarket_row, parent, false));
+        return new ShoppingListSupermarketRecyclerViewHolder(LayoutInflater.from(ctx).inflate(R.layout.shopping_list_supermarket_row, parent, false));
     }
 
     @Override
