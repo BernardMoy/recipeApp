@@ -74,4 +74,9 @@ public class AddNewShoppingList extends AppCompatActivity {
     public void exitActivity(View v){
         getOnBackPressedDispatcher().onBackPressed();
     }
+
+    // when the done button is clicked
+    public void updateShoppingListToDatabase(View v){
+
+    }
 }
