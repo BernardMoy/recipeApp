@@ -16,7 +16,7 @@ public class ShoppingListSupermarketRecyclerViewHolder extends RecyclerView.View
 
     public ShoppingListSupermarketRecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
-        supermarketNameTextView = itemView.findViewById(R.id.supermarket_textView);
+        supermarketNameTextView = itemView.findViewById(R.id.supermarketName_textView);
         supermarketCountTextView = itemView.findViewById(R.id.supermarketCount_textView);
         supermarketTotalCostTextView = itemView.findViewById(R.id.supermarketTotalCost_textView);
         shoppingListIngredientsRecyclerView = itemView.findViewById(R.id.shoppingListIngredients_recyclerView);

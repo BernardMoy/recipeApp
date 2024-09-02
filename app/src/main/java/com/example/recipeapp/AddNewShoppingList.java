@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +28,9 @@ public class AddNewShoppingList extends AppCompatActivity {
 
     // hashmap for storing ingredients classified by supermarkets.
     private HashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap;
+
+    // the big recyclerview (Supermarket recyclerview)
+    private RecyclerView supermarketsRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,9 @@ public class AddNewShoppingList extends AppCompatActivity {
 
         // load the hashmap
         shoppingListIngredientsHashMap = new HashMap<>();
+
+        // load the recycler view
+        supermarketsRecyclerView = findViewById(R.id.shoppingListSupermarkets_recyclerView);
     }
 
     // methods for the inputs
@@ -98,7 +106,7 @@ public class AddNewShoppingList extends AppCompatActivity {
         // create new shopping list ingredient
         ShoppingListIngredient ingredient = new ShoppingListIngredient(ingredientName, amount, cost);
 
-        // check if supermarket is already in the hashmap
+        // Modify the hashmap based on whether same supermarket exists
         if (shoppingListIngredientsHashMap.containsKey(supermarket)){
             // add to existing key
             shoppingListIngredientsHashMap.get(supermarket).add(ingredient);
@@ -109,6 +117,13 @@ public class AddNewShoppingList extends AppCompatActivity {
             newList.add(ingredient);
             shoppingListIngredientsHashMap.put(supermarket, newList);
         }
+
+        // set adapter for the supermarket recycler view
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(AddNewShoppingList.this, LinearLayoutManager.VERTICAL, false);
+        supermarketsRecyclerView.setLayoutManager(linearLayoutManager);
+
+        ShoppingListSupermarketAdapter supermarketAdapter = new ShoppingListSupermarketAdapter(AddNewShoppingList.this, shoppingListIngredientsHashMap);  // supply the hash map here
+        supermarketsRecyclerView.setAdapter(supermarketAdapter);
     }
 
     // Return to previous activity

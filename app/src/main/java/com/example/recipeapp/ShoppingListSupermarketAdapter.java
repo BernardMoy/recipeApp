@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -34,9 +35,19 @@ public class ShoppingListSupermarketAdapter extends RecyclerView.Adapter<Shoppin
         // Extract supermarket info from the linked hash map
         List<String> keys = List.copyOf(shoppingListIngredientsHashMap.keySet());
         String supermarketName = keys.get(position);
-        ArrayList<ShoppingListIngredient> ingredientsList = shoppingListIngredientsHashMap.get(supermarketName);
+        ArrayList<ShoppingListIngredient> ingredientList = shoppingListIngredientsHashMap.get(supermarketName);
 
         holder.getSupermarketNameTextView().setText(supermarketName);
+
+        // use the ingredientsList to populate the inner ShoppingListIngredientReyclerView
+        // modify the recycler view that displays list of items
+        RecyclerView ingredientsRecyclerView = holder.getShoppingListIngredientsRecyclerView();
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ctx, LinearLayoutManager.VERTICAL, false);
+        ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
+
+        ShoppingListIngredientAdapter ingredientAdapter = new ShoppingListIngredientAdapter(ctx, ingredientList);
+        ingredientsRecyclerView.setAdapter(ingredientAdapter);
     }
 
     @Override
