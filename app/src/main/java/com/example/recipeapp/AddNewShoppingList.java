@@ -11,7 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class AddNewShoppingList extends AppCompatActivity {
 
@@ -24,7 +24,7 @@ public class AddNewShoppingList extends AppCompatActivity {
     private TextView ingredientSupermarketEditText;
 
     // hashmap for storing ingredients classified by supermarkets.
-    private HashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap;
+    private LinkedHashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class AddNewShoppingList extends AppCompatActivity {
         ingredientSupermarketEditText = findViewById(R.id.shoppingListSupermarket_edittext);
 
         // load the hashmap
-        shoppingListIngredientsHashMap = new HashMap<>();
+        shoppingListIngredientsHashMap = new LinkedHashMap<>();
     }
 
     // methods for the inputs
