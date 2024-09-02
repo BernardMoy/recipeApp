@@ -24,7 +24,7 @@ public class AddNewShoppingList extends AppCompatActivity {
     private TextView ingredientSupermarketEditText;
 
     // hashmap for storing ingredients classified by supermarkets.
-    private HashMap<String, ArrayList<Ingredient>> shoppingListIngredientsHashMap;
+    private HashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

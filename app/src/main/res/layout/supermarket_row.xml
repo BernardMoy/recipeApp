@@ -87,15 +87,6 @@
 
             <TextView
                 android:gravity="center_horizontal"
-                android:text="Supermarket"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:textColor="@color/white"
-                android:textSize="@dimen/content_font_size" />
-
-            <TextView
-                android:gravity="center_horizontal"
                 android:text="Cost"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

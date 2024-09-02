@@ -3,14 +3,14 @@ package com.example.recipeapp;
 import java.util.ArrayList;
 public class ShoppingList {
     private String listName;
-    private ArrayList<Ingredient> listIngredients;
+    private ArrayList<ShoppingListIngredient> listIngredients;
 
     public ShoppingList(String listName){
         this.listName = listName;
         this.listIngredients = new ArrayList<>();
     }
 
-    public void setListIngredients(ArrayList<Ingredient> listIngredients) {
+    public void setListIngredients(ArrayList<ShoppingListIngredient> listIngredients) {
         this.listIngredients = listIngredients;
     }
 
@@ -23,7 +23,7 @@ public class ShoppingList {
     }
 
     // for ingredients in a shopping list -- their amount cannot be less than 1
-    public ArrayList<Ingredient> getListIngredients() {
+    public ArrayList<ShoppingListIngredient> getListIngredients() {
         return listIngredients;
     }
 
@@ -34,7 +34,7 @@ public class ShoppingList {
     public float getTotalCost(){
         float totalCost = 0.0f;
         for (int i = 0 ; i < listIngredients.size(); i++){
-            Ingredient ingredient = listIngredients.get(i);
+            ShoppingListIngredient ingredient = listIngredients.get(i);
             totalCost += ingredient.getCost() * ingredient.getAmount();
         }
         return totalCost;
