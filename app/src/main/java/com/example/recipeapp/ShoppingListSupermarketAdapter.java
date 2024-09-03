@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class ShoppingListSupermarketAdapter extends RecyclerView.Adapter<ShoppingListSupermarketRecyclerViewHolder> {
+public class ShoppingListSupermarketAdapter extends RecyclerView.Adapter<ShoppingListSupermarketRecyclerViewHolder>{
 
     // variables
     private Context ctx;
@@ -61,7 +61,24 @@ public class ShoppingListSupermarketAdapter extends RecyclerView.Adapter<Shoppin
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ctx, LinearLayoutManager.VERTICAL, false);
         ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
 
-        ShoppingListIngredientAdapter ingredientAdapter = new ShoppingListIngredientAdapter(ctx, ingredientList);
+
+            /*
+            This listener is called when an ingredient is deleted.
+
+            A callback is made to the parent to update the displayed count and total cost.
+            If there are no more ingredient, then delete it.
+            */
+        ShoppingListIngredientAdapter ingredientAdapter = new ShoppingListIngredientAdapter(ctx, ingredientList, new OnIngredientChangeListener() {
+            @Override
+            public void updateCountAndCost(int newCount, float newTotalCost) {
+                // update the count and cost displayed
+                String countText = String.valueOf(newCount) + " items";
+                String costText = String.format(Locale.getDefault(), "%.2f", newTotalCost);
+
+                holder.getSupermarketCountTextView().setText(countText);
+                holder.getSupermarketTotalCostTextView().setText(costText);
+            }
+        });
         ingredientsRecyclerView.setAdapter(ingredientAdapter);
     }
 

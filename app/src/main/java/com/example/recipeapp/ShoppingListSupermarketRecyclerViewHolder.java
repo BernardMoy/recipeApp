@@ -6,7 +6,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ShoppingListSupermarketRecyclerViewHolder extends RecyclerView.ViewHolder {
+public class ShoppingListSupermarketRecyclerViewHolder extends RecyclerView.ViewHolder{
 
     // elements that are contained in this recyclerview
     private TextView supermarketNameTextView;
