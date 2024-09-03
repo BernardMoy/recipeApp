@@ -124,6 +124,11 @@ public class AddNewShoppingList extends AppCompatActivity {
 
         ShoppingListSupermarketAdapter supermarketAdapter = new ShoppingListSupermarketAdapter(AddNewShoppingList.this, shoppingListIngredientsHashMap);  // supply the hash map here
         supermarketsRecyclerView.setAdapter(supermarketAdapter);
+
+        // reset fields
+        ingredientNameEditText.setText("");
+        ingredientAmountEditText.setText("");
+        ingredientCostEditText.setText("");
     }
 
     // Return to previous activity
