@@ -1,6 +1,7 @@
 package com.example.recipeapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -17,10 +19,11 @@ public class ShoppingListSupermarketAdapter extends RecyclerView.Adapter<Shoppin
 
     // variables
     private Context ctx;
-    private HashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap;
+    private LinkedHashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap;
+    // stores the list of keys in the above hashmap in an arraylist
+    private ArrayList<String> keys;
 
-
-    public ShoppingListSupermarketAdapter(Context ctx, HashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap){
+    public ShoppingListSupermarketAdapter(Context ctx, LinkedHashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap){
         this.ctx = ctx;
         this.shoppingListIngredientsHashMap = shoppingListIngredientsHashMap;
     }
@@ -34,7 +37,8 @@ public class ShoppingListSupermarketAdapter extends RecyclerView.Adapter<Shoppin
     @Override
     public void onBindViewHolder(@NonNull ShoppingListSupermarketRecyclerViewHolder holder, int position) {
         // Extract supermarket info from the linked hash map
-        List<String> keys = List.copyOf(shoppingListIngredientsHashMap.keySet());
+        keys = new ArrayList<>(shoppingListIngredientsHashMap.keySet());
+
         String supermarketName = keys.get(position);
         ArrayList<ShoppingListIngredient> ingredientList = shoppingListIngredientsHashMap.get(supermarketName);
 
@@ -72,11 +76,29 @@ public class ShoppingListSupermarketAdapter extends RecyclerView.Adapter<Shoppin
             @Override
             public void updateCountAndCost(int newCount, float newTotalCost) {
                 // update the count and cost displayed
-                String countText = String.valueOf(newCount) + " items";
-                String costText = String.format(Locale.getDefault(), "%.2f", newTotalCost);
+                // if new count = 0, remove the entire supermarket instead
+                if (newCount == 0){
+                    int delPos = holder.getAdapterPosition();
+                    // find the key associated with the current position
+                    String keyToBeRemoved = keys.get(delPos);
 
-                holder.getSupermarketCountTextView().setText(countText);
-                holder.getSupermarketTotalCostTextView().setText(costText);
+                    // update the hashMap
+                    shoppingListIngredientsHashMap.remove(keyToBeRemoved);
+
+                    // update the keys
+                    keys.remove(delPos);
+
+                    notifyItemRemoved(delPos);
+
+
+                } else {
+                    String countText = String.valueOf(newCount) + " items";
+                    String costText = String.format(Locale.getDefault(), "%.2f", newTotalCost);
+
+                    holder.getSupermarketCountTextView().setText(countText);
+                    holder.getSupermarketTotalCostTextView().setText(costText);
+
+                }
             }
         });
         ingredientsRecyclerView.setAdapter(ingredientAdapter);

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class AddNewShoppingList extends AppCompatActivity {
 
@@ -27,7 +28,7 @@ public class AddNewShoppingList extends AppCompatActivity {
     private TextView ingredientSupermarketEditText;
 
     // hashmap for storing ingredients classified by supermarkets.
-    private HashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap;
+    private LinkedHashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap;
 
     // the big recyclerview (Supermarket recyclerview)
     private RecyclerView supermarketsRecyclerView;
@@ -52,7 +53,7 @@ public class AddNewShoppingList extends AppCompatActivity {
         ingredientSupermarketEditText = findViewById(R.id.shoppingListSupermarket_edittext);
 
         // load the hashmap
-        shoppingListIngredientsHashMap = new HashMap<>();
+        shoppingListIngredientsHashMap = new LinkedHashMap<>();
 
         // load the recycler view
         supermarketsRecyclerView = findViewById(R.id.shoppingListSupermarkets_recyclerView);
