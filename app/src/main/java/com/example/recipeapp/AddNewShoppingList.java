@@ -100,6 +100,7 @@ public class AddNewShoppingList extends AppCompatActivity {
         float cost = 0.0f;
         if (!costStr.isEmpty()){
             cost = Float.parseFloat(costStr);
+            cost = Math.round(cost * 100) / 100.0f;  // trim to 2 dp
         }
 
 
