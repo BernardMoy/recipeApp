@@ -53,12 +53,14 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientRecyclerVi
             @Override
             public void onClick(View view) {
                 int position = holder.getAdapterPosition();
-                ingredientList.remove(position);
-                notifyItemRemoved(position);
+                if (position != -1){   // prevent clicking too fast
+                    ingredientList.remove(position);
+                    notifyItemRemoved(position);
 
-                // Update cost through a reference to activity using passed in context
-                AddNewRecipe a = (AddNewRecipe) ctx;
-                a.updateCost();
+                    // Update cost through a reference to activity using passed in context
+                    AddNewRecipe a = (AddNewRecipe) ctx;
+                    a.updateCost();
+                }
             }
         });
     }

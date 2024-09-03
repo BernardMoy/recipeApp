@@ -50,17 +50,19 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
             @Override
             public void onClick(View view) {
                 int pos = holder.getAdapterPosition();
-                shoppingListIngredientList.remove(pos);
-                notifyItemRemoved(pos);  // update the displayed view
+                if (pos != -1){   // prevent clicking too fast
+                    shoppingListIngredientList.remove(pos);
+                    notifyItemRemoved(pos);  // update the displayed view
 
-                // get the total cost of ingredients
-                float totalCost = 0.0f;
-                for (ShoppingListIngredient i : shoppingListIngredientList){
-                    totalCost += i.getCost()*i.getAmount();
+                    // get the total cost of ingredients
+                    float totalCost = 0.0f;
+                    for (ShoppingListIngredient i : shoppingListIngredientList){
+                        totalCost += i.getCost()*i.getAmount();
+                    }
+
+                    // call the listener to update parent recyclerview data
+                    listener.updateCountAndCost(shoppingListIngredientList.size(), totalCost);
                 }
-
-                // call the listener to update parent recyclerview data
-                listener.updateCountAndCost(shoppingListIngredientList.size(), totalCost);
             }
         });
     }
