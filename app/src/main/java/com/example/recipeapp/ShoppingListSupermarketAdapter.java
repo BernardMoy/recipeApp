@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class ShoppingListSupermarketAdapter extends RecyclerView.Adapter<ShoppingListSupermarketRecyclerViewHolder> {
 
@@ -38,6 +39,20 @@ public class ShoppingListSupermarketAdapter extends RecyclerView.Adapter<Shoppin
         ArrayList<ShoppingListIngredient> ingredientList = shoppingListIngredientsHashMap.get(supermarketName);
 
         holder.getSupermarketNameTextView().setText(supermarketName);
+
+
+        // modify the supermarket count textview and the supermarket total cost textview
+        String countText = String.valueOf(ingredientList.size()) + " items";
+        holder.getSupermarketCountTextView().setText(countText);
+
+        // get the total cost of ingredients
+        float totalCost = 0.0f;
+        for (ShoppingListIngredient i : ingredientList){
+            totalCost += i.getCost()*i.getAmount();
+        }
+        String costText = String.format(Locale.getDefault(), "%.2f", totalCost);
+        holder.getSupermarketTotalCostTextView().setText(costText);
+
 
         // use the ingredientsList to populate the inner ShoppingListIngredientReyclerView
         // modify the recycler view that displays list of items
