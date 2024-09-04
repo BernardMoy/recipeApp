@@ -93,7 +93,7 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS Recipe_tags;");
         db.execSQL("DROP TABLE IF EXISTS Recipe_ingredients;");
         onCreate(db);     // recreate the database
-        Toast.makeText(context, "Database reset", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Recipe database reset", Toast.LENGTH_SHORT).show();
     }
 
     // method to add new recipe

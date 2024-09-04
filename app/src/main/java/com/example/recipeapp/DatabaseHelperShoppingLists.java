@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 // the database helper for recipes.
 public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
@@ -71,6 +73,67 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS Shopping_list_supermarket_ingredients;");
 
         onCreate(db);     // recreate the database
-        Toast.makeText(context, "Database reset", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Shopping list database reset", Toast.LENGTH_SHORT).show();
+    }
+
+
+    // method to extract information needed to display the shopping lists
+    public Cursor getShoppingLists() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Extract all SL data
+        String queryShoppingList = "SELECT SL.name, COUNT(I.ingredient_id) AS itemCount, COUNT(DISTINCT supermarket) AS supermarketCount, SUM(I.cost) as cost, is_favourited " +
+                "FROM Shopping_lists SL "+
+                "JOIN Shopping_list_supermarket_ingredients SLSI ON SL.shopping_list_id = SLSI.shopping_list_id "+
+                "JOIN Ingredients I ON SLSI.ingredient_id = I.ingredient_id; ";
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(queryShoppingList, null);
+        }
+        return cursor;
+    }
+
+    public boolean addShoppingList(String name, String description, LinkedHashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        ContentValues contentValuesShoppingLists = new ContentValues();
+        ContentValues contentValuesIngredients = new ContentValues();
+        ContentValues contentValuesShoppingListSupermarketIngredients = new ContentValues();
+
+        // content values for basic SL table
+        contentValuesShoppingLists.put("name", name);
+        contentValuesShoppingLists.put("description", description);
+
+        // insert into SL -- get the returned id
+        long resultShoppingLists = db.insert("Shopping_lists", null, contentValuesShoppingLists);
+        if (resultShoppingLists == -1){
+            return false;
+        }
+
+        // insert into the SLSI and Ingredient table
+        for (Map.Entry<String, ArrayList<ShoppingListIngredient>> entry : shoppingListIngredientsHashMap.entrySet()) {
+            String key = entry.getKey();
+            ArrayList<ShoppingListIngredient> value = entry.getValue();
+
+            for (ShoppingListIngredient ingredient : value) {
+                contentValuesIngredients.put("name", ingredient.getIngredient());
+                contentValuesIngredients.put("amount", ingredient.getAmount());
+                contentValuesIngredients.put("cost", ingredient.getCost());
+
+                // insert into ingredients table
+                long resultIngredients = db.insert("Ingredients", null, contentValuesIngredients);
+                if (resultIngredients == -1){
+                    return false;
+                }
+
+                // insert into supermarket ingredients table
+                contentValuesShoppingListSupermarketIngredients.put("shopping_list_id", resultShoppingLists);
+                contentValuesShoppingListSupermarketIngredients.put("ingredient_id", resultIngredients);
+                contentValuesShoppingListSupermarketIngredients.put("supermarker", key);
+            }
+        }
+
+        return true;
     }
 }

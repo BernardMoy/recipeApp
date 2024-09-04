@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
     // function to reset shopping list db
     public void resetShoppingListDb(View v){
-
+        DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(this);
+        db.reset();
     }
 }
