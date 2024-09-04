@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -98,7 +99,7 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Extract all SL data
-        String queryShoppingList = "SELECT COUNT(I.ingredient_id), COUNT(DISTINCT supermarket), SUM(I.cost) " +
+        String queryShoppingList = "SELECT COUNT(I.ingredient_id), COUNT(DISTINCT supermarket), SUM(I.cost*I.amount) " +
                 "FROM Shopping_lists SL "+
                 "JOIN Shopping_list_supermarket_ingredients SLSI ON SL.shopping_list_id = SLSI.shopping_list_id "+
                 "JOIN Ingredients I ON SLSI.ingredient_id = I.ingredient_id " +
@@ -147,7 +148,13 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
                 // insert into supermarket ingredients table
                 contentValuesShoppingListSupermarketIngredients.put("shopping_list_id", resultShoppingLists);
                 contentValuesShoppingListSupermarketIngredients.put("ingredient_id", resultIngredients);
-                contentValuesShoppingListSupermarketIngredients.put("supermarker", key);
+                contentValuesShoppingListSupermarketIngredients.put("supermarket", key);
+
+                // insert into supermarket ingredients table
+                long resultSupermarketIngredients = db.insert("Shopping_list_supermarket_ingredients", null, contentValuesShoppingListSupermarketIngredients);
+                if (resultSupermarketIngredients == -1){
+                    return false;
+                }
             }
         }
 

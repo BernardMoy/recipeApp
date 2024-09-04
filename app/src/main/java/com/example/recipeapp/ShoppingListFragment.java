@@ -105,7 +105,6 @@ public class ShoppingListFragment extends Fragment {
 
         // 2. Update the SL recyclerview: load SL Preview arraylist from db
         shoppingListPreviewArrayList = displayShoppingListsFromDatabase();
-        Log.d("ARRAYLIST", String.valueOf(shoppingListPreviewArrayList.size()));
         // set up recycler view
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         shoppingListRecyclerView.setLayoutManager(linearLayoutManager);
