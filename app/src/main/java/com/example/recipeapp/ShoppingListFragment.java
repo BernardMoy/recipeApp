@@ -12,9 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -31,6 +33,7 @@ public class ShoppingListFragment extends Fragment {
     private RecyclerView shoppingListRecyclerView;
     private ShoppingListAdapter shoppingListAdapter;  // The adapter for displaying a list of recipe previews
     private String searchString;
+    private ToggleButton favToggleButton;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -94,6 +97,17 @@ public class ShoppingListFragment extends Fragment {
                 // when text is changed, filter search results
                 filterShoppingLists(view);
                 return false;
+            }
+        });
+
+        // set up state change listener for the favourite toggle button
+        favToggleButton = view.findViewById(R.id.fav_toggleButton);
+        favToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                // update the filtering options in the filter in adapter
+                shoppingListAdapter.setFavouriteFilterSelected(b);
+                filterShoppingLists(view);
             }
         });
         return view;

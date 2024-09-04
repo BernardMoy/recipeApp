@@ -178,14 +178,14 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         // mark shoppingList as fav
-        String update = "UPDATE Shopping_lists SET is_favourited = TRUE WHERE shoppingList_id = ?;";
+        String update = "UPDATE Shopping_lists SET is_favourited = TRUE WHERE shopping_list_id = ?;";
         db.execSQL(update, new String[]{String.valueOf(shoppingListId)});
     }
 
     public void updateShoppingListUnFavourite(int shoppingListId){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String update = "UPDATE Shopping_lists SET is_favourited = FALSE WHERE shoppingList_id = ?;";
+        String update = "UPDATE Shopping_lists SET is_favourited = FALSE WHERE shopping_list_id = ?;";
         db.execSQL(update, new String[]{String.valueOf(shoppingListId)});
     }
 }

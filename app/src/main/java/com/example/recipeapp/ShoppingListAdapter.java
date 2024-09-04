@@ -48,6 +48,14 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListRecycl
 
         holder.getCostTextView().setText(String.valueOf(shoppingListPreview.getCost()));
 
+        // discard the prev listener
+        holder.getFavouriteButton().setOnCheckedChangeListener(null);
+
+        // change the displayed icon depending whether is favourited
+        ShoppingListPreview currentShoppingList = shoppingListPreviewList.get(position);
+
+        holder.getFavouriteButton().setChecked(currentShoppingList.isFavourited());
+
         // set the fav button
         holder.getFavouriteButton().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -62,9 +70,11 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListRecycl
 
                 if (b) {
                     db.updateShoppingListFavourite(clickedShoppingListId);
+                    shoppingListPreviewList.get(pos).setIsFavourited(true);
 
                 } else {
                     db.updateShoppingListUnFavourite(clickedShoppingListId);
+                    shoppingListPreviewList.get(pos).setIsFavourited(false);
                 }
             }
         });
@@ -86,7 +96,12 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListRecycl
             ArrayList<ShoppingListPreview> filteredShoppingListPreviewList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0){
-                filteredShoppingListPreviewList.addAll(shoppingListPreviewListFull);
+                // filter by the fav filter only
+                for (ShoppingListPreview shoppingListPreview : shoppingListPreviewListFull){
+                    if (validateShoppingList(shoppingListPreview)){
+                        filteredShoppingListPreviewList.add(shoppingListPreview);
+                    }
+                }
 
             } else {
                 // filter by search string
@@ -121,5 +136,9 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListRecycl
         }
 
         return true;
+    }
+
+    public void setFavouriteFilterSelected(boolean favouriteFilterSelected) {
+        this.favouriteFilterSelected = favouriteFilterSelected;
     }
 }

@@ -39,6 +39,10 @@ public class ShoppingListPreview {
         return isFavourited;
     }
 
+    public void setIsFavourited(boolean b){
+        this.isFavourited = b;
+    }
+
     public int getShoppingListId() {
         return shoppingListId;
     }
