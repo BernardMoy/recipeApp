@@ -3,6 +3,7 @@ package com.example.recipeapp;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.Filterable;
 
@@ -46,6 +47,27 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListRecycl
         holder.getSupermarketCountTextView().setText(supermarketCountString);
 
         holder.getCostTextView().setText(String.valueOf(shoppingListPreview.getCost()));
+
+        // set the fav button
+        holder.getFavouriteButton().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                // Extract the corresponding id that is clicked
+                int pos = holder.getAdapterPosition();
+
+                // must use recipePreviewList instead of full. Operation is done on filtered results.
+                int clickedShoppingListId = shoppingListPreviewList.get(pos).getShoppingListId();
+                DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(ctx);
+
+                if (b) {
+                    db.updateShoppingListFavourite(clickedShoppingListId);
+
+                } else {
+                    db.updateShoppingListUnFavourite(clickedShoppingListId);
+                }
+            }
+        });
     }
 
     @Override
@@ -94,6 +116,10 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListRecycl
 
     // validate SL with extra constraints for the filter
     public boolean validateShoppingList(ShoppingListPreview shoppingListPreview){
+        if (favouriteFilterSelected && !shoppingListPreview.isFavourited()){
+            return false;
+        }
+
         return true;
     }
 }

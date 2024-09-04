@@ -13,7 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-// the database helper for recipes.
+// the database helper for shoppingList.
 public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
 
     private Context context;
@@ -165,11 +165,27 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String queryRecipesCount = "SELECT COUNT(*) FROM Shopping_lists;";
+        String queryShoppingListsCount = "SELECT COUNT(*) FROM Shopping_lists;";
         Cursor cursor = null;
         if (db != null) {
-            cursor = db.rawQuery(queryRecipesCount, null);
+            cursor = db.rawQuery(queryShoppingListsCount, null);
         }
         return cursor;
+    }
+
+    // method to mark shoppingList favourited or unfavourited.
+    public void updateShoppingListFavourite(int shoppingListId){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // mark shoppingList as fav
+        String update = "UPDATE Shopping_lists SET is_favourited = TRUE WHERE shoppingList_id = ?;";
+        db.execSQL(update, new String[]{String.valueOf(shoppingListId)});
+    }
+
+    public void updateShoppingListUnFavourite(int shoppingListId){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String update = "UPDATE Shopping_lists SET is_favourited = FALSE WHERE shoppingList_id = ?;";
+        db.execSQL(update, new String[]{String.valueOf(shoppingListId)});
     }
 }

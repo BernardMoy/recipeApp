@@ -173,7 +173,7 @@ public class ShoppingListFragment extends Fragment {
                 float cost = cursor2.getFloat(2);
 
                 // construct preview object
-                ShoppingListPreview shoppingListPreview = new ShoppingListPreview(name, itemCount, supermarketCount, cost, isFavourited);
+                ShoppingListPreview shoppingListPreview = new ShoppingListPreview(shoppingListId, name, itemCount, supermarketCount, cost, isFavourited);
 
                 shoppingListPreviewArrayList.add(shoppingListPreview);
             }
