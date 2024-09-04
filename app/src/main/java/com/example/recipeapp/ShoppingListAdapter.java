@@ -32,8 +32,13 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListRecycl
         ShoppingListPreview shoppingListPreview = shoppingListPreviewList.get(position);
 
         holder.getNameTextView().setText(shoppingListPreview.getName());
-        holder.getItemCountTextView().setText(String.valueOf(shoppingListPreview.getItemCount()));
-        holder.getSupermarketCountTextView().setText(String.valueOf(shoppingListPreview.getSupermarketCount()));
+
+        String itemCountString = String.valueOf(shoppingListPreview.getItemCount()) + " items";
+        holder.getItemCountTextView().setText(String.valueOf(itemCountString));
+
+        String supermarketCountString = "(" + String.valueOf(shoppingListPreview.getSupermarketCount()) + " places)";
+        holder.getSupermarketCountTextView().setText(supermarketCountString);
+
         holder.getCostTextView().setText(String.valueOf(shoppingListPreview.getCost()));
     }
 

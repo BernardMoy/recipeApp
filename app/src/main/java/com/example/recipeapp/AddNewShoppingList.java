@@ -92,9 +92,15 @@ public class AddNewShoppingList extends AppCompatActivity {
         }
 
         // empty portion size and type cast
-        int amount = 0;
+        int amount = 1;
         if (!amountStr.isEmpty()){
             amount = Integer.parseInt(amountStr);
+
+            // check if amount is greater or equal 1
+            if (amount < 1){
+                Toast.makeText(AddNewShoppingList.this, "Amount has to be at least 1", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
 
         // empty cost
@@ -149,5 +155,17 @@ public class AddNewShoppingList extends AppCompatActivity {
 
         String shoppingListDescription = descriptionEditText.getText().toString();
 
+        // add SL to database
+        DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(this);
+        boolean status = db.addShoppingList(shoppingListName, shoppingListDescription, shoppingListIngredientsHashMap);
+
+        // exit activity if successful
+        if (!status){
+            Toast.makeText(this, "Data adding failed", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(this, "New shopping list added", Toast.LENGTH_SHORT).show();
+            getOnBackPressedDispatcher().onBackPressed();
+        }
     }
 }

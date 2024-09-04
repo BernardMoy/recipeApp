@@ -77,19 +77,36 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
     }
 
 
-    // method to extract information needed to display the shopping lists
+    // method to extract basic information needed to display the shopping lists
     public Cursor getShoppingLists() {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Extract all SL data
-        String queryShoppingList = "SELECT SL.name, COUNT(I.ingredient_id) AS itemCount, COUNT(DISTINCT supermarket) AS supermarketCount, SUM(I.cost) as cost, is_favourited " +
-                "FROM Shopping_lists SL "+
-                "JOIN Shopping_list_supermarket_ingredients SLSI ON SL.shopping_list_id = SLSI.shopping_list_id "+
-                "JOIN Ingredients I ON SLSI.ingredient_id = I.ingredient_id; ";
+        String queryShoppingList = "SELECT shopping_list_id, name, is_favourited " +
+                "FROM Shopping_lists;";
 
         Cursor cursor = null;
         if (db != null) {
             cursor = db.rawQuery(queryShoppingList, null);
+        }
+        return cursor;
+    }
+
+    // method for displaying counts (itemCount, supermarketCount and Cost) which needs to be separated bc there may be no data
+    // method to extract information needed to display the shopping lists
+    public Cursor getShoppingListsNumsFromId(int shoppingListId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Extract all SL data
+        String queryShoppingList = "SELECT COUNT(I.ingredient_id), COUNT(DISTINCT supermarket), SUM(I.cost) " +
+                "FROM Shopping_lists SL "+
+                "JOIN Shopping_list_supermarket_ingredients SLSI ON SL.shopping_list_id = SLSI.shopping_list_id "+
+                "JOIN Ingredients I ON SLSI.ingredient_id = I.ingredient_id " +
+                "WHERE SL.shopping_list_id = ?";
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(queryShoppingList, new String[]{String.valueOf(shoppingListId)});
         }
         return cursor;
     }
@@ -135,5 +152,17 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
         }
 
         return true;
+    }
+
+    public Cursor getShoppingListsCount() {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String queryRecipesCount = "SELECT COUNT(*) FROM Shopping_lists;";
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(queryRecipesCount, null);
+        }
+        return cursor;
     }
 }
