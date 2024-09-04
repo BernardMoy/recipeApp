@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -28,7 +30,7 @@ public class ShoppingListFragment extends Fragment {
     ArrayList<ShoppingListPreview> shoppingListPreviewArrayList;
     private RecyclerView shoppingListRecyclerView;
     private ShoppingListAdapter shoppingListAdapter;  // The adapter for displaying a list of recipe previews
-
+    private String searchString;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -74,6 +76,26 @@ public class ShoppingListFragment extends Fragment {
         // load SL Recycler view
         shoppingListRecyclerView = (RecyclerView) view.findViewById(R.id.shoppingList_recyclerView);
 
+
+        // set up search bar
+        searchString = "";
+        // Set up query text listener for search view.
+        SearchView searchView = (SearchView) view.findViewById(R.id.shoppingList_searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                // update class variable
+                searchString = s;
+                // when text is changed, filter search results
+                filterShoppingLists(view);
+                return false;
+            }
+        });
         return view;
     }
 
@@ -158,5 +180,22 @@ public class ShoppingListFragment extends Fragment {
         }
 
         return shoppingListPreviewArrayList;
+    }
+
+    // called when search bar is updated
+    public void filterShoppingLists(View view){
+        // when text is changed, filter search results
+        Filter shoppingListFilter = shoppingListAdapter.getFilter();
+
+        // filter based on the class variable searchString
+        shoppingListFilter.filter(searchString, new Filter.FilterListener() {
+            @Override
+            public void onFilterComplete(int i) {
+                // Updates the SL count after filtering
+                String countString = String.valueOf(i) + " results";
+                TextView textView = (TextView) view.findViewById(R.id.shoppingListCount_textView);
+                textView.setText(countString);
+            }
+        });
     }
 }
