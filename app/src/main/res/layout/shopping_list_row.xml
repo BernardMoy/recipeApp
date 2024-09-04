@@ -35,7 +35,7 @@
             tools:ignore="UseAppTint" />
 
         <ToggleButton
-            android:id="@+id/shoppingListRow_toggleButton"
+            android:id="@+id/shoppingListRow_favButton"
             android:layout_width="@dimen/image_button_size"
             android:layout_height="@dimen/image_button_size"
             android:text=""
@@ -47,7 +47,7 @@
 
 
         <TextView
-            android:id="@+id/shoppingListRow_tagPlus"
+            android:id="@+id/shoppingListRow_itemCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0 items"
@@ -56,6 +56,18 @@
             android:layout_marginStart="@dimen/title_margin"
             android:layout_marginTop="@dimen/content_margin"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shoppingListRow_name"/>
+
+        <TextView
+            android:id="@+id/shoppingListRow_supermarketCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(3 places)"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/content_font_size"
+            android:layout_marginStart="@dimen/content_margin"
+            android:layout_marginTop="@dimen/content_margin"
+            app:layout_constraintStart_toEndOf="@id/shoppingListRow_itemCount"
             app:layout_constraintTop_toBottomOf="@+id/shoppingListRow_name"/>
 
 
@@ -70,7 +82,7 @@
             android:textColor="@color/gray"
             android:textSize="@dimen/content_font_size"
             android:drawableTint="@color/gray"
-            app:layout_constraintStart_toEndOf="@+id/shoppingListRow_tagPlus"
+            app:layout_constraintStart_toEndOf="@+id/shoppingListRow_supermarketCount"
             app:layout_constraintTop_toBottomOf="@+id/shoppingListRow_name" />
 
 
