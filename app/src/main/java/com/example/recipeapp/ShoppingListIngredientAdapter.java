@@ -40,9 +40,7 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
 
         // set alternating row colours
         if (position % 2 == 0){
-            holder.getIngredientTextView().setBackgroundResource(R.color.lightColor);
-            holder.getAmountTextView().setBackgroundResource(R.color.lightColor);
-            holder.getCostTextView().setBackgroundResource(R.color.lightColor);
+            holder.getTableRow().setBackgroundResource(R.color.lightColor);
         }
 
         // set up delete button functionality

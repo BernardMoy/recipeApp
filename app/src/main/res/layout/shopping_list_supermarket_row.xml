@@ -69,6 +69,15 @@
 
             <TextView
                 android:gravity="center_horizontal"
+                android:text=""
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/content_font_size" />
+
+            <TextView
+                android:gravity="center_horizontal"
                 android:text="Ingredient"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

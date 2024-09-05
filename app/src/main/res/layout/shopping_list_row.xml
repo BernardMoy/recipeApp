@@ -18,7 +18,6 @@
             android:text="Shopping list name"
             android:textAlignment="viewStart"
             android:textSize="@dimen/title_font_size"
-            app:layout_constraintEnd_toStartOf="@+id/shoppingListRow_toggleButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

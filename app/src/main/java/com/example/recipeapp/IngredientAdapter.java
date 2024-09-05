@@ -42,10 +42,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientRecyclerVi
 
         // set alternating row colours
         if (position % 2 == 0){
-            holder.getIngredientTextView().setBackgroundResource(R.color.lightColor);
-            holder.getAmountTextView().setBackgroundResource(R.color.lightColor);
-            holder.getSupermarketTextView().setBackgroundResource(R.color.lightColor);
-            holder.getCostTextView().setBackgroundResource(R.color.lightColor);
+            holder.getTableRow().setBackgroundResource(R.color.lightColor);
         }
 
         // Make the displayed box disappear when clicked the delete button
