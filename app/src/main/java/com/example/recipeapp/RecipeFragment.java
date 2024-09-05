@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -73,6 +74,9 @@ public class RecipeFragment extends Fragment {
 
     // toggle button for the fav symbol
     private ToggleButton favToggleButton;
+
+    // for the top bar that is displayed when some items are selected
+    private ConstraintLayout selectedOptionsBar;
 
 
 
@@ -153,6 +157,8 @@ public class RecipeFragment extends Fragment {
         // load recipe recycler view
         recipeRecyclerView = (RecyclerView) view.findViewById(R.id.recipe_recyclerView);
 
+        // load top bar
+        selectedOptionsBar = view.findViewById(R.id.selectedOptions_bar);
 
         // Sets on click listener for the recipe tags filter button.
         // make the hint button and recyclerview not visible
@@ -319,7 +325,7 @@ public class RecipeFragment extends Fragment {
         recipeRecyclerView.setLayoutManager(linearLayoutManager);
 
         // crete a new adapter from the modified recipe preview array list
-        recipeAdapter = new RecipeAdapter(getActivity(), recipePreviewArrayList);
+        recipeAdapter = new RecipeAdapter(getActivity(), recipePreviewArrayList, selectedOptionsBar);
         recipeRecyclerView.setAdapter(recipeAdapter);
 
 

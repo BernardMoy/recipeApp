@@ -21,6 +21,7 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,23 +42,30 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
     // a list of tags that the selected item should have
     private HashSet<String> selectedTagsSet;
 
+    // a constraint layout for the top bar that is visible only when some items are checked
+    // this bar is passed from the recipe fragment that creates the adapter
+    private ConstraintLayout selectedOptionsBar;
+
     // two buttons for the dialog that pops up when delete button is clicked
     private Button cancelButton;
     private Button deleteButton;
 
 
-    public RecipeAdapter(Context ctx, ArrayList<RecipePreview> recipePreviewList){
+    public RecipeAdapter(Context ctx, ArrayList<RecipePreview> recipePreviewList, ConstraintLayout selectedOptionsBar){
         this.ctx = ctx;
         this.recipePreviewListFull = recipePreviewList;
         this.recipePreviewList = new ArrayList<>(recipePreviewListFull);
         this.selectedTagsSet = new HashSet<>();
         this.favouriteFilterSelected = false;
+
+        this.selectedOptionsBar = selectedOptionsBar;
     }
 
     @NonNull
     @Override
     public RecipeRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new RecipeRecyclerViewHolder(LayoutInflater.from(ctx).inflate(R.layout.recipe_row, parent, false));
+        View view = LayoutInflater.from(ctx).inflate(R.layout.recipe_row, parent, false);
+        return new RecipeRecyclerViewHolder(view);
     }
 
     @Override
@@ -137,6 +145,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
             }
         });
 
+        // make the top bar not visible
+        selectedOptionsBar.setVisibility(View.GONE);
+
         // set up functionality of checkbox
         checkedRecipeSet = new HashSet<>();
         holder.getCheckBox().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -148,15 +159,22 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
 
                 if (b) {
                     checkedRecipeSet.add(recipeId);
+                    selectedOptionsBar.setVisibility(View.VISIBLE);
 
                 } else {
                     // remove if the id is in set.
                     if (checkedRecipeSet.contains(recipeId)){
                         checkedRecipeSet.remove(recipeId);
                     }
+
+                    if (checkedRecipeSet.isEmpty()){
+                        selectedOptionsBar.setVisibility(View.GONE);
+                    }
                 }
             }
         });
+
+
 
         // set up listener for the delete button of a recipe
         /*
