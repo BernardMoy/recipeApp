@@ -138,6 +138,7 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
                 contentValuesIngredients.put("name", ingredient.getIngredient());
                 contentValuesIngredients.put("amount", ingredient.getAmount());
                 contentValuesIngredients.put("cost", ingredient.getCost());
+                contentValuesIngredients.put("checked", ingredient.isChecked());
 
                 // insert into ingredients table
                 long resultIngredients = db.insert("Ingredients", null, contentValuesIngredients);
@@ -198,6 +199,7 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
                 contentValuesIngredients.put("name", ingredient.getIngredient());
                 contentValuesIngredients.put("amount", ingredient.getAmount());
                 contentValuesIngredients.put("cost", ingredient.getCost());
+                contentValuesIngredients.put("checked", ingredient.isChecked());
 
                 // insert into ingredients table
                 long resultIngredients = db.insert("Ingredients", null, contentValuesIngredients);
@@ -267,7 +269,7 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
     public Cursor getShoppingListSupermarketIngredientsFromId(int shoppingListId){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT SLSI.supermarket, I.name, I.amount, I.cost, I.checked " +
+        String query = "SELECT SLSI.supermarket, I.ingredient_id, I.name, I.amount, I.cost, I.checked " +
                 "FROM Shopping_lists SL "+
                 "JOIN Shopping_list_supermarket_ingredients SLSI ON SL.shopping_list_id = SLSI.shopping_list_id "+
                 "JOIN Ingredients I ON SLSI.ingredient_id = I.ingredient_id " +
@@ -280,19 +282,19 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public Cursor getSupermarketCountAndCostFromId(int shoppingListId, String supermarket){
-        SQLiteDatabase db = this.getReadableDatabase();
+    // mark an ingredient as crossed out
+    public void updateIngredientChecked(int ingredientId){
+        SQLiteDatabase db = this.getWritableDatabase();
 
-        String query = "SELECT COUNT(I.ingredient_id), SUM(I.cost*I.amount) " +
-                "FROM Shopping_lists SL "+
-                "JOIN Shopping_list_supermarket_ingredients SLSI ON SL.shopping_list_id = SLSI.shopping_list_id "+
-                "JOIN Ingredients I ON SLSI.ingredient_id = I.ingredient_id " +
-                "WHERE SL.shopping_list_id = ? AND SLSI.supermarket = ?";
+        // mark shoppingList as fav
+        String update = "UPDATE Ingredients SET checked = TRUE WHERE ingredient_id = ?;";
+        db.execSQL(update, new String[]{String.valueOf(ingredientId)});
+    }
 
-        Cursor cursor = null;
-        if (db != null) {
-            cursor = db.rawQuery(query, new String[]{String.valueOf(shoppingListId), supermarket});
-        }
-        return cursor;
+    public void updateIngredientUnchecked(int ingredientId){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String update = "UPDATE Ingredients SET checked = FALSE WHERE ingredient_id = ?;";
+        db.execSQL(update, new String[]{String.valueOf(ingredientId)});
     }
 }

@@ -8,7 +8,7 @@
     <TableRow android:id="@+id/shoppingListIngredient_tableRow">
 
         <ToggleButton
-            android:id="@+id/shoppingListRow_favButton"
+            android:id="@+id/ingredient_checkButton"
             android:layout_width="@dimen/toggle_button_size"
             android:layout_height="@dimen/toggle_button_size"
             android:text=""

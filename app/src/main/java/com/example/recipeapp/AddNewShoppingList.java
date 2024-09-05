@@ -108,13 +108,14 @@ public class AddNewShoppingList extends AppCompatActivity {
             if (cursor2.getCount() > 0){
                 while (cursor2.moveToNext()){
                     String supermarket = cursor2.getString(0);
-                    String ingredientName = cursor2.getString(1);
-                    int ingredientAmount = cursor2.getInt(2);
-                    float ingredientCost = cursor2.getFloat(3);
-                    boolean isChecked = (cursor2.getInt(4) == 1);
+                    int ingredientId = cursor2.getInt(1);
+                    String ingredientName = cursor2.getString(2);
+                    int ingredientAmount = cursor2.getInt(3);
+                    float ingredientCost = cursor2.getFloat(4);
+                    boolean isChecked = (cursor2.getInt(5) == 1);
 
                     // create new ingredient object
-                    ShoppingListIngredient ingredient = new ShoppingListIngredient(ingredientName, ingredientAmount, ingredientCost, isChecked);
+                    ShoppingListIngredient ingredient = new ShoppingListIngredient(ingredientId, ingredientName, ingredientAmount, ingredientCost, isChecked);
 
                     // add supermarket info to hashmap
                     addToHashMap(supermarket, ingredient);
@@ -184,7 +185,11 @@ public class AddNewShoppingList extends AppCompatActivity {
 
 
         // create new shopping list ingredient
-        ShoppingListIngredient ingredient = new ShoppingListIngredient(ingredientName, amount, cost, false);
+        /*
+        -1 is the placeholder for the ingredientID here. The id is necessary because it is used to mark ing as checked / unchecked.
+        It will be replaced by the real ingredient ID when extracted from the db.
+         */
+        ShoppingListIngredient ingredient = new ShoppingListIngredient(-1, ingredientName, amount, cost, false);
         addToHashMap(supermarket, ingredient);
 
         // set adapter for the supermarket recycler view

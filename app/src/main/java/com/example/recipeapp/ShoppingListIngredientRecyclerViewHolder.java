@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ public class ShoppingListIngredientRecyclerViewHolder extends RecyclerView.ViewH
     private TextView costTextView;
     private ImageButton deleteButton;
     private TableRow tableRow;
+    private ToggleButton checkButton;
 
     public ShoppingListIngredientRecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -23,6 +25,7 @@ public class ShoppingListIngredientRecyclerViewHolder extends RecyclerView.ViewH
         costTextView = itemView.findViewById(R.id.cost_textView);
         deleteButton = itemView.findViewById(R.id.ingredientDelete_button);
         tableRow = itemView.findViewById(R.id.shoppingListIngredient_tableRow);
+        checkButton = itemView.findViewById(R.id.ingredient_checkButton);
     }
 
     public TextView getIngredientTextView() {
@@ -43,5 +46,9 @@ public class ShoppingListIngredientRecyclerViewHolder extends RecyclerView.ViewH
 
     public TableRow getTableRow() {
         return tableRow;
+    }
+
+    public ToggleButton getCheckButton() {
+        return checkButton;
     }
 }

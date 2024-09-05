@@ -1,11 +1,15 @@
 package com.example.recipeapp;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -60,6 +64,58 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
 
                     // call the listener to update parent recyclerview data
                     listener.updateCountAndCost(shoppingListIngredientList.size(), totalCost);
+                }
+            }
+        });
+
+
+
+        // discard the prev listener
+        holder.getCheckButton().setOnCheckedChangeListener(null);
+
+        // change the displayed icon depending whether is checked
+        ShoppingListIngredient currentIngredient = shoppingListIngredientList.get(position);
+        if (currentIngredient.isChecked()){
+            holder.getCheckButton().setChecked(true);
+            holder.getIngredientTextView().setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.getIngredientTextView().setTextColor(ContextCompat.getColor(ctx, R.color.gray));
+
+            holder.getAmountTextView().setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.getAmountTextView().setTextColor(ContextCompat.getColor(ctx, R.color.gray));
+
+            holder.getCostTextView().setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.getCostTextView().setTextColor(ContextCompat.getColor(ctx, R.color.gray));
+        }
+
+        // listener for check button (Toggle button)
+        holder.getCheckButton().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    holder.getIngredientTextView().setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                    holder.getIngredientTextView().setTextColor(ContextCompat.getColor(ctx, R.color.gray));
+
+                    holder.getAmountTextView().setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                    holder.getAmountTextView().setTextColor(ContextCompat.getColor(ctx, R.color.gray));
+
+                    holder.getCostTextView().setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                    holder.getCostTextView().setTextColor(ContextCompat.getColor(ctx, R.color.gray));
+
+                    // set the current array
+                    currentIngredient.setChecked(true);
+
+
+                } else {
+                    holder.getIngredientTextView().setPaintFlags(0);
+                    holder.getIngredientTextView().setTextColor(ContextCompat.getColor(ctx, R.color.black));
+
+                    holder.getAmountTextView().setPaintFlags(0);
+                    holder.getAmountTextView().setTextColor(ContextCompat.getColor(ctx, R.color.black));
+
+                    holder.getCostTextView().setPaintFlags(0);
+                    holder.getCostTextView().setTextColor(ContextCompat.getColor(ctx, R.color.black));
+
+                    currentIngredient.setChecked(false);
                 }
             }
         });
