@@ -269,7 +269,7 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
     public Cursor getShoppingListSupermarketIngredientsFromId(int shoppingListId){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT SLSI.supermarket, I.ingredient_id, I.name, I.amount, I.cost, I.checked " +
+        String query = "SELECT SLSI.supermarket, I.name, I.amount, I.cost, I.checked " +
                 "FROM Shopping_lists SL "+
                 "JOIN Shopping_list_supermarket_ingredients SLSI ON SL.shopping_list_id = SLSI.shopping_list_id "+
                 "JOIN Ingredients I ON SLSI.ingredient_id = I.ingredient_id " +

@@ -4,14 +4,12 @@ package com.example.recipeapp;
 // It is separately stored in the hashmap and db.
 
 public class ShoppingListIngredient {
-    private int ingredientId;
     private String ingredientName;
     private int amount;
     private float cost;
     private boolean isChecked;
 
-    public ShoppingListIngredient(int ingredientId, String ingredientName, int amount, float cost, boolean isChecked){
-        this.ingredientId = ingredientId;
+    public ShoppingListIngredient(String ingredientName, int amount, float cost, boolean isChecked){
         this.ingredientName = ingredientName;
         this.amount = amount;
         this.cost = cost;
@@ -36,9 +34,5 @@ public class ShoppingListIngredient {
 
     public void setChecked(boolean checked) {
         isChecked = checked;
-    }
-
-    public int getIngredientId() {
-        return ingredientId;
     }
 }

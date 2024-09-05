@@ -101,7 +101,7 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
                     holder.getCostTextView().setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                     holder.getCostTextView().setTextColor(ContextCompat.getColor(ctx, R.color.gray));
 
-                    // set the current array
+                    // mark the ingredient in the current array as checked -- this array will be passed for create / update
                     currentIngredient.setChecked(true);
 
 
