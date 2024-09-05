@@ -32,7 +32,6 @@ public class RecipeRecyclerViewHolder extends RecyclerView.ViewHolder {
         timesCooked = itemView.findViewById(R.id.recipeRow_timesCooked);
         image = itemView.findViewById(R.id.recipeRow_image);
         toggleButton = itemView.findViewById(R.id.recipeRow_toggleButton);
-        deleteButton = itemView.findViewById(R.id.recipeDelete_button);
     }
 
     public TextView getName() {
@@ -65,9 +64,5 @@ public class RecipeRecyclerViewHolder extends RecyclerView.ViewHolder {
 
     public ToggleButton getToggleButton() {
         return toggleButton;
-    }
-
-    public ImageButton getDeleteButton() {
-        return deleteButton;
     }
 }

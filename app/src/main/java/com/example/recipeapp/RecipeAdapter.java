@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -134,6 +135,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
         });
 
         // set up listener for the delete button of a recipe
+        /*
         holder.getDeleteButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -199,7 +201,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                 dialog.show();
             }
         });
-
+        */
 
         // Set up listener for the entire recyclerview: When it is clicked, addNewRecipe activity is launched
         holder.itemView.setOnClickListener(new View.OnClickListener() {
