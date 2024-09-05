@@ -1,6 +1,7 @@
 package com.example.recipeapp;
 
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,7 +21,7 @@ public class RecipeRecyclerViewHolder extends RecyclerView.ViewHolder {
     private TextView timesCooked;
     private ImageView image;
     private ToggleButton toggleButton;
-    private ImageButton deleteButton;
+    private CheckBox checkBox;
 
     public RecipeRecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -32,6 +33,7 @@ public class RecipeRecyclerViewHolder extends RecyclerView.ViewHolder {
         timesCooked = itemView.findViewById(R.id.recipeRow_timesCooked);
         image = itemView.findViewById(R.id.recipeRow_image);
         toggleButton = itemView.findViewById(R.id.recipeRow_toggleButton);
+        checkBox = itemView.findViewById(R.id.checkBox);
     }
 
     public TextView getName() {
@@ -64,5 +66,9 @@ public class RecipeRecyclerViewHolder extends RecyclerView.ViewHolder {
 
     public ToggleButton getToggleButton() {
         return toggleButton;
+    }
+
+    public CheckBox getCheckBox() {
+        return checkBox;
     }
 }

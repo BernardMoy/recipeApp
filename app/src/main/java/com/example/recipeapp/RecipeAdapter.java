@@ -35,6 +35,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
     private ArrayList<RecipePreview> recipePreviewListFull;   // An arraylist that contains all original data
     private boolean favouriteFilterSelected;  // Store whether the favourite icon in the search filter is selected
 
+    // list to store all recipe IDs that are selected through checkbox
+    private HashSet<Integer> checkedRecipeSet;
+
     // a list of tags that the selected item should have
     private HashSet<String> selectedTagsSet;
 
@@ -130,6 +133,27 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                     // Mark the recipe as un favourited
                     db.updateRecipeUnFavourite(clickedRecipeId);
                     recipePreviewList.get(pos).setIsFavourited(false);
+                }
+            }
+        });
+
+        // set up functionality of checkbox
+        checkedRecipeSet = new HashSet<>();
+        holder.getCheckBox().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                // get the current pos and recipe id
+                int pos = holder.getAdapterPosition();
+                int recipeId = recipePreviewList.get(pos).getRecipeId();
+
+                if (b) {
+                    checkedRecipeSet.add(recipeId);
+
+                } else {
+                    // remove if the id is in set.
+                    if (checkedRecipeSet.contains(recipeId)){
+                        checkedRecipeSet.remove(recipeId);
+                    }
                 }
             }
         });
