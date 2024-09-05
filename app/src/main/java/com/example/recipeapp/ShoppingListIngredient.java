@@ -7,11 +7,13 @@ public class ShoppingListIngredient {
     private String ingredientName;
     private int amount;
     private float cost;
+    private boolean isChecked;
 
-    public ShoppingListIngredient(String ingredientName, int amount, float cost){
+    public ShoppingListIngredient(String ingredientName, int amount, float cost, boolean isChecked){
         this.ingredientName = ingredientName;
         this.amount = amount;
         this.cost = cost;
+        this.isChecked = isChecked;
     }
 
     public String getIngredient() {
@@ -24,5 +26,13 @@ public class ShoppingListIngredient {
 
     public float getCost() {
         return cost;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 }

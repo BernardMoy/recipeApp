@@ -85,7 +85,7 @@ public class AddNewShoppingList extends AppCompatActivity {
         if (getIntent().hasExtra("shopping_list_id")) {
             shoppingListId = getIntent().getIntExtra("shopping_list_id", -1);
 
-            // Get information from the database
+            // 1. Get basic information from the database
             DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(getApplicationContext());
             Cursor cursor = db.getShoppingListFromId(shoppingListId);
 
@@ -102,6 +102,32 @@ public class AddNewShoppingList extends AppCompatActivity {
                 TextView descEditText = (TextView) findViewById(R.id.shoppingListDesc_edittext);
                 descEditText.setText(desc);
             }
+
+            // 2. Get supermarket ing hashmap from the database, and update the hashmap
+            Cursor cursor2 = db.getShoppingListSupermarketIngredientsFromId(shoppingListId);
+            if (cursor2.getCount() > 0){
+                while (cursor2.moveToNext()){
+                    String supermarket = cursor2.getString(0);
+                    String ingredientName = cursor2.getString(1);
+                    int ingredientAmount = cursor2.getInt(2);
+                    float ingredientCost = cursor2.getFloat(3);
+                    boolean isChecked = (cursor2.getInt(4) == 1);
+
+                    // create new ingredient object
+                    ShoppingListIngredient ingredient = new ShoppingListIngredient(ingredientName, ingredientAmount, ingredientCost, isChecked);
+
+                    // add supermarket info to hashmap
+                    addToHashMap(supermarket, ingredient);
+                }
+            }
+
+            // 3. Load the recyclerview from hashmap
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(AddNewShoppingList.this, LinearLayoutManager.VERTICAL, false);
+            supermarketsRecyclerView.setLayoutManager(linearLayoutManager);
+
+            ShoppingListSupermarketAdapter supermarketAdapter = new ShoppingListSupermarketAdapter(AddNewShoppingList.this, shoppingListIngredientsHashMap);  // supply the hash map here
+            supermarketsRecyclerView.setAdapter(supermarketAdapter);
+
         }
     }
 
@@ -158,19 +184,8 @@ public class AddNewShoppingList extends AppCompatActivity {
 
 
         // create new shopping list ingredient
-        ShoppingListIngredient ingredient = new ShoppingListIngredient(ingredientName, amount, cost);
-
-        // Modify the hashmap based on whether same supermarket exists
-        if (shoppingListIngredientsHashMap.containsKey(supermarket)){
-            // add to existing key
-            shoppingListIngredientsHashMap.get(supermarket).add(ingredient);
-
-        } else {
-            // create new key
-            ArrayList<ShoppingListIngredient> newList = new ArrayList<>();
-            newList.add(ingredient);
-            shoppingListIngredientsHashMap.put(supermarket, newList);
-        }
+        ShoppingListIngredient ingredient = new ShoppingListIngredient(ingredientName, amount, cost, false);
+        addToHashMap(supermarket, ingredient);
 
         // set adapter for the supermarket recycler view
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(AddNewShoppingList.this, LinearLayoutManager.VERTICAL, false);
@@ -212,6 +227,22 @@ public class AddNewShoppingList extends AppCompatActivity {
         else{
             Toast.makeText(this, "New shopping list added", Toast.LENGTH_SHORT).show();
             getOnBackPressedDispatcher().onBackPressed();
+        }
+    }
+
+    // method to add to hashmap when given a supermarket and ingredient
+    public void addToHashMap(String supermarket, ShoppingListIngredient ingredient){
+
+        // Modify the hashmap based on whether same supermarket exists
+        if (shoppingListIngredientsHashMap.containsKey(supermarket)){
+            // add to existing key
+            shoppingListIngredientsHashMap.get(supermarket).add(ingredient);
+
+        } else {
+            // create new key
+            ArrayList<ShoppingListIngredient> newList = new ArrayList<>();
+            newList.add(ingredient);
+            shoppingListIngredientsHashMap.put(supermarket, newList);
         }
     }
 }
