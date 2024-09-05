@@ -95,7 +95,6 @@ public class AddNewRecipe extends AppCompatActivity {
         // Get the recipe id passed, if it exists
         if (getIntent().hasExtra("recipe_id")) {
             recipeId = getIntent().getIntExtra("recipe_id", -1);
-            Log.d("HELLO", String.valueOf(recipeId));
 
 
             // Get information from the database name, image, description, link, prep_time

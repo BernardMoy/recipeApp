@@ -1,7 +1,9 @@
 package com.example.recipeapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Filter;
@@ -76,6 +78,26 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListRecycl
                     db.updateShoppingListUnFavourite(clickedShoppingListId);
                     shoppingListPreviewList.get(pos).setIsFavourited(false);
                 }
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Extract the corresponding recipe id that is clicked
+                int pos = holder.getAdapterPosition();
+                int clickedShoppingListId = shoppingListPreviewList.get(pos).getShoppingListId();
+
+                // Start intent with passed parameters of shopping list
+                Intent i = new Intent(ctx, AddNewShoppingList.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+
+                // pass the shopping list id to the edit shopping list activity.
+                // Information is extracted from db there
+                i.putExtra("shopping_list_id", clickedShoppingListId);
+                i.putExtra("title_text", "Edit shopping list");
+
+                ctx.startActivity(i);
             }
         });
     }

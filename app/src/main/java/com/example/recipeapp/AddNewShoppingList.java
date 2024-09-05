@@ -34,6 +34,14 @@ public class AddNewShoppingList extends AppCompatActivity {
     // the big recyclerview (Supermarket recyclerview)
     private RecyclerView supermarketsRecyclerView;
 
+    /*
+    Again, same activity is used for edit and create new SL.
+
+    If recipeId == -1, it is in "Creating new SL" mode, otherwise it is updating/editing recipe.
+     */
+    private int shoppingListId;
+    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +66,24 @@ public class AddNewShoppingList extends AppCompatActivity {
 
         // load the recycler view
         supermarketsRecyclerView = findViewById(R.id.shoppingListSupermarkets_recyclerView);
+
+        // Get the recipe title text passed
+        if (getIntent().hasExtra("title_text")) {
+            String titleText = getIntent().getStringExtra("title_text");
+            TextView titleTextTextView = (TextView) findViewById(R.id.shoppingList_titleText);
+            titleTextTextView.setText(titleText);
+
+        } else {
+            Toast.makeText(getApplicationContext(), "Recipe did not load properly", Toast.LENGTH_SHORT).show();
+        }
+
+        // set the initial value of shoppingList id to -1
+        shoppingListId = -1;
+
+        // Get the shoppingList id passed, if it exists
+        if (getIntent().hasExtra("shoppingList_id")) {
+            shoppingListId = getIntent().getIntExtra("shopping_list_id", -1);
+        }
     }
 
     // methods for the inputs
