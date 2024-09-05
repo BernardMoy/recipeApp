@@ -161,6 +161,65 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
         return true;
     }
 
+    public boolean updateShoppingListFromId(int shoppingListId, String name, String description, LinkedHashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // 1. Update basic data
+        ContentValues contentValuesShoppingLists = new ContentValues();
+
+        // content values for basic SL table
+        contentValuesShoppingLists.put("name", name);
+        contentValuesShoppingLists.put("description", description);
+
+        String whereClause = "shopping_list_id = ?";
+        String[] whereArgs = new String[]{String.valueOf(shoppingListId)};
+
+        // use the update method to update sql
+        db.update("Shopping_lists", contentValuesShoppingLists, whereClause, whereArgs);
+
+
+        // 2. Update the SLSI table and ingredients table
+
+        // Delete old data first
+        String del1 = "DELETE FROM Shopping_list_supermarket_ingredients WHERE shopping_list_id = ?;";
+        db.execSQL(del1, new String[]{String.valueOf(shoppingListId)});
+
+        String del2 = "DELETE FROM Ingredients WHERE ingredient_id NOT IN (SELECT ingredient_id FROM Shopping_list_supermarket_ingredients);";
+        db.execSQL(del2);
+
+        ContentValues contentValuesShoppingListSupermarketIngredients = new ContentValues();
+        ContentValues contentValuesIngredients = new ContentValues();
+
+        for (Map.Entry<String, ArrayList<ShoppingListIngredient>> entry : shoppingListIngredientsHashMap.entrySet()) {
+            String key = entry.getKey();
+            ArrayList<ShoppingListIngredient> value = entry.getValue();
+
+            for (ShoppingListIngredient ingredient : value) {
+                contentValuesIngredients.put("name", ingredient.getIngredient());
+                contentValuesIngredients.put("amount", ingredient.getAmount());
+                contentValuesIngredients.put("cost", ingredient.getCost());
+
+                // insert into ingredients table
+                long resultIngredients = db.insert("Ingredients", null, contentValuesIngredients);
+                if (resultIngredients == -1){
+                    return false;
+                }
+
+                // insert into supermarket ingredients table
+                contentValuesShoppingListSupermarketIngredients.put("shopping_list_id", shoppingListId);
+                contentValuesShoppingListSupermarketIngredients.put("ingredient_id", resultIngredients);
+                contentValuesShoppingListSupermarketIngredients.put("supermarket", key);
+
+                // insert into supermarket ingredients table
+                long resultSupermarketIngredients = db.insert("Shopping_list_supermarket_ingredients", null, contentValuesShoppingListSupermarketIngredients);
+                if (resultSupermarketIngredients == -1){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public Cursor getShoppingListsCount() {
 
         SQLiteDatabase db = this.getReadableDatabase();

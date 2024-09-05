@@ -216,17 +216,32 @@ public class AddNewShoppingList extends AppCompatActivity {
 
         String shoppingListDescription = descriptionEditText.getText().toString();
 
-        // add SL to database
+        // add or update SL to database
         DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(this);
-        boolean status = db.addShoppingList(shoppingListName, shoppingListDescription, shoppingListIngredientsHashMap);
+        if (shoppingListId == -1){
+            boolean status = db.addShoppingList(shoppingListName, shoppingListDescription, shoppingListIngredientsHashMap);
 
-        // exit activity if successful
-        if (!status){
-            Toast.makeText(this, "Data adding failed", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Toast.makeText(this, "New shopping list added", Toast.LENGTH_SHORT).show();
-            getOnBackPressedDispatcher().onBackPressed();
+            // exit activity if successful
+            if (!status){
+                Toast.makeText(this, "Data adding failed", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(this, "New shopping list added", Toast.LENGTH_SHORT).show();
+                getOnBackPressedDispatcher().onBackPressed();
+            }
+
+        } else {
+            boolean status = db.updateShoppingListFromId(shoppingListId, shoppingListName, shoppingListDescription, shoppingListIngredientsHashMap);
+
+            // exit activity if successful
+            if (!status){
+                Toast.makeText(this, "Data editing failed", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(this, "Shopping list saved", Toast.LENGTH_SHORT).show();
+                getOnBackPressedDispatcher().onBackPressed();
+            }
+
         }
     }
 
