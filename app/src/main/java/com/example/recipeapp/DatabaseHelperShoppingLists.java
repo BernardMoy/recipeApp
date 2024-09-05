@@ -188,4 +188,52 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
         String update = "UPDATE Shopping_lists SET is_favourited = FALSE WHERE shopping_list_id = ?;";
         db.execSQL(update, new String[]{String.valueOf(shoppingListId)});
     }
+
+
+    // method to get data
+    public Cursor getShoppingListFromId(int shoppingListId){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT name, description " +
+                "FROM Shopping_lists WHERE shopping_list_id = ?;";
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, new String[]{String.valueOf(shoppingListId)});
+        }
+        return cursor;
+    }
+
+
+    public Cursor getShoppingListSupermarketIngredientsFromId(int shoppingListId){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT SLSI.supermarket, I.name, I.amount, I.cost, I.checked " +
+                "FROM Shopping_lists SL "+
+                "JOIN Shopping_list_supermarket_ingredients SLSI ON SL.shopping_list_id = SLSI.shopping_list_id "+
+                "JOIN Ingredients I ON SLSI.ingredient_id = I.ingredient_id " +
+                "WHERE SL.shopping_list_id = ?";
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, new String[]{String.valueOf(shoppingListId)});
+        }
+        return cursor;
+    }
+
+    public Cursor getSupermarketCountAndCostFromId(int shoppingListId, String supermarket){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT COUNT(I.ingredient_id), SUM(I.cost*I.amount) " +
+                "FROM Shopping_lists SL "+
+                "JOIN Shopping_list_supermarket_ingredients SLSI ON SL.shopping_list_id = SLSI.shopping_list_id "+
+                "JOIN Ingredients I ON SLSI.ingredient_id = I.ingredient_id " +
+                "WHERE SL.shopping_list_id = ? AND SLSI.supermarket = ?";
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, new String[]{String.valueOf(shoppingListId), supermarket});
+        }
+        return cursor;
+    }
 }

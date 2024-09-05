@@ -1,5 +1,6 @@
 package com.example.recipeapp;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -81,8 +82,26 @@ public class AddNewShoppingList extends AppCompatActivity {
         shoppingListId = -1;
 
         // Get the shoppingList id passed, if it exists
-        if (getIntent().hasExtra("shoppingList_id")) {
+        if (getIntent().hasExtra("shopping_list_id")) {
             shoppingListId = getIntent().getIntExtra("shopping_list_id", -1);
+
+            // Get information from the database
+            DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(getApplicationContext());
+            Cursor cursor = db.getShoppingListFromId(shoppingListId);
+
+
+            if (cursor.getCount() > 0) {
+                cursor.moveToNext();
+
+                String name = cursor.getString(0);
+                String desc = cursor.getString(1);
+
+                TextView nameEditText = (TextView) findViewById(R.id.shoppingListName_edittext);
+                nameEditText.setText(name);
+
+                TextView descEditText = (TextView) findViewById(R.id.shoppingListDesc_edittext);
+                descEditText.setText(desc);
+            }
         }
     }
 
