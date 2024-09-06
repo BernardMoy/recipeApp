@@ -16,11 +16,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -58,6 +60,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
     // two buttons for the dialog that pops up when delete button is clicked
     private Button cancelButton;
     private Button deleteButton;
+
+    // two buttons for the dialog that pops up to create SL from recipes
+    private Button cancelButton2;
+    private Button createShoppingListButton;
+    private EditText shoppingListNameEditText;
 
 
     public RecipeAdapter(Context ctx, ArrayList<RecipePreview> recipePreviewList, ConstraintLayout selectedOptionsConstraintLayout, LinearLayout filterOptionsLinearLayout){
@@ -292,6 +299,51 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                     }
                 });
 
+                dialog.show();
+            }
+        });
+
+
+        // set up listener for creating shopping list from recipes
+        createShoppingListFromRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // set up dialog
+                Dialog dialog = new Dialog(ctx);
+                dialog.setContentView(R.layout.create_shopping_list_window);
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().setBackgroundDrawable(getDrawable(ctx, R.drawable.custom_edit_text));
+                dialog.setCancelable(false);
+
+                // load the two buttons
+                cancelButton2 = dialog.findViewById(R.id.confirmShoppingListCreateCancel_button);
+                createShoppingListButton = dialog.findViewById(R.id.confirmShoppingListCreate_button);
+                shoppingListNameEditText = dialog.findViewById(R.id.createShoppingListName_edittext);
+
+                // set listener for cancel
+                cancelButton2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // Remove the dialog
+                        dialog.dismiss();
+                    }
+                });
+                
+                // set listener for confirm
+                createShoppingListButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        String shoppingListName = shoppingListNameEditText.getText().toString();
+
+                        // empty name
+                        if (shoppingListName.isEmpty()){
+                            Toast.makeText(ctx, "Shopping list name is empty", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                // show dialog
                 dialog.show();
             }
         });

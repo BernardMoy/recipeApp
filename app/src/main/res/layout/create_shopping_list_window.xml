@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/backgroundColor">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/title_font_size"
+        android:text="Create shopping list?"
+        android:layout_margin="@dimen/title_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textSize="@dimen/content_font_size"
+        android:text="A new shopping list will be created from these recipes."
+        android:textColor="@color/gray"
+        android:layout_marginTop="@dimen/content_margin"
+        android:layout_marginBottom="@dimen/title_margin"
+        android:layout_marginStart="@dimen/content_margin"
+        android:layout_marginEnd="@dimen/content_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView2" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/content_font_size"
+        android:text="Enter shopping list name"
+        android:textColor="@color/primaryColor"
+        android:layout_marginTop="@dimen/title_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView4" />
+
+    <EditText
+        android:id="@+id/createShoppingListName_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/image_button_size"
+        android:background="@drawable/custom_edit_text"
+        android:drawableStart="@drawable/brush_icon"
+        android:drawableTint="@color/gray"
+        android:hint=" Shopping list name "
+        android:paddingStart="@dimen/content_margin"
+        android:paddingEnd="@dimen/content_margin"
+        android:layout_marginTop="@dimen/content_margin"
+        android:inputType="text"
+        android:maxLength="100"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/content_font_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView3" />
+
+    <Button
+        android:id="@+id/confirmShoppingListCreateCancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/title_margin"
+        android:text="Cancel"
+        app:cornerRadius = "0dp"
+        android:backgroundTint="@color/lightGray"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/confirmShoppingListCreate_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createShoppingListName_edittext" />
+
+    <Button
+        android:id="@+id/confirmShoppingListCreate_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/title_margin"
+        android:text="Create!"
+        app:cornerRadius = "0dp"
+        android:backgroundTint="@color/primaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/confirmShoppingListCreateCancel_button"
+        app:layout_constraintTop_toBottomOf="@+id/createShoppingListName_edittext" />
+</androidx.constraintlayout.widget.ConstraintLayout>
