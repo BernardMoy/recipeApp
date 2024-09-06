@@ -331,6 +331,13 @@ public class RecipeFragment extends Fragment {
         recipeAdapter = new RecipeAdapter(getActivity(), recipePreviewArrayList, selectedOptionsConstraintLayout, filterOptionsLinearLayout);
         recipeRecyclerView.setAdapter(recipeAdapter);
 
+        // if there are no items, make the selected blue top bar not visible
+        if (recipePreviewArrayList.isEmpty()) {
+            selectedOptionsConstraintLayout.setVisibility(View.GONE);
+            selectedOptionsConstraintLayout.setEnabled(false);
+            filterOptionsLinearLayout.setVisibility(View.VISIBLE);
+            filterOptionsLinearLayout.setEnabled(true);
+        }
 
         // 3. Update the recipe tags filter recyclerview: load the recipe tag filter recycler view
         Context ctx = getContext();

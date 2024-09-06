@@ -277,6 +277,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                         TextView textView = (TextView) ((Activity) ctx).findViewById(R.id.recipeCount_textView);
                         textView.setText(countString);
 
+                        // display empty message if all recipes are deleted
+                        if (recipePreviewList.isEmpty()){
+                            TextView emptyRecipeTextView = (TextView) ((Activity) ctx).findViewById(R.id.emptyRecipes_textView);
+                            emptyRecipeTextView.setVisibility(View.VISIBLE);
+                        }
+
                         // Remove the dialog
                         dialog.dismiss();
 
