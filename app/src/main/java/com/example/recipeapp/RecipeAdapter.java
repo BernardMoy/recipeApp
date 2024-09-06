@@ -39,6 +39,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
 
     // list to store all recipe IDs that are selected through checkbox
     private HashSet<Integer> checkedRecipeSet;
+    private HashSet<CheckBox> checkedBoxesSet;
 
     // a list of tags that the selected item should have
     private HashSet<String> selectedTagsSet;
@@ -49,6 +50,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
     private TextView selectedCountTextView;
     private ImageButton createShoppingListFromRecipeButton;
     private ImageButton deleteRecipesButton;
+    private ImageButton deselectbutton;
 
     // two buttons for the dialog that pops up when delete button is clicked
     private Button cancelButton;
@@ -153,13 +155,17 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
         selectedCountTextView = selectedOptionsBar.findViewById(R.id.selectedCount_textView);
         createShoppingListFromRecipeButton = selectedOptionsBar.findViewById(R.id.createShoppingListFromRecipe_button);
         deleteRecipesButton = selectedOptionsBar.findViewById(R.id.deleteRecipes_button);
+        deselectbutton = selectedOptionsBar.findViewById(R.id.deselect_button);
 
         // make the top bar not visible
         selectedOptionsBar.setVisibility(View.GONE);
 
         // set up functionality of checkbox
         checkedRecipeSet = new HashSet<>();
-        holder.getCheckBox().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        checkedBoxesSet = new HashSet<>();
+
+        CheckBox currentCheckBox = holder.getCheckBox();
+        currentCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 // get the current pos and recipe id
@@ -168,11 +174,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
 
                 if (b) {
                     checkedRecipeSet.add(recipeId);
+                    checkedBoxesSet.add(currentCheckBox);
                     selectedOptionsBar.setVisibility(View.VISIBLE);
 
                 } else {
                     // remove if the id is in set.
                     checkedRecipeSet.remove(recipeId);
+                    checkedBoxesSet.remove(currentCheckBox);
 
                     if (checkedRecipeSet.isEmpty()){
                         selectedOptionsBar.setVisibility(View.GONE);
@@ -182,6 +190,22 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                 // update displayed count
                 String countStr = String.valueOf(checkedRecipeSet.size()) + " selected";
                 selectedCountTextView.setText(countStr);
+            }
+        });
+
+        // set deselect button functionality
+        deselectbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // clear all checked set
+                checkedRecipeSet.clear();
+
+                // mark all checkboxes as unvisited
+                // copy is needed to prevent set change size during iter
+                HashSet<CheckBox> copy = new HashSet<>(checkedBoxesSet);
+                for (CheckBox cb : copy){
+                    cb.setChecked(false);
+                }
             }
         });
 
