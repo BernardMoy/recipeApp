@@ -39,7 +39,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
     private boolean favouriteFilterSelected;  // Store whether the favourite icon in the search filter is selected
 
     // list to store all recipe IDs that are selected through checkbox
-    private HashSet<Integer> checkedRecipeSet;
+    private HashSet<Integer> checkedRecipeIdSet;
     private HashSet<CheckBox> checkedBoxesSet;
 
     // a list of tags that the selected item should have
@@ -165,7 +165,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
         toggleSelectedBar(false);
 
         // set up functionality of checkbox
-        checkedRecipeSet = new HashSet<>();
+        checkedRecipeIdSet = new HashSet<>();
         checkedBoxesSet = new HashSet<>();
 
         CheckBox currentCheckBox = holder.getCheckBox();
@@ -177,22 +177,22 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                 int recipeId = recipePreviewList.get(pos).getRecipeId();
 
                 if (b) {
-                    checkedRecipeSet.add(recipeId);
+                    checkedRecipeIdSet.add(recipeId);
                     checkedBoxesSet.add(currentCheckBox);
                     toggleSelectedBar(true);
 
                 } else {
                     // remove if the id is in set.
-                    checkedRecipeSet.remove(recipeId);
+                    checkedRecipeIdSet.remove(recipeId);
                     checkedBoxesSet.remove(currentCheckBox);
 
-                    if (checkedRecipeSet.isEmpty()){
+                    if (checkedRecipeIdSet.isEmpty()){
                         toggleSelectedBar(false);
 
                     }
                 }
                 // update displayed count
-                String countStr = String.valueOf(checkedRecipeSet.size()) + " selected";
+                String countStr = String.valueOf(checkedRecipeIdSet.size()) + " selected";
                 selectedCountTextView.setText(countStr);
             }
         });
@@ -201,32 +201,20 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
         deselectbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // clear all checked set
-                checkedRecipeSet.clear();
-
-                // mark all checkboxes as unvisited
-                // copy is needed to prevent set change size during iter
-                HashSet<CheckBox> copy = new HashSet<>(checkedBoxesSet);
-                for (CheckBox cb : copy){
-                    cb.setChecked(false);
-                }
+                deselectAll();
             }
         });
 
 
-
-        // set up listener for the delete button of a recipe
-        /*
-        holder.getDeleteButton().setOnClickListener(new View.OnClickListener() {
+        deleteRecipesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int pos = holder.getAdapterPosition();
-
+                // set up dialog
                 Dialog dialog = new Dialog(ctx);
                 dialog.setContentView(R.layout.confirm_window);
                 dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 dialog.getWindow().setBackgroundDrawable(getDrawable(ctx, R.drawable.custom_edit_text));
-                dialog.setCancelable(false);     // wont disappear when clicked outside of it
+                dialog.setCancelable(false);
 
                 // load the two buttons
                 cancelButton = dialog.findViewById(R.id.confirmRecipeCancel_button);
@@ -244,25 +232,42 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                 deleteButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        // Delete the recipe here
-                        int recipeId = recipePreviewList.get(pos).getRecipeId();
+                        // checkedRecipeIdSet stores all recipes ids to be deleted
+                        ArrayList<Integer> posToBeRemovedList = new ArrayList<>();
+                        ArrayList<Integer> posToBeRemovedListFull = new ArrayList<>();
 
-                        DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
-                        db.deleteRecipeFromId(recipeId);
-
-                        // update the recipe Preview lists
+                        // add the positions to be removed to the posToBeRemovedList
+                        // by checking if that row recipeId is to be deleted.
                         for (int i = 0; i < recipePreviewList.size(); i++){
-                            if (recipePreviewList.get(i).getRecipeId() == recipeId){
-                                recipePreviewList.remove(i);
-                                break;
+                            int currentRecipeId = recipePreviewList.get(i).getRecipeId();
+
+                            if (checkedRecipeIdSet.contains(currentRecipeId)){
+                                posToBeRemovedList.add(i);
                             }
                         }
 
                         for (int i = 0; i < recipePreviewListFull.size(); i++){
-                            if (recipePreviewListFull.get(i).getRecipeId() == recipeId){
-                                recipePreviewListFull.remove(i);
-                                break;
+                            int currentRecipeId = recipePreviewListFull.get(i).getRecipeId();
+
+                            if (checkedRecipeIdSet.contains(currentRecipeId)){
+                                posToBeRemovedListFull.add(i);
                             }
+                        }
+
+                        // remove item from the two arraylists in reverse order
+                        for (int i = posToBeRemovedList.size() - 1; i >= 0; i--) {
+                            recipePreviewList.remove(i);
+                            notifyItemRemoved(i);
+                        }
+
+                        for (int i = posToBeRemovedListFull.size() - 1; i >= 0; i--) {
+                            recipePreviewListFull.remove(i);
+                        }
+
+                        // remove corresponding recipe ids in database
+                        DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
+                        for (int recipeId : checkedRecipeIdSet) {
+                            db.deleteRecipeFromId(recipeId);
                         }
 
                         // Updates the recipe count displayed
@@ -270,19 +275,19 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                         TextView textView = (TextView) ((Activity) ctx).findViewById(R.id.recipeCount_textView);
                         textView.setText(countString);
 
-                        // update the recyclerview
-                        notifyItemRemoved(pos);
-
                         // Remove the dialog
                         dialog.dismiss();
+
+                        // deselect all and return the original bars
+                        deselectAll();
+
                     }
                 });
 
-                // show dialog
                 dialog.show();
             }
         });
-        */
+
 
         // Set up listener for the entire recyclerview: When it is clicked, addNewRecipe activity is launched
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -414,5 +419,20 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
             filterOptionsLinearLayout.setEnabled(true);
 
         }
+    }
+
+    public void deselectAll(){
+        // clear all checked set
+        checkedRecipeIdSet.clear();
+        checkedBoxesSet.clear();
+
+        // mark all checkboxes as unvisited
+        // copy is needed to prevent set change size during iter
+        HashSet<CheckBox> copy = new HashSet<>(checkedBoxesSet);
+        for (CheckBox cb : copy){
+            cb.setChecked(false);
+        }
+
+        toggleSelectedBar(false);
     }
 }
