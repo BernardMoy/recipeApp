@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/primaryColor"
-            android:id="@+id/selectedOptions_bar">
+            android:id="@+id/selectedOptions_constraintLayout">
 
             <ImageButton
                 android:id="@+id/deselect_button"
@@ -79,118 +79,127 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <SearchView
-                android:id="@+id/recipes_searchView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/content_margin"
-                android:iconifiedByDefault="false"
-                android:queryHint="Search recipes..."
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/recipeTagsFilter_button"
-                app:layout_constraintTop_toTopOf="parent">
-
-            </SearchView>
-
-            <ToggleButton
-                android:id="@+id/recipeTagsFilter_button"
-                android:layout_width="@dimen/image_button_size"
-                android:layout_height="@dimen/image_button_size"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/content_margin"
-                android:background="@drawable/filter_list_icon_selector"
-                android:contentDescription="Show filters"
-                android:text=""
-                android:textOff=""
-                android:textOn=""
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/recipes_searchView"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="UseAppTint" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/searchFilter_hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/title_margin"
-            android:textColor="@color/gray"
-            android:text="Filter by tags" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recipeTagsFilter_recyclerView"
+        <LinearLayout
+            android:id="@+id/filterOptions_linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/title_margin"
-            tools:itemCount="1" />
+            android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="@dimen/content_margin"
-            android:layout_marginEnd="@dimen/content_margin"
-            android:background="@android:color/darker_gray"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                <SearchView
+                    android:id="@+id/recipes_searchView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/content_margin"
+                    android:iconifiedByDefault="false"
+                    android:queryHint="Search recipes..."
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/recipeTagsFilter_button"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <AutoCompleteTextView
-                android:id="@+id/recipe_dropDown"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="200dp"
-                android:background="@drawable/custom_edit_text"
-                android:backgroundTint="@color/veryLightColor"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/dropdown_icon"
-                android:layout_marginTop="@dimen/content_margin"
-                android:layout_marginBottom="@dimen/content_margin"
-                android:layout_marginEnd="@dimen/content_margin"
-                android:inputType="none"
-                android:text="@string/recipe_dropDown_hint"
-                android:textSize="@dimen/content_font_size"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                </SearchView>
+
+                <ToggleButton
+                    android:id="@+id/recipeTagsFilter_button"
+                    android:layout_width="@dimen/image_button_size"
+                    android:layout_height="@dimen/image_button_size"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/content_margin"
+                    android:background="@drawable/filter_list_icon_selector"
+                    android:contentDescription="Show filters"
+                    android:text=""
+                    android:textOff=""
+                    android:textOn=""
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/recipes_searchView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="UseAppTint" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                android:id="@+id/recipeCount_textView"
+                android:id="@+id/searchFilter_hint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0 results"
                 android:layout_marginStart="@dimen/title_margin"
                 android:textColor="@color/gray"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:text="Filter by tags" />
 
-            <ToggleButton
-                android:id="@+id/fav_toggleButton"
-                android:layout_width="@dimen/image_button_size"
-                android:layout_height="@dimen/image_button_size"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recipeTagsFilter_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/title_margin"
+                tools:itemCount="1" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/content_margin"
                 android:layout_marginEnd="@dimen/content_margin"
-                android:text=""
-                android:textOff=""
-                android:textOn=""
-                android:background="@drawable/fav_button_selector"
-                app:layout_constraintEnd_toStartOf="@+id/recipe_dropDown"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:background="@android:color/darker_gray"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:id="@+id/recipe_dropDown"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="200dp"
+                    android:background="@drawable/custom_edit_text"
+                    android:backgroundTint="@color/veryLightColor"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/dropdown_icon"
+                    android:layout_marginTop="@dimen/content_margin"
+                    android:layout_marginBottom="@dimen/content_margin"
+                    android:layout_marginEnd="@dimen/content_margin"
+                    android:inputType="none"
+                    android:text="@string/recipe_dropDown_hint"
+                    android:textSize="@dimen/content_font_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/recipeCount_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 results"
+                    android:layout_marginStart="@dimen/title_margin"
+                    android:textColor="@color/gray"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ToggleButton
+                    android:id="@+id/fav_toggleButton"
+                    android:layout_width="@dimen/image_button_size"
+                    android:layout_height="@dimen/image_button_size"
+                    android:layout_marginEnd="@dimen/content_margin"
+                    android:text=""
+                    android:textOff=""
+                    android:textOn=""
+                    android:background="@drawable/fav_button_selector"
+                    app:layout_constraintEnd_toStartOf="@+id/recipe_dropDown"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id = "@+id/recipe_recyclerView"
+            android:layout_marginTop="@dimen/content_margin"
             android:layout_marginStart="@dimen/content_margin"
             android:layout_marginEnd="@dimen/content_margin"
             android:layout_width="match_parent"

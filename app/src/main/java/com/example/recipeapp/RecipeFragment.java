@@ -23,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
 import android.widget.Filter;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -76,7 +77,8 @@ public class RecipeFragment extends Fragment {
     private ToggleButton favToggleButton;
 
     // for the top bar that is displayed when some items are selected
-    private ConstraintLayout selectedOptionsBar;
+    private ConstraintLayout selectedOptionsConstraintLayout;
+    private LinearLayout filterOptionsLinearLayout;
 
 
 
@@ -158,7 +160,8 @@ public class RecipeFragment extends Fragment {
         recipeRecyclerView = (RecyclerView) view.findViewById(R.id.recipe_recyclerView);
 
         // load top bar
-        selectedOptionsBar = view.findViewById(R.id.selectedOptions_bar);
+        selectedOptionsConstraintLayout = view.findViewById(R.id.selectedOptions_constraintLayout);
+        filterOptionsLinearLayout = view.findViewById(R.id.filterOptions_linearLayout);
 
         // Sets on click listener for the recipe tags filter button.
         // make the hint button and recyclerview not visible
@@ -325,7 +328,7 @@ public class RecipeFragment extends Fragment {
         recipeRecyclerView.setLayoutManager(linearLayoutManager);
 
         // crete a new adapter from the modified recipe preview array list
-        recipeAdapter = new RecipeAdapter(getActivity(), recipePreviewArrayList, selectedOptionsBar);
+        recipeAdapter = new RecipeAdapter(getActivity(), recipePreviewArrayList, selectedOptionsConstraintLayout, filterOptionsLinearLayout);
         recipeRecyclerView.setAdapter(recipeAdapter);
 
 

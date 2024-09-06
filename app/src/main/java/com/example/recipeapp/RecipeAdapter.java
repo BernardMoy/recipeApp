@@ -19,6 +19,7 @@ import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,7 +47,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
 
     // a constraint layout for the top bar that is visible only when some items are checked
     // this bar is passed from the recipe fragment that creates the adapter
-    private ConstraintLayout selectedOptionsBar;
+    private ConstraintLayout selectedOptionsConstraintLayout;
+    private LinearLayout filterOptionsLinearLayout;
+
     private TextView selectedCountTextView;
     private ImageButton createShoppingListFromRecipeButton;
     private ImageButton deleteRecipesButton;
@@ -57,14 +60,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
     private Button deleteButton;
 
 
-    public RecipeAdapter(Context ctx, ArrayList<RecipePreview> recipePreviewList, ConstraintLayout selectedOptionsBar){
+    public RecipeAdapter(Context ctx, ArrayList<RecipePreview> recipePreviewList, ConstraintLayout selectedOptionsConstraintLayout, LinearLayout filterOptionsLinearLayout){
         this.ctx = ctx;
         this.recipePreviewListFull = recipePreviewList;
         this.recipePreviewList = new ArrayList<>(recipePreviewListFull);
         this.selectedTagsSet = new HashSet<>();
         this.favouriteFilterSelected = false;
 
-        this.selectedOptionsBar = selectedOptionsBar;
+        this.selectedOptionsConstraintLayout = selectedOptionsConstraintLayout;
+        this.filterOptionsLinearLayout = filterOptionsLinearLayout;
     }
 
     @NonNull
@@ -152,13 +156,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
         });
 
         // load elements of the top bar
-        selectedCountTextView = selectedOptionsBar.findViewById(R.id.selectedCount_textView);
-        createShoppingListFromRecipeButton = selectedOptionsBar.findViewById(R.id.createShoppingListFromRecipe_button);
-        deleteRecipesButton = selectedOptionsBar.findViewById(R.id.deleteRecipes_button);
-        deselectbutton = selectedOptionsBar.findViewById(R.id.deselect_button);
+        selectedCountTextView = selectedOptionsConstraintLayout.findViewById(R.id.selectedCount_textView);
+        createShoppingListFromRecipeButton = selectedOptionsConstraintLayout.findViewById(R.id.createShoppingListFromRecipe_button);
+        deleteRecipesButton = selectedOptionsConstraintLayout.findViewById(R.id.deleteRecipes_button);
+        deselectbutton = selectedOptionsConstraintLayout.findViewById(R.id.deselect_button);
 
         // make the top bar not visible
-        selectedOptionsBar.setVisibility(View.GONE);
+        toggleSelectedBar(false);
 
         // set up functionality of checkbox
         checkedRecipeSet = new HashSet<>();
@@ -175,7 +179,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                 if (b) {
                     checkedRecipeSet.add(recipeId);
                     checkedBoxesSet.add(currentCheckBox);
-                    selectedOptionsBar.setVisibility(View.VISIBLE);
+                    toggleSelectedBar(true);
 
                 } else {
                     // remove if the id is in set.
@@ -183,7 +187,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                     checkedBoxesSet.remove(currentCheckBox);
 
                     if (checkedRecipeSet.isEmpty()){
-                        selectedOptionsBar.setVisibility(View.GONE);
+                        toggleSelectedBar(false);
 
                     }
                 }
@@ -391,5 +395,24 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
 
         boolean tagsValidated = actualTagsSet.containsAll(selectedTagsSet);
         return tagsValidated;
+    }
+
+    // function to turn on / off the top selected bar
+    public void toggleSelectedBar(Boolean b){
+        if (b) {
+            selectedOptionsConstraintLayout.setVisibility(View.VISIBLE);
+            selectedOptionsConstraintLayout.setEnabled(true);
+
+            filterOptionsLinearLayout.setVisibility(View.GONE);
+            filterOptionsLinearLayout.setEnabled(false);
+
+        } else {
+            selectedOptionsConstraintLayout.setVisibility(View.GONE);
+            selectedOptionsConstraintLayout.setEnabled(false);
+
+            filterOptionsLinearLayout.setVisibility(View.VISIBLE);
+            filterOptionsLinearLayout.setEnabled(true);
+
+        }
     }
 }
