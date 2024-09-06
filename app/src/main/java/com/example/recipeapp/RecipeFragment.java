@@ -325,6 +325,7 @@ public class RecipeFragment extends Fragment {
         recipePreviewArrayList = displayRecipesFromDatabase();
         // set up recycler view
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, true);
+        linearLayoutManager.setStackFromEnd(true);
         recipeRecyclerView.setLayoutManager(linearLayoutManager);
 
         // crete a new adapter from the modified recipe preview array list
