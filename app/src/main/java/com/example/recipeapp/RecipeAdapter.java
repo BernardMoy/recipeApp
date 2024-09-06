@@ -354,6 +354,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                             DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(ctx);
                             db.addShoppingList(shoppingListName, "", map);
 
+                            // deselect all checkboxes
+                            deselectAll();
+
                             // message
                             Toast.makeText(ctx, "Shopping list successfully created", Toast.LENGTH_SHORT).show();
 
@@ -503,7 +506,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
     public void deselectAll(){
         // clear all checked set
         checkedRecipeIdSet.clear();
-        checkedBoxesSet.clear();
 
         // mark all checkboxes as unvisited
         // copy is needed to prevent set change size during iter
@@ -512,6 +514,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
             cb.setChecked(false);
         }
 
+        checkedBoxesSet.clear();
         toggleSelectedBar(false);
     }
 
