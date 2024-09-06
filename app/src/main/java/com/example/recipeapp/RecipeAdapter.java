@@ -29,8 +29,14 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import kotlin.Triple;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder> implements Filterable {
 
@@ -339,6 +345,19 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                         // empty name
                         if (shoppingListName.isEmpty()){
                             Toast.makeText(ctx, "Shopping list name is empty", Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            // pass the recipe id set to generate shopping list data
+                            LinkedHashMap<String, ArrayList<ShoppingListIngredient>> map = generateShoppingListFromRecipeIds(checkedRecipeIdSet);
+
+                            // add to db
+                            DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(ctx);
+                            db.addShoppingList(shoppingListName, "", map);
+
+                            // message
+                            Toast.makeText(ctx, "Shopping list successfully created", Toast.LENGTH_SHORT).show();
+
+                            dialog.dismiss();
                         }
                     }
                 });
@@ -494,5 +513,82 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
         }
 
         toggleSelectedBar(false);
+    }
+
+
+    /**
+     * method to generate shopping list ingredients from a set of recipe ids.
+     * 2 ingredients are considered identical if their NAME (CASE SENSITIVE), COST and SUPERMARKET are the same.
+     * Hence, (supermarket, name, cost) uniquely identifies an ingredient.
+     * It is stored before elements are added to the final hashMap.
+     *
+     * @param recipeIdSet
+     * @return
+     */
+    public LinkedHashMap<String, ArrayList<ShoppingListIngredient>> generateShoppingListFromRecipeIds(HashSet<Integer> recipeIdSet){
+
+        // 1. add all ingredients to this hashset to uniquely identify them first
+        // key = triple, value = amount
+        HashMap<Triple<String, String, Float>, Float> uniqueIngredientsMap = new HashMap<>();
+        DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
+
+        // extract information from each recipe id and put them into hashmap
+        String name;
+        Float amount;
+        String supermarket;
+        Float cost;
+
+        for (int recipeId : recipeIdSet){
+            Cursor cursor = db.getIngredientsFromId(recipeId);
+            if (cursor.getCount() > 0){
+                while (cursor.moveToNext()){
+                    name = cursor.getString(0);
+                    amount = cursor.getFloat(1);
+                    supermarket = cursor.getString(2);
+                    cost = cursor.getFloat(3);
+
+                    // add triples to hashset
+                    Triple<String, String, Float> triple = new Triple<>(supermarket, name, cost);
+                    if (uniqueIngredientsMap.containsKey(triple)){
+                        Float originalAmount = uniqueIngredientsMap.get(triple);
+                        uniqueIngredientsMap.put(triple, originalAmount + amount);
+
+                    } else {
+                        uniqueIngredientsMap.put(triple, amount);
+                    }
+
+                }
+            }
+        }
+
+        // 2. Create the LinkedHashMap from the set of ingredient triples
+        LinkedHashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientMap = new LinkedHashMap<>();
+
+        for (Map.Entry<Triple<String, String, Float>, Float> entry : uniqueIngredientsMap.entrySet()){
+            Triple<String, String, Float> key = entry.getKey();
+            String finalSupermarket = key.getFirst();
+            String finalIngredientName = key.getSecond();
+            Float finalCost = key.getThird();
+
+            Float totalAmount = entry.getValue();
+
+            // round up the total amount
+            int totalAmountRoundedUp = (int) Math.ceil(totalAmount);
+
+            // create ShoppingListIngredient
+            ShoppingListIngredient shoppingListIngredient = new ShoppingListIngredient(finalIngredientName, totalAmountRoundedUp, finalCost, false);
+
+            // add the ShoppingListIngredient to the linked hash map
+            if (shoppingListIngredientMap.containsKey(finalSupermarket)){
+                shoppingListIngredientMap.get(finalSupermarket).add(shoppingListIngredient);
+
+            } else {
+                ArrayList<ShoppingListIngredient> arrayList = new ArrayList<>();
+                arrayList.add(shoppingListIngredient);
+                shoppingListIngredientMap.put(finalSupermarket, arrayList);
+
+            }
+        }
+        return shoppingListIngredientMap;
     }
 }
