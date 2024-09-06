@@ -256,12 +256,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
 
                         // remove item from the two arraylists in reverse order
                         for (int i = posToBeRemovedList.size() - 1; i >= 0; i--) {
-                            recipePreviewList.remove(i);
-                            notifyItemRemoved(i);
+                            int pos = posToBeRemovedList.get(i);
+                            recipePreviewList.remove(pos);
+                            notifyItemRemoved(pos);
                         }
 
                         for (int i = posToBeRemovedListFull.size() - 1; i >= 0; i--) {
-                            recipePreviewListFull.remove(i);
+                            int pos = posToBeRemovedListFull.get(i);
+                            recipePreviewListFull.remove(pos);
                         }
 
                         // remove corresponding recipe ids in database
