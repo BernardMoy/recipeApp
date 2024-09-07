@@ -58,23 +58,12 @@
                 android:layout_height="@dimen/image_button_size"
                 android:backgroundTint="@android:color/transparent"
                 android:contentDescription="Deselect"
-                app:layout_constraintEnd_toStartOf="@id/deleteRecipes_button"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:srcCompat="@drawable/shopping_list_add_icon"
                 app:tint="@color/white" />
 
-            <ImageButton
-                android:id="@+id/deleteRecipes_button"
-                android:layout_width="@dimen/image_button_size"
-                android:layout_height="@dimen/image_button_size"
-                android:backgroundTint="@color/secondaryColor"
-                android:contentDescription="Deselect"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:srcCompat="@drawable/delete_icon"
-                app:tint="@color/white" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

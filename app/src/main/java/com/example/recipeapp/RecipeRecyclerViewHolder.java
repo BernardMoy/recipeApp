@@ -21,7 +21,9 @@ public class RecipeRecyclerViewHolder extends RecyclerView.ViewHolder {
     private TextView timesCooked;
     private ImageView image;
     private ToggleButton toggleButton;
-    private CheckBox checkBox;
+    private ImageButton addImageButton;
+    private ImageButton minusImageButton;
+    private TextView countTextView;
 
     public RecipeRecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -33,7 +35,9 @@ public class RecipeRecyclerViewHolder extends RecyclerView.ViewHolder {
         timesCooked = itemView.findViewById(R.id.recipeRow_timesCooked);
         image = itemView.findViewById(R.id.recipeRow_image);
         toggleButton = itemView.findViewById(R.id.recipeRow_toggleButton);
-        checkBox = itemView.findViewById(R.id.checkBox);
+        addImageButton = itemView.findViewById(R.id.add_imageButton);
+        countTextView = itemView.findViewById(R.id.count_textView);
+        minusImageButton = itemView.findViewById(R.id.minus_imageButton);
     }
 
     public TextView getName() {
@@ -68,7 +72,15 @@ public class RecipeRecyclerViewHolder extends RecyclerView.ViewHolder {
         return toggleButton;
     }
 
-    public CheckBox getCheckBox() {
-        return checkBox;
+    public ImageButton getAddImageButton() {
+        return addImageButton;
+    }
+
+    public TextView getCountTextView() {
+        return countTextView;
+    }
+
+    public ImageButton getMinusImageButton() {
+        return minusImageButton;
     }
 }

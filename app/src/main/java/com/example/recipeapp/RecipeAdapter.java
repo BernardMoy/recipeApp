@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.w3c.dom.Text;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,8 +50,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
     private boolean favouriteFilterSelected;  // Store whether the favourite icon in the search filter is selected
 
     // list to store all recipe IDs that are selected through checkbox
-    private HashSet<Integer> checkedRecipeIdSet;
-    private HashSet<CheckBox> checkedBoxesSet;
+    private HashMap<Integer, Integer> selectedRecipeIdMap;
+    private HashSet<TextView> selectedTextViewSet;
 
     // a list of tags that the selected item should have
     private HashSet<String> selectedTagsSet;
@@ -177,11 +180,66 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
         // make the top bar not visible
         toggleSelectedBar(false);
 
-        // set up functionality of checkbox
-        checkedRecipeIdSet = new HashSet<>();
-        checkedBoxesSet = new HashSet<>();
+        // set up functionality of add buttons
+        selectedRecipeIdMap = new HashMap<>();
+        selectedTextViewSet = new HashSet<>();
 
-        CheckBox currentCheckBox = holder.getCheckBox();
+        ImageButton currentAddButton = holder.getAddImageButton();
+        ImageButton currentMinusButton = holder.getMinusImageButton();
+        TextView currentCountTextView = holder.getCountTextView();
+
+        // add the recipe data to the hashmap if clicked on button
+        currentAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int pos = holder.getAdapterPosition();
+                int clickedRecipeId = recipePreviewList.get(pos).getRecipeId();
+
+                // modify the map and textview
+                if (selectedRecipeIdMap.containsKey(clickedRecipeId)){
+                    int newCount = selectedRecipeIdMap.get(clickedRecipeId) + 1;
+                    selectedRecipeIdMap.put(clickedRecipeId, newCount);
+                    currentCountTextView.setText(String.valueOf(newCount));
+
+                    // if newCount is 1, add to set
+                    if (newCount == 1){
+                        selectedTextViewSet.add(currentCountTextView);
+                    }
+
+                } else {
+                    selectedRecipeIdMap.put(clickedRecipeId, 1);
+                    currentCountTextView.setText(String.valueOf(1));
+
+                }
+
+            }
+        });
+
+        currentMinusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int pos = holder.getAdapterPosition();
+                int clickedRecipeId = recipePreviewList.get(pos).getRecipeId();
+
+                // modify the map and textview
+                if (selectedRecipeIdMap.containsKey(clickedRecipeId)){
+                    int newCount = selectedRecipeIdMap.get(clickedRecipeId) - 1;
+
+                    if (newCount >= 0){
+                        selectedRecipeIdMap.put(clickedRecipeId, newCount);
+                        currentCountTextView.setText(String.valueOf(newCount));
+
+                        // if newCount is 0, remove the textview from the set
+                        if (newCount == 0){
+                            selectedTextViewSet.remove(currentCountTextView);
+                        }
+                    }
+
+                }  // else, this button does nothing (The newCount is <0 -> Not valid)
+            }
+        });
+
+        /*
         currentCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -210,6 +268,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
             }
         });
 
+         */
+
         // set deselect button functionality
         deselectbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -218,7 +278,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
             }
         });
 
-
+        /*
         deleteRecipesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -309,6 +369,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
             }
         });
 
+         */
+
 
         // set up listener for creating shopping list from recipes
         createShoppingListFromRecipeButton.setOnClickListener(new View.OnClickListener() {
@@ -348,7 +410,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
 
                         } else {
                             // pass the recipe id set to generate shopping list data
-                            LinkedHashMap<String, ArrayList<ShoppingListIngredient>> map = generateShoppingListFromRecipeIds(checkedRecipeIdSet);
+                            LinkedHashMap<String, ArrayList<ShoppingListIngredient>> map = generateShoppingListFromRecipeIds(selectedRecipeIdMap);
 
                             // add to db
                             DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(ctx);
@@ -487,15 +549,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
     // function to turn on / off the top selected bar
     public void toggleSelectedBar(Boolean b){
         if (b) {
-            selectedOptionsConstraintLayout.setVisibility(View.VISIBLE);
-            selectedOptionsConstraintLayout.setEnabled(true);
+            // selectedOptionsConstraintLayout.setVisibility(View.VISIBLE);
+            // selectedOptionsConstraintLayout.setEnabled(true);
 
             filterOptionsLinearLayout.setVisibility(View.GONE);
             filterOptionsLinearLayout.setEnabled(false);
 
         } else {
-            selectedOptionsConstraintLayout.setVisibility(View.GONE);
-            selectedOptionsConstraintLayout.setEnabled(false);
+            // selectedOptionsConstraintLayout.setVisibility(View.GONE);
+            // selectedOptionsConstraintLayout.setEnabled(false);
 
             filterOptionsLinearLayout.setVisibility(View.VISIBLE);
             filterOptionsLinearLayout.setEnabled(true);
@@ -504,17 +566,21 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
     }
 
     public void deselectAll(){
-        // clear all checked set
-        checkedRecipeIdSet.clear();
+        // clear the hashmap
+        selectedRecipeIdMap.clear();
 
-        // mark all checkboxes as unvisited
-        // copy is needed to prevent set change size during iter
-        HashSet<CheckBox> copy = new HashSet<>(checkedBoxesSet);
-        for (CheckBox cb : copy){
-            cb.setChecked(false);
+        // change all textviews to display 0
+        HashSet<TextView> copy = new HashSet<>(selectedTextViewSet);
+        Log.d("LENGTH", String.valueOf(copy.size()));
+
+        for (TextView tv : copy){
+            tv.setText("0");
         }
 
-        checkedBoxesSet.clear();
+        // clear all sets
+        selectedTextViewSet.clear();
+
+        // toggle off the bar
         toggleSelectedBar(false);
     }
 
@@ -525,10 +591,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
      * Hence, (supermarket, name, cost) uniquely identifies an ingredient.
      * It is stored before elements are added to the final hashMap.
      *
-     * @param recipeIdSet
-     * @return
+     * @param selectedRecipeIdMap a hashmap where key is the recipeId, value is the count of it.
+     * @return a linkedhashmap that is ready to be put into the database
      */
-    public LinkedHashMap<String, ArrayList<ShoppingListIngredient>> generateShoppingListFromRecipeIds(HashSet<Integer> recipeIdSet){
+    public LinkedHashMap<String, ArrayList<ShoppingListIngredient>> generateShoppingListFromRecipeIds(HashMap<Integer, Integer> selectedRecipeIdMap){
 
         // 1. add all ingredients to this hashset to uniquely identify them first
         // key = triple, value = amount
@@ -541,14 +607,17 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
         String supermarket;
         Float cost;
 
-        for (int recipeId : recipeIdSet){
+        for (Map.Entry<Integer, Integer> entry : selectedRecipeIdMap.entrySet()){
+            int recipeId = entry.getKey();
+            int count = entry.getValue();
+
             Cursor cursor = db.getIngredientsFromId(recipeId);
             if (cursor.getCount() > 0){
                 while (cursor.moveToNext()){
                     name = cursor.getString(0);
-                    amount = cursor.getFloat(1);
+                    amount = cursor.getFloat(1)*count;
                     supermarket = cursor.getString(2);
-                    cost = cursor.getFloat(3);
+                    cost = cursor.getFloat(3)*count;
 
                     // add triples to hashset
                     Triple<String, String, Float> triple = new Triple<>(supermarket, name, cost);
