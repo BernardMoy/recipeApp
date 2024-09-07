@@ -51,7 +51,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
 
     // list to store all recipe IDs that are selected through checkbox
     private HashMap<Integer, Integer> selectedRecipeIdMap;
-    private HashSet<TextView> selectedTextViewSet;
 
     // a list of tags that the selected item should have
     private HashSet<String> selectedTagsSet;
@@ -182,11 +181,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
 
         // set up functionality of add buttons
         selectedRecipeIdMap = new HashMap<>();
-        selectedTextViewSet = new HashSet<>();
 
         ImageButton currentAddButton = holder.getAddImageButton();
         ImageButton currentMinusButton = holder.getMinusImageButton();
         TextView currentCountTextView = holder.getCountTextView();
+
+        // modify the textview to show "0"
+        currentCountTextView.setText("0");
 
         // add the recipe data to the hashmap if clicked on button
         currentAddButton.setOnClickListener(new View.OnClickListener() {
@@ -200,11 +201,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                     int newCount = selectedRecipeIdMap.get(clickedRecipeId) + 1;
                     selectedRecipeIdMap.put(clickedRecipeId, newCount);
                     currentCountTextView.setText(String.valueOf(newCount));
-
-                    // if newCount is 1, add to set
-                    if (newCount == 1){
-                        selectedTextViewSet.add(currentCountTextView);
-                    }
 
                 } else {
                     selectedRecipeIdMap.put(clickedRecipeId, 1);
@@ -229,10 +225,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                         selectedRecipeIdMap.put(clickedRecipeId, newCount);
                         currentCountTextView.setText(String.valueOf(newCount));
 
-                        // if newCount is 0, remove the textview from the set
-                        if (newCount == 0){
-                            selectedTextViewSet.remove(currentCountTextView);
-                        }
                     }
 
                 }  // else, this button does nothing (The newCount is <0 -> Not valid)
@@ -549,18 +541,18 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
     // function to turn on / off the top selected bar
     public void toggleSelectedBar(Boolean b){
         if (b) {
-            // selectedOptionsConstraintLayout.setVisibility(View.VISIBLE);
-            // selectedOptionsConstraintLayout.setEnabled(true);
+            selectedOptionsConstraintLayout.setVisibility(View.VISIBLE);
+            selectedOptionsConstraintLayout.setEnabled(true);
 
-            filterOptionsLinearLayout.setVisibility(View.GONE);
-            filterOptionsLinearLayout.setEnabled(false);
+            // filterOptionsLinearLayout.setVisibility(View.GONE);
+            // filterOptionsLinearLayout.setEnabled(false);
 
         } else {
-            // selectedOptionsConstraintLayout.setVisibility(View.GONE);
-            // selectedOptionsConstraintLayout.setEnabled(false);
+            selectedOptionsConstraintLayout.setVisibility(View.GONE);
+            selectedOptionsConstraintLayout.setEnabled(false);
 
-            filterOptionsLinearLayout.setVisibility(View.VISIBLE);
-            filterOptionsLinearLayout.setEnabled(true);
+            // filterOptionsLinearLayout.setVisibility(View.VISIBLE);
+            // filterOptionsLinearLayout.setEnabled(true);
 
         }
     }
@@ -568,20 +560,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
     public void deselectAll(){
         // clear the hashmap
         selectedRecipeIdMap.clear();
-
-        // change all textviews to display 0
-        HashSet<TextView> copy = new HashSet<>(selectedTextViewSet);
-        Log.d("LENGTH", String.valueOf(copy.size()));
-
-        for (TextView tv : copy){
-            tv.setText("0");
-        }
-
-        // clear all sets
-        selectedTextViewSet.clear();
-
-        // toggle off the bar
         toggleSelectedBar(false);
+        notifyDataSetChanged();   // used to reload all text views to set their text back to default (0)
     }
 
 

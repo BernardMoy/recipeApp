@@ -141,12 +141,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/content_margin"
             android:layout_marginTop="@dimen/content_margin"
+            android:layout_marginEnd="@dimen/content_margin"
             android:drawableStart="@drawable/calendar_repeat_icon"
             android:drawableTint="@color/gray"
-            android:text=" 4 times cooked"
+            android:text=" 4 cooked"
             android:textColor="@color/gray"
             android:textSize="@dimen/content_font_size"
-            app:layout_constraintEnd_toEndOf="@+id/recipeRow_toggleButton"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/recipeRow_prepTime"
             app:layout_constraintTop_toBottomOf="@+id/recipeRow_tag" />
 
