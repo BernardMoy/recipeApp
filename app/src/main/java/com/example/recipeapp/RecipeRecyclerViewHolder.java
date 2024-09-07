@@ -24,6 +24,7 @@ public class RecipeRecyclerViewHolder extends RecyclerView.ViewHolder {
     private ImageButton addImageButton;
     private ImageButton minusImageButton;
     private TextView countTextView;
+    private ImageButton deleteButton;
 
     public RecipeRecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -38,6 +39,7 @@ public class RecipeRecyclerViewHolder extends RecyclerView.ViewHolder {
         addImageButton = itemView.findViewById(R.id.add_imageButton);
         countTextView = itemView.findViewById(R.id.count_textView);
         minusImageButton = itemView.findViewById(R.id.minus_imageButton);
+        deleteButton = itemView.findViewById(R.id.deleteRecipes_button);
     }
 
     public TextView getName() {
@@ -82,5 +84,9 @@ public class RecipeRecyclerViewHolder extends RecyclerView.ViewHolder {
 
     public ImageButton getMinusImageButton() {
         return minusImageButton;
+    }
+
+    public ImageButton getDeleteButton() {
+        return deleteButton;
     }
 }

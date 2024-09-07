@@ -178,7 +178,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
         // load elements of the top bar
         selectedCountTextView = selectedOptionsConstraintLayout.findViewById(R.id.selectedCount_textView);
         createShoppingListFromRecipeButton = selectedOptionsConstraintLayout.findViewById(R.id.createShoppingListFromRecipe_button);
-        deleteRecipesButton = selectedOptionsConstraintLayout.findViewById(R.id.deleteRecipes_button);
         deselectbutton = selectedOptionsConstraintLayout.findViewById(R.id.deselect_button);
 
         // make the top bar not visible -- this is done BY DEFAULT
@@ -233,11 +232,17 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                 if (selectedRecipeIdMap.containsKey(clickedRecipeId)){
                     int newCount = selectedRecipeIdMap.get(clickedRecipeId) - 1;
 
-                    if (newCount >= 0){
+                    if (newCount > 0){
+                        // decrement hashmap value
                         selectedRecipeIdMap.put(clickedRecipeId, newCount);
-                        currentCountTextView.setText(String.valueOf(newCount));
 
+                    } else if (newCount == 0){
+                        // remove from hashmap
+                        selectedRecipeIdMap.remove(clickedRecipeId);
                     }
+
+                    // update textview shown
+                    currentCountTextView.setText(String.valueOf(newCount));
 
                 }  // else, this button does nothing (The newCount is <0 -> Not valid)
 
@@ -260,8 +265,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
             }
         });
 
-        /*
-        deleteRecipesButton.setOnClickListener(new View.OnClickListener() {
+
+        // set up delete button
+        holder.getDeleteButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // set up dialog
@@ -287,47 +293,22 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                 deleteButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        // checkedRecipeIdSet stores all recipes ids to be deleted
-                        ArrayList<Integer> posToBeRemovedList = new ArrayList<>();
-                        ArrayList<Integer> posToBeRemovedListFull = new ArrayList<>();
+                        int pos = holder.getAdapterPosition();
+                        int clickedRecipeId = recipePreviewList.get(pos).getRecipeId();
 
-                        // add the positions to be removed to the posToBeRemovedList
-                        // by checking if that row recipeId is to be deleted.
-                        for (int i = 0; i < recipePreviewList.size(); i++){
-                            int currentRecipeId = recipePreviewList.get(i).getRecipeId();
+                        // delete Recipe from arraylists
+                        recipePreviewList.remove(pos);
 
-                            if (checkedRecipeIdSet.contains(currentRecipeId)){
-                                posToBeRemovedList.add(i);
+                        for (int i = 0 ; i < recipePreviewListFull.size() ; i++){
+                            if (recipePreviewListFull.get(i).getRecipeId() == clickedRecipeId){
+                                recipePreviewListFull.remove(i);
+                                break;
                             }
                         }
 
-                        for (int i = 0; i < recipePreviewListFull.size(); i++){
-                            int currentRecipeId = recipePreviewListFull.get(i).getRecipeId();
+                        notifyItemRemoved(pos);
 
-                            if (checkedRecipeIdSet.contains(currentRecipeId)){
-                                posToBeRemovedListFull.add(i);
-                            }
-                        }
-
-                        // remove item from the two arraylists in reverse order
-                        for (int i = posToBeRemovedList.size() - 1; i >= 0; i--) {
-                            int pos = posToBeRemovedList.get(i);
-                            recipePreviewList.remove(pos);
-                            notifyItemRemoved(pos);
-                        }
-
-                        for (int i = posToBeRemovedListFull.size() - 1; i >= 0; i--) {
-                            int pos = posToBeRemovedListFull.get(i);
-                            recipePreviewListFull.remove(pos);
-                        }
-
-                        // remove corresponding recipe ids in database
-                        DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
-                        for (int recipeId : checkedRecipeIdSet) {
-                            db.deleteRecipeFromId(recipeId);
-                        }
-
-                        // Updates the recipe count displayed
+                        // update displayed count
                         String countString = String.valueOf(recipePreviewList.size()) + " results";
                         TextView textView = (TextView) ((Activity) ctx).findViewById(R.id.recipeCount_textView);
                         textView.setText(countString);
@@ -338,20 +319,23 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                             emptyRecipeTextView.setVisibility(View.VISIBLE);
                         }
 
-                        // Remove the dialog
+                        // delete SL from db
+                        DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
+                        db.deleteRecipeFromId(clickedRecipeId);
+
+                        // deselect all, if some are selected
+                        if (!selectedRecipeIdMap.isEmpty()){
+                            deselectAll();
+                        }
+
+                        // dismiss dialog
                         dialog.dismiss();
-
-                        // deselect all and return the original bars
-                        deselectAll();
-
                     }
                 });
 
                 dialog.show();
             }
         });
-
-         */
 
 
         // set up listener for creating shopping list from recipes
