@@ -22,7 +22,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/shoppingListDelete_button"
+            android:id="@+id/deleteShoppingList_button"
             android:layout_width="@dimen/image_button_size"
             android:layout_height="@dimen/image_button_size"
             android:background="@color/secondaryColor"
@@ -41,7 +41,7 @@
             android:textOff=""
             android:textOn=""
             android:background="@drawable/fav_button_selector"
-            app:layout_constraintEnd_toStartOf="@id/shoppingListDelete_button"
+            app:layout_constraintEnd_toStartOf="@id/deleteShoppingList_button"
             app:layout_constraintTop_toTopOf="parent"/>
 
 

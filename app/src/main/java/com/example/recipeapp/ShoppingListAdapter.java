@@ -1,13 +1,18 @@
 package com.example.recipeapp;
 
+import static androidx.core.content.ContextCompat.getDrawable;
+
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +26,10 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListRecycl
     private ArrayList<ShoppingListPreview> shoppingListPreviewList;
     private ArrayList<ShoppingListPreview> shoppingListPreviewListFull;
     private boolean favouriteFilterSelected;
+
+    // two buttons for the dialog that pops up when delete button is clicked
+    private Button cancelButton;
+    private Button deleteButton;
 
 
     public ShoppingListAdapter(Context ctx, ArrayList<ShoppingListPreview> shoppingListPreviewList){
@@ -98,6 +107,42 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListRecycl
                 i.putExtra("title_text", "Edit shopping list");
 
                 ctx.startActivity(i);
+            }
+        });
+
+        // functionality of delete button
+        holder.getDeleteShoppingListButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // set up dialog
+                Dialog dialog = new Dialog(ctx);
+                dialog.setContentView(R.layout.confirm_window);
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().setBackgroundDrawable(getDrawable(ctx, R.drawable.custom_edit_text));
+                dialog.setCancelable(false);
+
+                // load 2 buttons
+                cancelButton = dialog.findViewById(R.id.confirmRecipeCancel_button);
+                deleteButton = dialog.findViewById(R.id.confirmRecipeDelete_button);
+
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                deleteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int pos = holder.getAdapterPosition();
+                        int clickedShoppingListId = shoppingListPreviewList.get(pos).getShoppingListId();
+
+
+                    }
+                });
+
+                dialog.show();
             }
         });
     }
