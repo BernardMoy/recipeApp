@@ -297,4 +297,18 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
         String update = "UPDATE Ingredients SET checked = FALSE WHERE ingredient_id = ?;";
         db.execSQL(update, new String[]{String.valueOf(ingredientId)});
     }
+
+    public void deleteShoppingListFromId(int shoppingListId){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String del1 = "DELETE FROM Shopping_list_supermarket_ingredients WHERE shopping_list_id = ?;";
+        db.execSQL(del1, new String[]{String.valueOf(shoppingListId)});
+
+        String del2 = "DELETE FROM Ingredients WHERE ingredient_id NOT IN (SELECT ingredient_id FROM Shopping_list_supermarket_ingredients);";
+        db.execSQL(del2);
+
+        String del3 = "DELETE FROM Shopping_lists WHERE shopping_list_id = ?;";
+        db.execSQL(del3, new String[]{String.valueOf(shoppingListId)});
+
+    }
 }

@@ -2,6 +2,7 @@ package com.example.recipeapp;
 
 import static androidx.core.content.ContextCompat.getDrawable;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -138,6 +140,35 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListRecycl
                         int pos = holder.getAdapterPosition();
                         int clickedShoppingListId = shoppingListPreviewList.get(pos).getShoppingListId();
 
+                        // delete SL from arraylists
+                        shoppingListPreviewList.remove(pos);
+
+                        for (int i = 0 ; i < shoppingListPreviewListFull.size() ; i++){
+                            if (shoppingListPreviewListFull.get(i).getShoppingListId() == clickedShoppingListId){
+                                shoppingListPreviewListFull.remove(i);
+                                break;
+                            }
+                        }
+
+                        notifyItemRemoved(pos);
+
+                        // update displayed count
+                        String countString = String.valueOf(shoppingListPreviewList.size()) + " results";
+                        TextView textView = (TextView) ((Activity) ctx).findViewById(R.id.shoppingListCount_textView);
+                        textView.setText(countString);
+
+                        // display empty message if all recipes are deleted
+                        if (shoppingListPreviewList.isEmpty()){
+                            TextView emptyRecipeTextView = (TextView) ((Activity) ctx).findViewById(R.id.emptyShoppingList_textView);
+                            emptyRecipeTextView.setVisibility(View.VISIBLE);
+                        }
+
+                        // delete SL from db
+                        DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(ctx);
+                        db.deleteShoppingListFromId(clickedShoppingListId);
+
+                        // dismiss dialog
+                        dialog.dismiss();
 
                     }
                 });
