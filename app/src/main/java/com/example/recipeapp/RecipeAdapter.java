@@ -84,7 +84,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
         this.recipePreviewList = new ArrayList<>(recipePreviewListFull);
         this.selectedTagsSet = new HashSet<>();
         this.favouriteFilterSelected = false;
-
         this.selectedOptionsConstraintLayout = selectedOptionsConstraintLayout;
     }
 
@@ -597,9 +596,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                     name = cursor.getString(0);
                     amount = cursor.getFloat(1)*count;
                     supermarket = cursor.getString(2);
-                    cost = cursor.getFloat(3)*count;
+                    cost = cursor.getFloat(3);
 
-                    // add triples to hashset
+                    // add triples to hashset -- the real amount is amount*count
                     Triple<String, String, Float> triple = new Triple<>(supermarket, name, cost);
                     if (uniqueIngredientsMap.containsKey(triple)){
                         Float originalAmount = uniqueIngredientsMap.get(triple);
