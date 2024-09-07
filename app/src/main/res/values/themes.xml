@@ -7,4 +7,14 @@
 
     <style name="Theme.RecipeApp" parent="Base.Theme.RecipeApp" />
 
+    <style name="calendarDateStyle" parent="Base.Theme.RecipeApp">
+        <item name="android:textColor">@drawable/calendar_text_selector</item>
+        <item name="android:textSize">@dimen/content_font_size</item>
+    </style>
+
+    <style name = "calendarWeekdayStyle" parent="Base.Theme.RecipeApp">
+        <item name="android:textColor">@color/Orange</item>
+        <item name="android:textSize">@dimen/content_font_size</item>
+    </style>
+
 </resources>
