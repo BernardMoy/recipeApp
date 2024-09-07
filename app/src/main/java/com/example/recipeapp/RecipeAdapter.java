@@ -49,7 +49,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
     private ArrayList<RecipePreview> recipePreviewListFull;   // An arraylist that contains all original data
     private boolean favouriteFilterSelected;  // Store whether the favourite icon in the search filter is selected
 
-    // list to store all recipe IDs that are selected through checkbox
+
+    /*
+    list to store all recipe IDs that are selected through checkbox
+    Recipe selection data is ONLY stored in this hashmap, so when the recipes get updated, the hashmap resets.
+     */
     private HashMap<Integer, Integer> selectedRecipeIdMap;
 
     // a list of tags that the selected item should have
@@ -58,7 +62,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
     // a constraint layout for the top bar that is visible only when some items are checked
     // this bar is passed from the recipe fragment that creates the adapter
     private ConstraintLayout selectedOptionsConstraintLayout;
-    private LinearLayout filterOptionsLinearLayout;
 
     private TextView selectedCountTextView;
     private ImageButton createShoppingListFromRecipeButton;
@@ -83,7 +86,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
         this.favouriteFilterSelected = false;
 
         this.selectedOptionsConstraintLayout = selectedOptionsConstraintLayout;
-        this.filterOptionsLinearLayout = filterOptionsLinearLayout;
     }
 
     @NonNull
@@ -170,16 +172,20 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
             }
         });
 
+
+
+
+
         // load elements of the top bar
         selectedCountTextView = selectedOptionsConstraintLayout.findViewById(R.id.selectedCount_textView);
         createShoppingListFromRecipeButton = selectedOptionsConstraintLayout.findViewById(R.id.createShoppingListFromRecipe_button);
         deleteRecipesButton = selectedOptionsConstraintLayout.findViewById(R.id.deleteRecipes_button);
         deselectbutton = selectedOptionsConstraintLayout.findViewById(R.id.deselect_button);
 
-        // make the top bar not visible
+        // make the top bar not visible -- this is done BY DEFAULT
         toggleSelectedBar(false);
 
-        // set up functionality of add buttons
+        // set up functionality of add buttons -- the hashmap is reset BY DEFAULT
         selectedRecipeIdMap = new HashMap<>();
 
         ImageButton currentAddButton = holder.getAddImageButton();
@@ -206,7 +212,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                     selectedRecipeIdMap.put(clickedRecipeId, 1);
                     currentCountTextView.setText(String.valueOf(1));
 
+                    // if there is one entry in the hashmap, then this is the new one. Make the selected bar appear
+                    if (selectedRecipeIdMap.size() == 1){
+                        toggleSelectedBar(true);
+                    }
                 }
+
+                // modify the count displayed
+                updateSelectedCount();
 
             }
         });
@@ -228,39 +241,17 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                     }
 
                 }  // else, this button does nothing (The newCount is <0 -> Not valid)
-            }
-        });
 
-        /*
-        currentCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                // get the current pos and recipe id
-                int pos = holder.getAdapterPosition();
-                int recipeId = recipePreviewList.get(pos).getRecipeId();
+                // update the selected count
+                updateSelectedCount();
 
-                if (b) {
-                    checkedRecipeIdSet.add(recipeId);
-                    checkedBoxesSet.add(currentCheckBox);
-                    toggleSelectedBar(true);
-
-                } else {
-                    // remove if the id is in set.
-                    checkedRecipeIdSet.remove(recipeId);
-                    checkedBoxesSet.remove(currentCheckBox);
-
-                    if (checkedRecipeIdSet.isEmpty()){
-                        toggleSelectedBar(false);
-
-                    }
+                // if the map is empty, toggle off the selected bar
+                if (selectedRecipeIdMap.isEmpty()){
+                    toggleSelectedBar(false);
                 }
-                // update displayed count
-                String countStr = String.valueOf(checkedRecipeIdSet.size()) + " selected";
-                selectedCountTextView.setText(countStr);
             }
         });
 
-         */
 
         // set deselect button functionality
         deselectbutton.setOnClickListener(new View.OnClickListener() {
@@ -562,6 +553,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
         selectedRecipeIdMap.clear();
         toggleSelectedBar(false);
         notifyDataSetChanged();   // used to reload all text views to set their text back to default (0)
+    }
+
+    public void updateSelectedCount(){
+        int count = 0;
+        for (int value : selectedRecipeIdMap.values()){
+            count += value;
+        }
+        String countStr = String.valueOf(count) + " selected";
+        selectedCountTextView.setText(countStr);
     }
 
 
