@@ -17,6 +17,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
@@ -48,6 +50,10 @@ public class MealPlannerFragment extends Fragment {
     private ImageButton addMealButton;
     private Button cancelButton;
     private Button createButton;
+
+    // the auto complete text views in the dialog
+    private AutoCompleteTextView categoryAutoCompleteTextView;
+    private AutoCompleteTextView recipeNameAutoCompleteTextView;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -129,6 +135,15 @@ public class MealPlannerFragment extends Fragment {
                 dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 dialog.getWindow().setBackgroundDrawable(getDrawable(ctx, R.drawable.custom_edit_text));
                 dialog.setCancelable(false);
+
+                // set up functionality of the auto complete text views
+                categoryAutoCompleteTextView = dialog.findViewById(R.id.category_autoCompleteTextView);
+                recipeNameAutoCompleteTextView = dialog.findViewById(R.id.recipeName_autoCompleteTextView);
+
+                String[] categorySuggestionsList = getResources().getStringArray(R.array.category_suggestions);
+                ArrayAdapter<String> arrayAdapterCategory = new ArrayAdapter<>(ctx, R.layout.recipe_dropdown_item, categorySuggestionsList);
+                categoryAutoCompleteTextView.setAdapter(arrayAdapterCategory);
+
 
                 // load 2 buttons
                 cancelButton = dialog.findViewById(R.id.confirmMealCreateCancel_button);
