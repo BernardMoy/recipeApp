@@ -93,6 +93,7 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS Ingredients;");
         db.execSQL("DROP TABLE IF EXISTS Recipe_tags;");
         db.execSQL("DROP TABLE IF EXISTS Recipe_ingredients;");
+        db.execSQL("DROP TABLE IF EXISTS Meals;");
     }
 
     // reset database
@@ -103,6 +104,7 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS Ingredients;");
         db.execSQL("DROP TABLE IF EXISTS Recipe_tags;");
         db.execSQL("DROP TABLE IF EXISTS Recipe_ingredients;");
+        db.execSQL("DROP TABLE IF EXISTS Meals;");
         onCreate(db);     // recreate the database
         Toast.makeText(context, "Recipe database reset", Toast.LENGTH_SHORT).show();
     }
@@ -475,6 +477,8 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
         db.execSQL(del, new String[]{String.valueOf(recipeId)});
     }
 
+
+
     // method to add new meal
     public boolean addMeal(Date date, String category, int recipeId){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -493,7 +497,27 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
     }
 
     // method to remove new meal
+    public void deleteMealFromId(int mealId){
+        SQLiteDatabase db = this.getWritableDatabase();
 
-    // method to get information about meals from date
+        String del = "DELETE FROM Meals WHERE meal_id = ?;";
+        db.execSQL(del, new String[]{String.valueOf(mealId)});
+    }
+
+    // method to get meal preview information about meals from date: Category and recipe name
+    // for cost of recipes, use the separate method cost from RID
+    public Cursor getMealsFromDate(Date date){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT M.meal_id, M.category, R.name, R.image, R.recipe_id " +
+                "FROM Meals M JOIN Recipes R ON M.recipe_id = R.recipe_id " +
+                "WHERE M.date = ?;";
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, new String[]{String.valueOf(date.getTime())});
+        }
+        return cursor;
+    }
 
 }

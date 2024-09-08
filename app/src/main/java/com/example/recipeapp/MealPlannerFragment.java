@@ -1,19 +1,24 @@
 package com.example.recipeapp;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -28,6 +33,10 @@ public class MealPlannerFragment extends Fragment {
     private CalendarView calendarView;
     private Calendar calendar;
     private Context ctx;
+
+    // recyclerview for meals
+    private RecyclerView mealsRecyclerView;
+    private ArrayList<MealPreview> mealPreviewList;
 
 
 
@@ -82,6 +91,10 @@ public class MealPlannerFragment extends Fragment {
         calendarView = view.findViewById(R.id.calendarView);
         calendar = Calendar.getInstance();
 
+        // find recyclerview
+        mealsRecyclerView = view.findViewById(R.id.meals_recyclerView);
+        mealPreviewList = new ArrayList<>();
+
         // get the current month and day, then call the listener method
         int currentMonth = calendar.get(Calendar.MONTH);
         int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
@@ -95,6 +108,7 @@ public class MealPlannerFragment extends Fragment {
             }
         });
 
+
         return view;
     }
 
@@ -105,6 +119,38 @@ public class MealPlannerFragment extends Fragment {
         // set the date string
         TextView dateTextView = view.findViewById(R.id.date_textView);
         dateTextView.setText(dateStr);
+
+        // reset arraylist
+        mealPreviewList = new ArrayList<>();
+
+        // load the arraylist from db
+        DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
+        Cursor cursor = db.getMealsFromDate(calendar.getTime());
+        if (cursor.getCount() > 0){
+            while (cursor.moveToNext()){
+                int mealId = cursor.getInt(0);
+                String category = cursor.getString(1);
+                String recipeName = cursor.getString(2);
+                byte[] recipeImage = cursor.getBlob(3);
+                int recipeId = cursor.getInt(4);
+
+                // find the cost of that recipe id
+                Cursor cursor2 = db.getWeightedCost(recipeId);
+                cursor2.moveToNext();
+                float recipeCost = cursor2.getFloat(0);
+
+                // construct object
+                MealPreview mealPreview = new MealPreview(mealId, category, recipeName, recipeImage, recipeCost);
+                mealPreviewList.add(mealPreview);
+            }
+        }
+
+        // set up recyclerview
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ctx, LinearLayoutManager.VERTICAL, true);
+        linearLayoutManager.setStackFromEnd(true);
+        mealsRecyclerView.setLayoutManager(linearLayoutManager);
+        MealAdapter mealAdapter = new MealAdapter(ctx, mealPreviewList);
+        mealsRecyclerView.setAdapter(mealAdapter);
     }
 
 

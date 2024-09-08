@@ -8,7 +8,7 @@ public class MealPreview {
     private String recipeName;
     private float recipeCost;
 
-    public MealPreview(int mealId, String category, byte[] recipeImage, String recipeName, float recipeCost){
+    public MealPreview(int mealId, String category, String recipeName, byte[] recipeImage, float recipeCost){
         this.mealId = mealId;
         this.category = category;
         this.recipeImage = recipeImage;

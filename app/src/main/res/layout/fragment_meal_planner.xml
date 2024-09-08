@@ -41,6 +41,16 @@
             android:textSize="@dimen/content_font_size"
             />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/meals_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/title_margin"
+            android:layout_marginEnd="@dimen/title_margin"
+            android:layout_marginTop="@dimen/content_margin"
+            android:layout_marginBottom="@dimen/content_margin"
+            tools:itemCount="2"/>
+
     </LinearLayout>
 
 </FrameLayout>
