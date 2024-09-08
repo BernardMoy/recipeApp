@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -143,6 +145,35 @@ public class MealPlannerFragment extends Fragment {
                 String[] categorySuggestionsList = getResources().getStringArray(R.array.category_suggestions);
                 ArrayAdapter<String> arrayAdapterCategory = new ArrayAdapter<>(ctx, R.layout.recipe_dropdown_item, categorySuggestionsList);
                 categoryAutoCompleteTextView.setAdapter(arrayAdapterCategory);
+
+                // make the suggestions show when the user clicks on the text view
+                categoryAutoCompleteTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean b) {
+                        if (b) {
+                            categoryAutoCompleteTextView.showDropDown();
+                        }
+                    }
+                });
+
+                categoryAutoCompleteTextView.setThreshold(1); // make it start filtering when 1 character is typed
+                categoryAutoCompleteTextView.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        arrayAdapterCategory.getFilter().filter(charSequence);
+                        categoryAutoCompleteTextView.showDropDown();
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
+                    }
+                });
 
 
                 // load 2 buttons

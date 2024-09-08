@@ -39,11 +39,12 @@
         android:layout_marginTop="@dimen/title_margin"
         android:layout_marginEnd="@dimen/content_margin"
         android:padding="@dimen/content_margin"
+        android:textSize="@dimen/content_font_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/textView3"
         app:layout_constraintTop_toBottomOf="@id/textView2"
         android:background="@drawable/custom_edit_text"
-        android:hint=" Enter or select category"
+        android:hint=" Enter or select..."
         />
 
 
@@ -72,9 +73,8 @@
         app:layout_constraintStart_toEndOf="@id/textView4"
         app:layout_constraintTop_toBottomOf="@id/category_autoCompleteTextView"
         android:background="@drawable/custom_edit_text"
-        android:drawableStart="@drawable/brush_icon"
-        android:drawableTint="@color/gray"
-        android:hint=" Type recipe name... "
+        android:hint=" Enter recipe name... "
+        android:textSize="@dimen/content_font_size"
         android:inputType="text"
         />
 
@@ -97,7 +97,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/title_margin"
-        android:text="Create!"
+        android:text="Add meal"
         app:cornerRadius = "0dp"
         android:backgroundTint="@color/primaryColor"
         app:layout_constraintEnd_toEndOf="parent"
