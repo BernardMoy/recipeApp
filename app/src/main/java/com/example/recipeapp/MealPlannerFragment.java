@@ -1,7 +1,11 @@
 package com.example.recipeapp;
 
+import static androidx.core.content.ContextCompat.getDrawable;
+
+import android.app.Dialog;
 import android.content.Context;
 import android.database.Cursor;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,7 +17,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -38,6 +44,10 @@ public class MealPlannerFragment extends Fragment {
     private RecyclerView mealsRecyclerView;
     private ArrayList<MealPreview> mealPreviewList;
 
+    // add button
+    private ImageButton addMealButton;
+    private Button cancelButton;
+    private Button createButton;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -108,6 +118,39 @@ public class MealPlannerFragment extends Fragment {
             }
         });
 
+        // listener for the add button
+        addMealButton = view.findViewById(R.id.addMeal_imageButton);
+        addMealButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // set up dialog
+                Dialog dialog = new Dialog(ctx);
+                dialog.setContentView(R.layout.create_meal_window);
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().setBackgroundDrawable(getDrawable(ctx, R.drawable.custom_edit_text));
+                dialog.setCancelable(false);
+
+                // load 2 buttons
+                cancelButton = dialog.findViewById(R.id.confirmMealCreateCancel_button);
+                createButton = dialog.findViewById(R.id.confirmMealCreate_button);
+
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                createButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+
+                dialog.show();
+            }
+        });
 
         return view;
     }

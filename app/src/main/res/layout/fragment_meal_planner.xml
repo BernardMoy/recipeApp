@@ -50,7 +50,7 @@
                 />
 
             <ImageButton
-                android:id="@+id/createMeal_imageButton"
+                android:id="@+id/addMeal_imageButton"
                 android:layout_width="@dimen/image_button_size"
                 android:layout_height="@dimen/image_button_size"
                 android:backgroundTint="@color/primaryColor"
