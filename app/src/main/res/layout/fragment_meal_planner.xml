@@ -31,6 +31,16 @@
             android:weekDayTextAppearance="@style/calendarWeekdayStyle"
             />
 
+        <TextView
+            android:id="@+id/date_textView"
+            android:layout_marginStart="@dimen/title_margin"
+            android:text="No date selected"
+            android:textColor="@color/gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/content_font_size"
+            />
+
     </LinearLayout>
 
 </FrameLayout>

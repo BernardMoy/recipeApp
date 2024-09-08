@@ -6,12 +6,16 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,12 +82,77 @@ public class MealPlannerFragment extends Fragment {
         calendarView = view.findViewById(R.id.calendarView);
         calendar = Calendar.getInstance();
 
+        // get the current month and day, then call the listener method
+        int currentMonth = calendar.get(Calendar.MONTH);
+        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+        dayChange(view, currentMonth, currentDay);
+
+        // listener when a new date is selected
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
+                dayChange(view, month, day);
             }
         });
 
         return view;
+    }
+
+    // method called when the date and month is updated. This is called initially when loading the fragment
+    public void dayChange(View view, int month, int day){
+        String dateStr = dateFormatter(month, day);
+
+        // set the date string
+        TextView dateTextView = view.findViewById(R.id.date_textView);
+        dateTextView.setText(dateStr);
+    }
+
+
+    public String dateFormatter(int month, int day){
+        String dayString = String.valueOf(day);
+
+        // note that january starts from 0
+        String monthString = "";
+        switch(month) {
+            case 0:
+                monthString = "January";
+                break;
+            case 1:
+                monthString = "February";
+                break;
+            case 2:
+                monthString = "March";
+                break;
+            case 3:
+                monthString = "April";
+                break;
+            case 4:
+                monthString = "May";
+                break;
+            case 5:
+                monthString = "June";
+                break;
+            case 6:
+                monthString = "July";
+                break;
+            case 7:
+                monthString = "August";
+                break;
+            case 8:
+                monthString = "September";
+                break;
+            case 9:
+                monthString = "October";
+                break;
+            case 10:
+                monthString = "November";
+                break;
+            case 11:
+                monthString = "December";
+                break;
+        }
+
+        String formatted = dayString + " " + monthString;
+        return formatted;
     }
 }
