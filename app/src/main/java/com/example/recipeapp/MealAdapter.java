@@ -1,6 +1,8 @@
 package com.example.recipeapp;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -28,7 +30,18 @@ public class MealAdapter extends RecyclerView.Adapter<MealRecyclerViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MealRecyclerViewHolder holder, int position) {
+        MealPreview mealPreview = mealPreviewList.get(position);
+
         // set text for the meal rows
+        holder.getCategoryName().setText(mealPreview.getCategory());
+
+        byte[] imageByteArray = mealPreview.getRecipeImage();
+        Bitmap bitmap = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray.length);
+        holder.getRecipeImage().setImageBitmap(bitmap);
+
+        holder.getRecipeName().setText(mealPreview.getRecipeName());
+
+        holder.getRecipeCost().setText(String.valueOf(mealPreview.getRecipeCost()));
     }
 
     @Override

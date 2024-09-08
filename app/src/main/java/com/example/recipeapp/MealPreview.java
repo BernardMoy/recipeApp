@@ -4,11 +4,11 @@ public class MealPreview {
 
     private int mealId;
     private String category;
-    private Byte[] recipeImage;
+    private byte[] recipeImage;
     private String recipeName;
-    private int recipeCost;
+    private float recipeCost;
 
-    public MealPreview(int mealId, String category, Byte[] recipeImage, String recipeName, int recipeCost){
+    public MealPreview(int mealId, String category, byte[] recipeImage, String recipeName, float recipeCost){
         this.mealId = mealId;
         this.category = category;
         this.recipeImage = recipeImage;
@@ -24,7 +24,7 @@ public class MealPreview {
         return category;
     }
 
-    public Byte[] getRecipeImage() {
+    public byte[] getRecipeImage() {
         return recipeImage;
     }
 
@@ -32,7 +32,7 @@ public class MealPreview {
         return recipeName;
     }
 
-    public int getRecipeCost() {
+    public float getRecipeCost() {
         return recipeCost;
     }
 }

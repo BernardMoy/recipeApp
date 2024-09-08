@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 // the database helper for recipes.
@@ -473,4 +474,26 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
         String del = "DELETE FROM Recipes WHERE recipe_id = ?;";
         db.execSQL(del, new String[]{String.valueOf(recipeId)});
     }
+
+    // method to add new meal
+    public boolean addMeal(Date date, String category, int recipeId){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValuesMeals = new ContentValues();
+
+        // set new values submitted
+        contentValuesMeals.put("date", date.getTime());
+        contentValuesMeals.put("category", category);
+        contentValuesMeals.put("recipe_id", recipeId);
+
+        // insert into recipes - returns the auto incremented id
+        long result = db.insert("Meals", null, contentValuesMeals);
+
+        return result != -1;
+    }
+
+    // method to remove new meal
+
+    // method to get information about meals from date
+
 }
