@@ -68,11 +68,21 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
                         "FOREIGN KEY (ingredient_id) REFERENCES Ingredients(ingredient_id) ON DELETE CASCADE" +
                         ");";
 
+        String createMeals =
+                "CREATE TABLE IF NOT EXISTS Meals(" +
+                        "meal_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "date DATE," +
+                        "category VARCHAR(50)," +
+                        "recipe_id INTEGER NOT NULL," +
+                        "FOREIGN KEY (recipe_id) REFERENCES Recipes(recipe_id) ON DELETE CASCADE" +
+                        ");";
+
         db.execSQL(createRecipes);
         db.execSQL(createTags);
         db.execSQL(createIngredients);
         db.execSQL(createRecipeTags);
         db.execSQL(createRecipeIngredients);
+        db.execSQL(createMeals);
     }
 
     @Override
