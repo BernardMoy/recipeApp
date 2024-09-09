@@ -140,7 +140,13 @@ public class AddNewMeal extends AppCompatActivity {
             }
         });
 
-
+        // display empty message
+        TextView emptyTextView = findViewById(R.id.emptyMealRecipes_textView);
+        if (!previewList.isEmpty()){
+            emptyTextView.setVisibility(View.GONE);
+        } else {
+            emptyTextView.setVisibility(View.VISIBLE);
+        }
     }
 
     public String dbToDisplayDateFormatter(String dateStr){
@@ -160,6 +166,11 @@ public class AddNewMeal extends AppCompatActivity {
         } catch (ParseException e){
             return "Invalid date";
         }
+    }
+
+    public void clearCategory(View v){
+        AutoCompleteTextView tv = (AutoCompleteTextView) findViewById(R.id.category_autoCompleteTextView);
+        tv.setText("");
     }
 
     // Return to previous activity
