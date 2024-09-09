@@ -7,10 +7,13 @@ import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +33,9 @@ public class MealRecipeSuggestionRecyclerViewAdapter extends RecyclerView.Adapte
     private ImageView selectedImageView;
     private TextView selectedNameTextView;
     private TextView selectedCostTextView;
+
+    // the done button
+    private Button doneButton;
 
 
     public MealRecipeSuggestionRecyclerViewAdapter(Context ctx, ArrayList<MealRecipeSuggestionPreview> previewList){
@@ -58,6 +64,7 @@ public class MealRecipeSuggestionRecyclerViewAdapter extends RecyclerView.Adapte
         holder.getRecipeCost().setText(String.valueOf(preview.getRecipeCost()));
 
         // load the views that are shown at the selected location
+        selectedRecipeId = -1;
         selectedImageView = ((Activity) ctx).findViewById(R.id.selectedImage_imageView);
         selectedNameTextView = ((Activity) ctx).findViewById(R.id.selectedName_textView);
         selectedCostTextView = ((Activity) ctx).findViewById(R.id.selectedCost_textView);
@@ -78,6 +85,32 @@ public class MealRecipeSuggestionRecyclerViewAdapter extends RecyclerView.Adapte
                 selectedNameTextView.setText(selectedRecipe.getRecipeName());
 
                 selectedCostTextView.setText(String.valueOf(selectedRecipe.getRecipeCost()));
+
+            }
+        });
+
+        // set the on click listener for the DONE button
+        doneButton = ((Activity) ctx).findViewById(R.id.done_button);
+        doneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // get the category and the recipeID (Stored here)
+                AutoCompleteTextView a = ((Activity) ctx).findViewById(R.id.category_autoCompleteTextView);
+                String inputCategory = a.getText().toString();
+
+                // check constraints
+                if (inputCategory.isEmpty()){
+                    Toast.makeText(ctx, "Category name is empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (selectedRecipeId == -1){
+                    Toast.makeText(ctx, "No recipe selected", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // add the recipeID data to the database
+                DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
+
 
             }
         });
