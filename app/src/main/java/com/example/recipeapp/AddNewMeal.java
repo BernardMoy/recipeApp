@@ -25,7 +25,6 @@ public class AddNewMeal extends AppCompatActivity {
 
     private String dateString;
     private AutoCompleteTextView categoryAutoCompleteTextView;
-    private AutoCompleteTextView recipeSuggestionsAutoCompleteTextView;
     private TextView dateTextView;
 
     @Override
@@ -39,19 +38,17 @@ public class AddNewMeal extends AppCompatActivity {
             return insets;
         });
 
-        // load text views
+        // load text view
         categoryAutoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.category_autoCompleteTextView);
-        recipeSuggestionsAutoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.recipeName_autoCompleteTextView);
         dateTextView = (TextView) findViewById(R.id.date_textView);
 
-        if (getIntent().hasExtra("date")){
+        if (getIntent().hasExtra("date")) {
             dateString = getIntent().getStringExtra("date");
             dateTextView.setText(dbToDisplayDateFormatter(dateString));
         }
 
-        // set up functionality of the auto complete text views
+        // set up functionality of the auto complete text view
         categoryAutoCompleteTextView = findViewById(R.id.category_autoCompleteTextView);
-        recipeSuggestionsAutoCompleteTextView = findViewById(R.id.recipeName_autoCompleteTextView);
 
         String[] categorySuggestionsList = getResources().getStringArray(R.array.category_suggestions);
         ArrayAdapter<String> arrayAdapterCategory = new ArrayAdapter<>(getApplicationContext(), R.layout.recipe_dropdown_item, categorySuggestionsList);
@@ -86,58 +83,6 @@ public class AddNewMeal extends AppCompatActivity {
             }
         });
 
-
-        // for the recipe name ACTV, get an arraylist of all meal recipe previews.
-        ArrayList<MealRecipeSuggestionPreview> previewList = new ArrayList<>();
-        DatabaseHelperRecipes db = new DatabaseHelperRecipes(getApplicationContext());
-        Cursor cursor = db.getRecipes();
-        if (cursor.getCount() > 0){
-            while (cursor.moveToNext()){
-                byte[] image = cursor.getBlob(5);
-                String name = cursor.getString(1);
-                int id = cursor.getInt(0);
-
-                // get the weighted cost
-                Cursor cursor2 = db.getWeightedCost(id);
-                cursor2.moveToNext();
-                float cost = cursor2.getFloat(0);
-
-                MealRecipeSuggestionPreview mealRecipeSuggestionPreview = new MealRecipeSuggestionPreview(image, name, cost);
-                previewList.add(mealRecipeSuggestionPreview);
-            }
-        }
-
-        // set adapter with the created arraylist
-        MealRecipeSuggestionAdapter mealRecipeSuggestionAdapter = new MealRecipeSuggestionAdapter(getApplicationContext(), previewList);
-        recipeSuggestionsAutoCompleteTextView.setAdapter(mealRecipeSuggestionAdapter);
-        recipeSuggestionsAutoCompleteTextView.setThreshold(1);
-
-        recipeSuggestionsAutoCompleteTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (b) {
-                    recipeSuggestionsAutoCompleteTextView.showDropDown();
-                }
-            }
-        });
-
-        recipeSuggestionsAutoCompleteTextView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mealRecipeSuggestionAdapter.getFilter().filter(charSequence);
-                recipeSuggestionsAutoCompleteTextView.showDropDown();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
     }
 
     public String dbToDisplayDateFormatter(String dateStr){
