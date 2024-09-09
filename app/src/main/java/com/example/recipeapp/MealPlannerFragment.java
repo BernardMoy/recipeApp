@@ -55,7 +55,7 @@ public class MealPlannerFragment extends Fragment {
 
     // the auto complete text views in the dialog
     private AutoCompleteTextView categoryAutoCompleteTextView;
-    private AutoCompleteTextView recipeNameAutoCompleteTextView;
+    private AutoCompleteTextView recipeSuggestionsAutoCompleteTextView;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -138,9 +138,13 @@ public class MealPlannerFragment extends Fragment {
                 dialog.getWindow().setBackgroundDrawable(getDrawable(ctx, R.drawable.custom_edit_text));
                 dialog.setCancelable(false);
 
+
+
+
+
                 // set up functionality of the auto complete text views
                 categoryAutoCompleteTextView = dialog.findViewById(R.id.category_autoCompleteTextView);
-                recipeNameAutoCompleteTextView = dialog.findViewById(R.id.recipeName_autoCompleteTextView);
+                recipeSuggestionsAutoCompleteTextView = dialog.findViewById(R.id.recipeName_autoCompleteTextView);
 
                 String[] categorySuggestionsList = getResources().getStringArray(R.array.category_suggestions);
                 ArrayAdapter<String> arrayAdapterCategory = new ArrayAdapter<>(ctx, R.layout.recipe_dropdown_item, categorySuggestionsList);
@@ -174,6 +178,67 @@ public class MealPlannerFragment extends Fragment {
 
                     }
                 });
+
+
+
+
+                // for the recipe name ACTV, get an arraylist of all meal recipe previews.
+                ArrayList<MealRecipeSuggestionPreview> previewList = new ArrayList<>();
+                DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
+                Cursor cursor = db.getRecipes();
+                if (cursor.getCount() > 0){
+                    while (cursor.moveToNext()){
+                        byte[] image = cursor.getBlob(5);
+                        String name = cursor.getString(1);
+                        int id = cursor.getInt(0);
+
+                        // get the weighted cost
+                        Cursor cursor2 = db.getWeightedCost(id);
+                        cursor2.moveToNext();
+                        float cost = cursor2.getFloat(0);
+
+                        MealRecipeSuggestionPreview mealRecipeSuggestionPreview = new MealRecipeSuggestionPreview(image, name, cost);
+                        previewList.add(mealRecipeSuggestionPreview);
+                    }
+                }
+
+                // set adapter with the created arraylist
+                MealRecipeSuggestionAdapter mealRecipeSuggestionAdapter = new MealRecipeSuggestionAdapter(ctx, previewList);
+                recipeSuggestionsAutoCompleteTextView.setAdapter(mealRecipeSuggestionAdapter);
+                recipeSuggestionsAutoCompleteTextView.setThreshold(1);
+
+                recipeSuggestionsAutoCompleteTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean b) {
+                        if (b) {
+                            recipeSuggestionsAutoCompleteTextView.showDropDown();
+                        }
+                    }
+                });
+
+                recipeSuggestionsAutoCompleteTextView.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        mealRecipeSuggestionAdapter.getFilter().filter(charSequence);
+                        recipeSuggestionsAutoCompleteTextView.showDropDown();
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
+                    }
+                });
+
+
+
+
+
+
 
 
                 // load 2 buttons
