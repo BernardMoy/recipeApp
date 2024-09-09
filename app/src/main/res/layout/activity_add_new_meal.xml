@@ -169,7 +169,7 @@
 
 
                     <ImageView
-                        android:id="@+id/mealRecipeSuggestion_imageView"
+                        android:id="@+id/selectedImage_imageView"
                         android:layout_width="@dimen/content_image_size"
                         android:layout_height="@dimen/content_image_size"
                         android:layout_margin="0dp"
@@ -180,17 +180,17 @@
                         tools:srcCompat="@tools:sample/avatars" />
 
                     <TextView
-                        android:id="@+id/mealRecipeSuggestionRecipeName_textView"
+                        android:id="@+id/selectedName_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="No recipe selected"
                         android:textSize="@dimen/content_font_size"
-                        app:layout_constraintStart_toEndOf="@+id/mealRecipeSuggestion_imageView"
+                        app:layout_constraintStart_toEndOf="@+id/selectedImage_imageView"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/mealRecipeSuggestionCost_textView"/>
+                        app:layout_constraintBottom_toTopOf="@id/selectedCost_textView"/>
 
                     <TextView
-                        android:id="@+id/mealRecipeSuggestionCost_textView"
+                        android:id="@+id/selectedCost_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/money_icon"
@@ -199,8 +199,8 @@
                         android:textColor="@color/gray"
                         android:textSize="@dimen/content_font_size"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/mealRecipeSuggestion_imageView"
-                        app:layout_constraintTop_toBottomOf="@id/mealRecipeSuggestionRecipeName_textView" />
+                        app:layout_constraintStart_toEndOf="@id/selectedImage_imageView"
+                        app:layout_constraintTop_toBottomOf="@id/selectedName_textView" />
 
 
 

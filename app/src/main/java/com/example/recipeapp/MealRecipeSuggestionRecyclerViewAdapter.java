@@ -1,12 +1,16 @@
 package com.example.recipeapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +24,13 @@ public class MealRecipeSuggestionRecyclerViewAdapter extends RecyclerView.Adapte
     private ArrayList<MealRecipeSuggestionPreview> previewList;
     private ArrayList<MealRecipeSuggestionPreview> previewListFull;
 
+    // stores the recipe id that is selected. if no recipes are selected, it is -1.
+    private int selectedRecipeId;
+
+    private ImageView selectedImageView;
+    private TextView selectedNameTextView;
+    private TextView selectedCostTextView;
+
 
     public MealRecipeSuggestionRecyclerViewAdapter(Context ctx, ArrayList<MealRecipeSuggestionPreview> previewList){
         this.ctx = ctx;
@@ -30,7 +41,8 @@ public class MealRecipeSuggestionRecyclerViewAdapter extends RecyclerView.Adapte
     @NonNull
     @Override
     public MealRecipeSuggestionRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MealRecipeSuggestionRecyclerViewHolder(LayoutInflater.from(ctx).inflate(R.layout.meal_recipe_suggestion_row, parent,false));
+        View view = LayoutInflater.from(ctx).inflate(R.layout.meal_recipe_suggestion_row, parent,false);
+        return new MealRecipeSuggestionRecyclerViewHolder(view);
     }
 
     @Override
@@ -44,6 +56,31 @@ public class MealRecipeSuggestionRecyclerViewAdapter extends RecyclerView.Adapte
         holder.getRecipeName().setText(preview.getRecipeName());
 
         holder.getRecipeCost().setText(String.valueOf(preview.getRecipeCost()));
+
+        // load the views that are shown at the selected location
+        selectedImageView = ((Activity) ctx).findViewById(R.id.selectedImage_imageView);
+        selectedNameTextView = ((Activity) ctx).findViewById(R.id.selectedName_textView);
+        selectedCostTextView = ((Activity) ctx).findViewById(R.id.selectedCost_textView);
+
+        holder.getSelectButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // get the recipe id that is clicked
+                int pos = holder.getAdapterPosition();
+                MealRecipeSuggestionPreview selectedRecipe = previewList.get(pos);
+                selectedRecipeId = selectedRecipe.getRecipeId();  // modify global var
+
+                // modify the selected data
+                byte[] selectedImageByteArray = selectedRecipe.getRecipeImage();
+                Bitmap bm = BitmapFactory.decodeByteArray(selectedImageByteArray, 0, selectedImageByteArray.length);
+                selectedImageView.setImageBitmap(bm);
+
+                selectedNameTextView.setText(selectedRecipe.getRecipeName());
+
+                selectedCostTextView.setText(String.valueOf(selectedRecipe.getRecipeCost()));
+
+            }
+        });
     }
 
     @Override
