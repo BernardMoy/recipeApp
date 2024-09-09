@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Filter;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -15,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,6 +30,11 @@ public class AddNewMeal extends AppCompatActivity {
     private String dateString;
     private AutoCompleteTextView categoryAutoCompleteTextView;
     private TextView dateTextView;
+
+    private ArrayList<MealRecipeSuggestionPreview> previewList;
+    private RecyclerView mealRecipesRecyclerView;
+    private MealRecipeSuggestionRecyclerViewAdapter mealRecipeSuggestionRecyclerViewAdapter;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +91,55 @@ public class AddNewMeal extends AppCompatActivity {
 
             }
         });
+
+
+        // extract recipe data from db
+        previewList = new ArrayList<>();
+        DatabaseHelperRecipes db = new DatabaseHelperRecipes(AddNewMeal.this);
+        Cursor cursor = db.getRecipes();
+        if (cursor.getCount() > 0){
+            while (cursor.moveToNext()){
+                int recipeId = cursor.getInt(0);
+                String recipeName = cursor.getString(1);
+                byte[] recipeImage = cursor.getBlob(5);
+
+                // get the recipe cost
+                Cursor cursor2 = db.getWeightedCost(recipeId);
+                cursor2.moveToNext();
+                float cost = cursor2.getFloat(0);
+
+                MealRecipeSuggestionPreview mealRecipeSuggestionPreview = new MealRecipeSuggestionPreview(recipeId, recipeImage, recipeName, cost);
+
+                previewList.add(mealRecipeSuggestionPreview);
+            }
+        }
+
+        // set up recyclerview to display recipes
+        mealRecipesRecyclerView = findViewById(R.id.mealRecipes_recyclerView);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(AddNewMeal.this, LinearLayoutManager.VERTICAL, true);
+        linearLayoutManager.setStackFromEnd(true);
+        mealRecipesRecyclerView.setLayoutManager(linearLayoutManager);
+
+        mealRecipeSuggestionRecyclerViewAdapter = new MealRecipeSuggestionRecyclerViewAdapter(AddNewMeal.this, previewList);
+        mealRecipesRecyclerView.setAdapter(mealRecipeSuggestionRecyclerViewAdapter);
+
+
+        // set up search view
+        searchView = findViewById(R.id.mealRecipes_searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                Filter filter = mealRecipeSuggestionRecyclerViewAdapter.getFilter();
+                filter.filter(s);
+                return false;
+            }
+        });
+
 
     }
 

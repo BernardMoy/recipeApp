@@ -2,11 +2,13 @@ package com.example.recipeapp;
 
 public class MealRecipeSuggestionPreview {
 
+    private int recipeId;
     private byte[] recipeImage;
     private String recipeName;
     private Float recipeCost;
 
-    public MealRecipeSuggestionPreview(byte[] recipeImage, String recipeName, Float recipeCost){
+    public MealRecipeSuggestionPreview(int recipeId, byte[] recipeImage, String recipeName, Float recipeCost){
+        this.recipeId = recipeId;
         this.recipeImage = recipeImage;
         this.recipeName = recipeName;
         this.recipeCost = recipeCost;
@@ -22,5 +24,9 @@ public class MealRecipeSuggestionPreview {
 
     public Float getRecipeCost() {
         return recipeCost;
+    }
+
+    public int getRecipeId() {
+        return recipeId;
     }
 }

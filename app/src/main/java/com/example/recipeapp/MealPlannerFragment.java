@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -54,10 +55,6 @@ public class MealPlannerFragment extends Fragment {
     private ImageButton addMealButton;
     private Button cancelButton;
     private Button createButton;
-
-    // the auto complete text views in the dialog
-    private AutoCompleteTextView categoryAutoCompleteTextView;
-    private AutoCompleteTextView recipeSuggestionsAutoCompleteTextView;
 
     // stores the current selected date
     private String dateString;
