@@ -155,7 +155,23 @@ public class MealPlannerFragment extends Fragment {
         TextView dateTextView = view.findViewById(R.id.date_textView);
         dateTextView.setText(dbToDisplayDateFormatter(dateString));
 
-        // reset arraylist
+        updateMealRecyclerView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateMealRecyclerView();
+    }
+
+    /*
+    method to update the recyclerview displayed below the calendar.
+    When given a date, all the meals of that date is extracted.
+    This method is called when a date is changed, or onResume() such as exiting from creating a new meal.
+
+    Remember to modify the date string (Global variable) before calling this method.
+     */
+    public void updateMealRecyclerView(){
         mealPreviewList = new ArrayList<>();
 
         // load the arraylist from db
