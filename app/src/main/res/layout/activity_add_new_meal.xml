@@ -108,6 +108,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/content_font_size"
                     android:padding="@dimen/content_margin"
+                    android:maxLength="50"
                     android:drawableStart="@drawable/brush_icon"
                     android:drawableTint="@color/gray"
                     android:layout_gravity="center_vertical"
