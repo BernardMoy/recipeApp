@@ -120,7 +120,7 @@ public class AddNewMeal extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         mealRecipesRecyclerView.setLayoutManager(linearLayoutManager);
 
-        mealRecipeSuggestionRecyclerViewAdapter = new MealRecipeSuggestionRecyclerViewAdapter(AddNewMeal.this, previewList);
+        mealRecipeSuggestionRecyclerViewAdapter = new MealRecipeSuggestionRecyclerViewAdapter(AddNewMeal.this, previewList, dateString);
         mealRecipesRecyclerView.setAdapter(mealRecipeSuggestionRecyclerViewAdapter);
 
 

@@ -37,11 +37,15 @@ public class MealRecipeSuggestionRecyclerViewAdapter extends RecyclerView.Adapte
     // the done button
     private Button doneButton;
 
+    // store the current date string passed from add new meal activity
+    private String dateString;
 
-    public MealRecipeSuggestionRecyclerViewAdapter(Context ctx, ArrayList<MealRecipeSuggestionPreview> previewList){
+
+    public MealRecipeSuggestionRecyclerViewAdapter(Context ctx, ArrayList<MealRecipeSuggestionPreview> previewList, String dateString){
         this.ctx = ctx;
         this.previewListFull = previewList;
         this.previewList = new ArrayList<>(previewListFull);
+        this.dateString = dateString;
     }
 
     @NonNull
@@ -110,7 +114,14 @@ public class MealRecipeSuggestionRecyclerViewAdapter extends RecyclerView.Adapte
 
                 // add the recipeID data to the database
                 DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
+                boolean status = db.addMeal(dateString, inputCategory, selectedRecipeId);
+                if (!status){
+                    Toast.makeText(ctx, "Data adding failed", Toast.LENGTH_SHORT).show();
 
+                } else {
+                    Toast.makeText(ctx, "Meal added", Toast.LENGTH_SHORT).show();
+                    ((Activity) ctx).onBackPressed();  // exit activity
+                }
 
             }
         });

@@ -480,13 +480,13 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
 
 
     // method to add new meal
-    public boolean addMeal(Date date, String category, int recipeId){
+    public boolean addMeal(String dateString, String category, int recipeId){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValuesMeals = new ContentValues();
 
         // set new values submitted
-        contentValuesMeals.put("date", date.getTime());
+        contentValuesMeals.put("date", dateString);
         contentValuesMeals.put("category", category);
         contentValuesMeals.put("recipe_id", recipeId);
 
@@ -506,7 +506,7 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
 
     // method to get meal preview information about meals from date: Category and recipe name
     // for cost of recipes, use the separate method cost from RID
-    public Cursor getMealsFromDate(Date date){
+    public Cursor getMealsFromDate(String dateString){
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "SELECT M.meal_id, M.category, R.name, R.image, R.recipe_id " +
@@ -515,7 +515,7 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
 
         Cursor cursor = null;
         if (db != null) {
-            cursor = db.rawQuery(query, new String[]{String.valueOf(date.getTime())});
+            cursor = db.rawQuery(query, new String[]{dateString});
         }
         return cursor;
     }

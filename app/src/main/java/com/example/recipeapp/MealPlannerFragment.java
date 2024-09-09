@@ -160,7 +160,7 @@ public class MealPlannerFragment extends Fragment {
 
         // load the arraylist from db
         DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
-        Cursor cursor = db.getMealsFromDate(calendar.getTime());
+        Cursor cursor = db.getMealsFromDate(dateString);
         if (cursor.getCount() > 0){
             while (cursor.moveToNext()){
                 int mealId = cursor.getInt(0);
