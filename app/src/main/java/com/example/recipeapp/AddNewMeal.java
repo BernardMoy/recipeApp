@@ -142,10 +142,10 @@ public class AddNewMeal extends AppCompatActivity {
 
         // display empty message
         TextView emptyTextView = findViewById(R.id.emptyMealRecipes_textView);
-        if (!previewList.isEmpty()){
-            emptyTextView.setVisibility(View.GONE);
-        } else {
+        if (previewList.isEmpty()){
             emptyTextView.setVisibility(View.VISIBLE);
+        } else {
+            emptyTextView.setVisibility(View.GONE);
         }
     }
 

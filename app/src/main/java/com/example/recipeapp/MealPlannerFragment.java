@@ -59,6 +59,8 @@ public class MealPlannerFragment extends Fragment {
     // stores the current selected date
     private String dateString;
 
+    private TextView emptyMealTextView;
+
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -112,6 +114,9 @@ public class MealPlannerFragment extends Fragment {
         calendarView = view.findViewById(R.id.calendarView);
         calendar = Calendar.getInstance();
 
+        // load the empty text view
+        emptyMealTextView = view.findViewById(R.id.emptyMeal_textView);
+
         // find recyclerview
         mealsRecyclerView = view.findViewById(R.id.meals_recyclerView);
         mealPreviewList = new ArrayList<>();
@@ -155,6 +160,7 @@ public class MealPlannerFragment extends Fragment {
         TextView dateTextView = view.findViewById(R.id.date_textView);
         dateTextView.setText(dbToDisplayDateFormatter(dateString));
 
+        // load recyclerview for the meals on that day
         updateMealRecyclerView();
     }
 
@@ -202,6 +208,13 @@ public class MealPlannerFragment extends Fragment {
         mealsRecyclerView.setLayoutManager(linearLayoutManager);
         MealAdapter mealAdapter = new MealAdapter(ctx, mealPreviewList);
         mealsRecyclerView.setAdapter(mealAdapter);
+
+        // show or hide the empty message
+        if (mealPreviewList.isEmpty()){
+            emptyMealTextView.setVisibility(View.VISIBLE);
+        } else {
+            emptyMealTextView.setVisibility(View.GONE);
+        }
     }
 
 
