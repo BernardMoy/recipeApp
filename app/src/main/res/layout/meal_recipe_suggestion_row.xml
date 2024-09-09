@@ -1,0 +1,51 @@
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:background="@drawable/custom_edit_text"
+        android:layout_marginBottom="@dimen/content_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/mealRecipeSuggestion_imageView"
+            android:layout_width="@dimen/content_image_size"
+            android:layout_height="@dimen/content_image_size"
+            android:layout_margin="0dp"
+            android:padding="@dimen/content_margin"
+            android:layout_marginStart="@dimen/title_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/mealRecipeSuggestionRecipeName_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/content_margin"
+            android:paddingEnd="@dimen/content_margin"
+            android:text="Recipe name"
+            android:textSize="@dimen/subtitle_font_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/mealRecipeSuggestion_imageView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/mealRecipeSuggestionCost_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/money_icon"
+            android:paddingStart="@dimen/content_margin"
+            android:drawableTint="@color/gray"
+            android:text=" 0.00"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/content_font_size"
+            app:layout_constraintStart_toEndOf="@id/mealRecipeSuggestionRecipeName_textView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
