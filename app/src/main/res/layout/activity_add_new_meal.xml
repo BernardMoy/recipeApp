@@ -47,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Done"
-        android:onClick="updateShoppingListToDatabase"
+        android:onClick="updateMealToDatabase"
         android:drawableEnd="@drawable/check_icon"
         android:drawableTint="@color/white"
         android:backgroundTint="@color/primaryColor"
@@ -92,13 +92,11 @@
                 android:layout_marginBottom="@dimen/content_margin"
                 android:textSize="@dimen/content_font_size" />
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top"
                 android:layout_marginTop="@dimen/content_margin"
-                android:layout_marginBottom="@dimen/content_margin"
-                android:orientation="horizontal">
+                android:layout_marginBottom="@dimen/content_margin">
 
                 <TextView
                     android:id="@+id/textView5"
@@ -107,21 +105,27 @@
                     android:layout_marginStart="10dp"
                     android:text="Category"
                     android:layout_gravity="center_vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:textSize="@dimen/content_font_size" />
 
-                <EditText
-                    android:id="@+id/mealName_edittext"
-                    android:layout_width="187dp"
-                    android:layout_height="match_parent"
-                    android:inputType="text"
+                <AutoCompleteTextView
+                    android:id="@+id/category_autoCompleteTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:textSize="@dimen/content_font_size"
-                    android:background="@drawable/custom_edit_text"
-                    android:hint=" Name"
-                    android:maxLength="100"
-                    android:textColor="@color/gray"
+                    android:padding="@dimen/content_margin"
                     android:drawableStart="@drawable/brush_icon"
                     android:drawableTint="@color/gray"
-                    android:paddingLeft="@dimen/content_margin"/>
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/custom_edit_text"
+                    app:layout_constraintStart_toEndOf="@id/textView5"
+                    app:layout_constraintEnd_toStartOf="@id/imageButton5"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:hint=" Enter or select..."
+                    />
 
                 <ImageButton
                     android:id="@+id/imageButton5"
@@ -129,40 +133,50 @@
                     android:layout_height="@dimen/image_button_size"
                     android:backgroundTint="@android:color/transparent"
                     android:contentDescription="Clear"
-                    android:onClick="clearName"
+                    android:onClick="clearCategory"
                     app:srcCompat="@drawable/cancel_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:tint="@color/secondaryColor" />
-            </LinearLayout>
-            <LinearLayout
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top"
                 android:layout_marginTop="@dimen/content_margin"
-                android:layout_marginBottom="@dimen/content_margin"
-                android:orientation="horizontal">
+                android:layout_marginBottom="@dimen/content_margin">
 
                 <TextView
                     android:id="@+id/textView8"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="Description"
+                    android:text="Recipe"
                     android:layout_gravity="center_vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:textSize="@dimen/content_font_size" />
 
-                <EditText
-                    android:id="@+id/mealDesc_edittext"
-                    android:layout_width="250dp"
-                    android:layout_height="match_parent"
-                    android:inputType="textMultiLine"
-                    android:textSize="@dimen/content_font_size"
-                    android:background="@drawable/custom_edit_text"
-                    android:hint=" Description"
-                    android:textColor="@color/gray"
-                    android:drawableStart="@drawable/text_snippet_icon"
+                <AutoCompleteTextView
+                    android:id="@+id/recipeName_autoCompleteTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/content_margin"
+                    android:drawableStart="@drawable/search_glass_icon"
                     android:drawableTint="@color/gray"
-                    android:paddingStart="@dimen/content_margin"
-                    android:paddingEnd="@dimen/content_margin"/>
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/custom_edit_text"
+                    android:hint=" Enter recipe name... "
+                    app:layout_constraintStart_toEndOf="@id/textView8"
+                    app:layout_constraintEnd_toStartOf="@id/imageButton6"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:textSize="@dimen/content_font_size"
+                    android:inputType="text"
+                    />
 
                 <ImageButton
                     android:id="@+id/imageButton6"
@@ -170,10 +184,16 @@
                     android:layout_height="@dimen/image_button_size"
                     android:backgroundTint="@android:color/transparent"
                     android:contentDescription="Clear"
-                    android:onClick="clearDesc"
+                    android:onClick="clearRecipe"
                     app:srcCompat="@drawable/cancel_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:tint="@color/secondaryColor" />
-            </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         </LinearLayout>
     </ScrollView>
 

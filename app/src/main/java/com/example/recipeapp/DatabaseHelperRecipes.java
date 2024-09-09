@@ -72,7 +72,7 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
         String createMeals =
                 "CREATE TABLE IF NOT EXISTS Meals(" +
                         "meal_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "date DATE," +
+                        "date TEXT," +
                         "category VARCHAR(50)," +
                         "recipe_id INTEGER NOT NULL," +
                         "FOREIGN KEY (recipe_id) REFERENCES Recipes(recipe_id) ON DELETE CASCADE" +

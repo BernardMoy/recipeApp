@@ -4,6 +4,7 @@ import static androidx.core.content.ContextCompat.getDrawable;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.media.Image;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -56,6 +58,10 @@ public class MealPlannerFragment extends Fragment {
     // the auto complete text views in the dialog
     private AutoCompleteTextView categoryAutoCompleteTextView;
     private AutoCompleteTextView recipeSuggestionsAutoCompleteTextView;
+
+    // stores the current selected date
+    private String dateString;
+
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -114,15 +120,16 @@ public class MealPlannerFragment extends Fragment {
         mealPreviewList = new ArrayList<>();
 
         // get the current month and day, then call the listener method
+        int currentYear = calendar.get(Calendar.YEAR);
         int currentMonth = calendar.get(Calendar.MONTH);
         int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
-        dayChange(view, currentMonth, currentDay);
+        dayChange(view, currentYear, currentMonth, currentDay);
 
         // listener when a new date is selected
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
-                dayChange(view, month, day);
+                dayChange(view, year, month, day);
             }
         });
 
@@ -131,135 +138,11 @@ public class MealPlannerFragment extends Fragment {
         addMealButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // set up dialog
-                Dialog dialog = new Dialog(ctx);
-                dialog.setContentView(R.layout.create_meal_window);
-                dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                dialog.getWindow().setBackgroundDrawable(getDrawable(ctx, R.drawable.custom_edit_text));
-                dialog.setCancelable(false);
+                // open add meal activity
+                Intent intent = new Intent(ctx, AddNewMeal.class);
+                intent.putExtra("date", dateString);
 
-
-
-
-
-                // set up functionality of the auto complete text views
-                categoryAutoCompleteTextView = dialog.findViewById(R.id.category_autoCompleteTextView);
-                recipeSuggestionsAutoCompleteTextView = dialog.findViewById(R.id.recipeName_autoCompleteTextView);
-
-                String[] categorySuggestionsList = getResources().getStringArray(R.array.category_suggestions);
-                ArrayAdapter<String> arrayAdapterCategory = new ArrayAdapter<>(ctx, R.layout.recipe_dropdown_item, categorySuggestionsList);
-                categoryAutoCompleteTextView.setAdapter(arrayAdapterCategory);
-
-                // make the suggestions show when the user clicks on the text view
-                categoryAutoCompleteTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View view, boolean b) {
-                        if (b) {
-                            categoryAutoCompleteTextView.showDropDown();
-                        }
-                    }
-                });
-
-                categoryAutoCompleteTextView.setThreshold(1); // make it start filtering when 1 character is typed
-                categoryAutoCompleteTextView.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        arrayAdapterCategory.getFilter().filter(charSequence);
-                        categoryAutoCompleteTextView.showDropDown();
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-
-                    }
-                });
-
-
-
-
-                // for the recipe name ACTV, get an arraylist of all meal recipe previews.
-                ArrayList<MealRecipeSuggestionPreview> previewList = new ArrayList<>();
-                DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
-                Cursor cursor = db.getRecipes();
-                if (cursor.getCount() > 0){
-                    while (cursor.moveToNext()){
-                        byte[] image = cursor.getBlob(5);
-                        String name = cursor.getString(1);
-                        int id = cursor.getInt(0);
-
-                        // get the weighted cost
-                        Cursor cursor2 = db.getWeightedCost(id);
-                        cursor2.moveToNext();
-                        float cost = cursor2.getFloat(0);
-
-                        MealRecipeSuggestionPreview mealRecipeSuggestionPreview = new MealRecipeSuggestionPreview(image, name, cost);
-                        previewList.add(mealRecipeSuggestionPreview);
-                    }
-                }
-
-                // set adapter with the created arraylist
-                MealRecipeSuggestionAdapter mealRecipeSuggestionAdapter = new MealRecipeSuggestionAdapter(ctx, previewList);
-                recipeSuggestionsAutoCompleteTextView.setAdapter(mealRecipeSuggestionAdapter);
-                recipeSuggestionsAutoCompleteTextView.setThreshold(1);
-
-                recipeSuggestionsAutoCompleteTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View view, boolean b) {
-                        if (b) {
-                            recipeSuggestionsAutoCompleteTextView.showDropDown();
-                        }
-                    }
-                });
-
-                recipeSuggestionsAutoCompleteTextView.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        mealRecipeSuggestionAdapter.getFilter().filter(charSequence);
-                        recipeSuggestionsAutoCompleteTextView.showDropDown();
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-
-                    }
-                });
-
-
-
-
-
-
-
-
-                // load 2 buttons
-                cancelButton = dialog.findViewById(R.id.confirmMealCreateCancel_button);
-                createButton = dialog.findViewById(R.id.confirmMealCreate_button);
-
-                cancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-
-                createButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                    }
-                });
-
-                dialog.show();
+                startActivity(intent);
             }
         });
 
@@ -267,12 +150,13 @@ public class MealPlannerFragment extends Fragment {
     }
 
     // method called when the date and month is updated. This is called initially when loading the fragment
-    public void dayChange(View view, int month, int day){
-        String dateStr = dateFormatter(month, day);
+    public void dayChange(View view, int year, int month, int day){
+        // set global date string variable
+        dateString = String.format("%04d-%02d-%02d", year, month+1, day);  // month starts at 0
 
         // set the date string
         TextView dateTextView = view.findViewById(R.id.date_textView);
-        dateTextView.setText(dateStr);
+        dateTextView.setText(dbToDisplayDateFormatter(dateString));
 
         // reset arraylist
         mealPreviewList = new ArrayList<>();
@@ -308,51 +192,22 @@ public class MealPlannerFragment extends Fragment {
     }
 
 
-    public String dateFormatter(int month, int day){
-        String dayString = String.valueOf(day);
+    public String dbToDisplayDateFormatter(String dateStr){
+        SimpleDateFormat sourceDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        // note that january starts from 0
-        String monthString = "";
-        switch(month) {
-            case 0:
-                monthString = "January";
-                break;
-            case 1:
-                monthString = "February";
-                break;
-            case 2:
-                monthString = "March";
-                break;
-            case 3:
-                monthString = "April";
-                break;
-            case 4:
-                monthString = "May";
-                break;
-            case 5:
-                monthString = "June";
-                break;
-            case 6:
-                monthString = "July";
-                break;
-            case 7:
-                monthString = "August";
-                break;
-            case 8:
-                monthString = "September";
-                break;
-            case 9:
-                monthString = "October";
-                break;
-            case 10:
-                monthString = "November";
-                break;
-            case 11:
-                monthString = "December";
-                break;
+        // parse string to date object
+        try{
+            Date date = sourceDateFormat.parse(dateStr);
+            SimpleDateFormat targetDateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy");
+
+            if (date != null){
+                return targetDateFormat.format(date);
+            } else {
+                return "Invalid date";
+            }
+
+        } catch (ParseException e){
+            return "Invalid date";
         }
-
-        String formatted = dayString + " " + monthString;
-        return formatted;
     }
 }
