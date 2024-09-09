@@ -36,7 +36,7 @@ public class MealRecipeSuggestionAdapter extends ArrayAdapter<MealRecipeSuggesti
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
         if (convertView == null){
-            return LayoutInflater.from(getContext()).inflate(R.layout.meal_recipe_suggestion_row, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.meal_recipe_suggestion_row, parent, false);
         }
 
         // get fields from the row layout
