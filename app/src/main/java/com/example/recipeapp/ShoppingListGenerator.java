@@ -27,9 +27,9 @@ public class ShoppingListGenerator {
      * Hence, (supermarket, name, cost) uniquely identifies an ingredient.
      * It is stored before elements are added to the final hashMap.
      *
-     * @return a linkedhashmap that is ready to be put into the database
+     * @return True if there are ingredients to be added (And successfully added), False otherwise
      */
-    public LinkedHashMap<String, ArrayList<ShoppingListIngredient>> generateShoppingListFromRecipeIds(){
+    public boolean generateShoppingListFromRecipeIds(String shoppingListName){
 
         // 1. add all ingredients to this hashset to uniquely identify them first
         // key = triple, value = amount
@@ -96,17 +96,14 @@ public class ShoppingListGenerator {
 
             }
         }
-        return shoppingListIngredientMap;
+
+        // 3. Add the information to the db, if the shopping list ingredient map is not empty
+        if (!shoppingListIngredientMap.isEmpty()){
+            DatabaseHelperShoppingLists dbs = new DatabaseHelperShoppingLists(ctx);
+            dbs.addShoppingList(shoppingListName, "", shoppingListIngredientMap);
+            return true;
+        }
+
+        return false;
     }
-
-    /*
-    Afterwards:
-
-    LinkedHashMap<String, ArrayList<ShoppingListIngredient>> map = shoppingListGenerator.generateShoppingListFromRecipeIds();
-
-    // add to db
-    DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(ctx);
-    db.addShoppingList(shoppingListName, "", map);
-
-     */
 }

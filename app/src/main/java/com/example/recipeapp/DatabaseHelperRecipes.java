@@ -520,4 +520,17 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
         return cursor;
     }
 
+    // get all recipe ids that belong to a specific date
+    public Cursor getRecipeIdsFromDate(String dateString){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT recipe_id FROM Meals WHERE date = ?; ";
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, new String[]{dateString});
+        }
+        return cursor;
+    }
+
 }

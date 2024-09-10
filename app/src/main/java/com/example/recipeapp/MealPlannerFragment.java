@@ -26,10 +26,12 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.text.ParseException;
@@ -37,6 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -57,8 +60,6 @@ public class MealPlannerFragment extends Fragment {
 
     // add button
     private ImageButton addMealButton;
-    private Button cancelButton;
-    private Button createButton;
 
     // stores the current selected date
     private String dateString;
@@ -73,6 +74,15 @@ public class MealPlannerFragment extends Fragment {
     private ConstraintLayout selectedOptionsConstraintLayout;
 
     private ImageButton deselectButton;
+
+    // create SL by selecting dates
+    private ImageButton createShoppingListButton;
+    private HashMap<Integer, Integer> selectedRecipeIdMap;
+
+    // buttons for the create SL dialog
+    private Button cancelButton;
+    private Button createButton;
+    private EditText shoppingListNameEditText;
 
 
 
@@ -135,6 +145,7 @@ public class MealPlannerFragment extends Fragment {
         // load the top bar
         selectedOptionsConstraintLayout = view.findViewById(R.id.selectedOptions_constraintLayout);
         selectedOptionsConstraintLayout.setVisibility(View.GONE);   // initially gone
+        selectedOptionsConstraintLayout.setEnabled(false);
 
         // load the toggle button
         dateCheckToggleButton = view.findViewById(R.id.dateCheck_toggleButton);
@@ -194,14 +205,106 @@ public class MealPlannerFragment extends Fragment {
         deselectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // reset the hashset
-                selectedDateStringSet.clear();
-                updateSelectedCount();
-                updateCheckButton();
+                deselectAll();
+            }
+        });
+
+        // functionality of the create SL BUTTON
+        createShoppingListButton = view.findViewById(R.id.createShoppingListFromRecipe_button);
+        createShoppingListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // set up dialog
+                Dialog dialog = new Dialog(ctx);
+                dialog.setContentView(R.layout.create_shopping_list_window);
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().setBackgroundDrawable(getDrawable(ctx, R.drawable.custom_edit_text));
+                dialog.setCancelable(false);
+
+                // load the two buttons
+                cancelButton = dialog.findViewById(R.id.confirmShoppingListCreateCancel_button);
+                createButton = dialog.findViewById(R.id.confirmShoppingListCreate_button);
+                shoppingListNameEditText = dialog.findViewById(R.id.createShoppingListName_edittext);
+
+                // set listener for cancel
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // Remove the dialog
+                        dialog.dismiss();
+                    }
+                });
+
+                // set listener for confirm
+                createButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        String shoppingListName = shoppingListNameEditText.getText().toString();
+
+                        // empty name
+                        if (shoppingListName.isEmpty()){
+                            Toast.makeText(ctx, "Shopping list name is empty", Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            selectedRecipeIdMap = new HashMap<>();
+
+                            // load all the recipes that are loaded on those dates, specified in the selected date set
+                            DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
+                            for (String ds : selectedDateStringSet){
+                                // get the recipe ids that belong to the dates
+                                Cursor cursor = db.getRecipeIdsFromDate(ds);
+                                if (cursor.getCount() > 0){
+                                    while (cursor.moveToNext()){
+                                        int recipeId = cursor.getInt(0);
+
+                                        // add the recipe id to the selected map
+                                        if (selectedRecipeIdMap.containsKey(recipeId)){
+                                            int originalCount = selectedRecipeIdMap.get(recipeId);
+                                            selectedRecipeIdMap.put(recipeId, originalCount + 1);
+
+                                        } else {
+                                            selectedRecipeIdMap.put(recipeId, 1);
+                                        }
+
+                                    }
+                                }
+                            }
+
+                            // generate SL from recipes
+                            ShoppingListGenerator shoppingListGenerator = new ShoppingListGenerator(ctx, selectedRecipeIdMap);
+                            boolean b = shoppingListGenerator.generateShoppingListFromRecipeIds(shoppingListName);
+
+                            // deselect all dates
+                            deselectAll();
+
+                            // message
+                            if (b) {
+                                Toast.makeText(ctx, "Shopping list successfully created", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(ctx, "There are no ingredients for this shopping list", Toast.LENGTH_SHORT).show();
+                            }
+
+                            dialog.dismiss();
+                        }
+                    }
+                });
+
+                // show dialog
+                dialog.show();
             }
         });
 
         return view;
+    }
+
+    // method to deselect all: Called when new shopping list is added, or deselect button is clicked
+    public void deselectAll(){
+        // reset the hashset
+        selectedDateStringSet.clear();
+        updateSelectedCount();
+        updateCheckButton();
     }
 
     // method called when the date and month is updated. This is called initially when loading the fragment
@@ -313,9 +416,11 @@ public class MealPlannerFragment extends Fragment {
         // if count > 0, show the constraint layout, hide otherwise
         if (selectedDateStringSet.isEmpty()){
             selectedOptionsConstraintLayout.setVisibility(View.GONE);
+            selectedOptionsConstraintLayout.setEnabled(false);
 
         } else {
             selectedOptionsConstraintLayout.setVisibility(View.VISIBLE);
+            selectedOptionsConstraintLayout.setEnabled(true);
 
         }
     }

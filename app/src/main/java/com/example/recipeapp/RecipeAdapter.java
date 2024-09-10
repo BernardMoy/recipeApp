@@ -377,17 +377,17 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                         } else {
                             // pass the recipe id set to generate shopping list data
                             ShoppingListGenerator shoppingListGenerator = new ShoppingListGenerator(ctx, selectedRecipeIdMap);
-                            LinkedHashMap<String, ArrayList<ShoppingListIngredient>> map = shoppingListGenerator.generateShoppingListFromRecipeIds();
-
-                            // add to db
-                            DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(ctx);
-                            db.addShoppingList(shoppingListName, "", map);
+                            boolean b = shoppingListGenerator.generateShoppingListFromRecipeIds(shoppingListName);
 
                             // deselect all checkboxes
                             deselectAll();
 
                             // message
-                            Toast.makeText(ctx, "Shopping list successfully created", Toast.LENGTH_SHORT).show();
+                            if (b) {
+                                Toast.makeText(ctx, "Shopping list successfully created", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(ctx, "There are no ingredients for this shopping list", Toast.LENGTH_SHORT).show();
+                            }
 
                             dialog.dismiss();
                         }
