@@ -1,6 +1,7 @@
 package com.example.recipeapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -101,7 +102,6 @@ public class HomeFragment extends Fragment {
 
         // load the empty text view
         emptyRecipeTextView = view.findViewById(R.id.emptyGenerateRecipes_textView);
-        emptyRecipeTextView.setVisibility(View.GONE);
 
         // load views for the generated recipe
         recipeImageView = view.findViewById(R.id.generateRow_image);
@@ -115,6 +115,18 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 generateRandomRecipe();
+            }
+        });
+
+        // set click listener of the constraint layout --> Edit recipe
+        generateRecipeConstraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ctx, AddNewRecipe.class);
+                intent.putExtra("title_text", "Edit recipe");
+                intent.putExtra("recipe_id", generatedRecipeId);
+
+                startActivity(intent);
             }
         });
 
