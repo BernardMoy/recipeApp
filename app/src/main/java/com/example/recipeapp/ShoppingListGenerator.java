@@ -98,4 +98,15 @@ public class ShoppingListGenerator {
         }
         return shoppingListIngredientMap;
     }
+
+    /*
+    Afterwards:
+
+    LinkedHashMap<String, ArrayList<ShoppingListIngredient>> map = shoppingListGenerator.generateShoppingListFromRecipeIds();
+
+    // add to db
+    DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(ctx);
+    db.addShoppingList(shoppingListName, "", map);
+
+     */
 }

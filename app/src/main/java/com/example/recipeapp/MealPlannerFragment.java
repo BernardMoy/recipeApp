@@ -10,6 +10,7 @@ import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,16 +25,19 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,6 +64,16 @@ public class MealPlannerFragment extends Fragment {
     private String dateString;
 
     private TextView emptyMealTextView;
+
+
+    // store a list of date strings that are selected
+    private HashSet<String> selectedDateStringSet;
+    private ToggleButton dateCheckToggleButton;
+    private TextView selectedCountTextView;
+    private ConstraintLayout selectedOptionsConstraintLayout;
+
+    private ImageButton deselectButton;
+
 
 
 
@@ -114,6 +128,17 @@ public class MealPlannerFragment extends Fragment {
         calendarView = view.findViewById(R.id.calendarView);
         calendar = Calendar.getInstance();
 
+        // load the selected set
+        selectedDateStringSet = new HashSet<>();
+        selectedCountTextView = view.findViewById(R.id.selectedCount_textView);
+
+        // load the top bar
+        selectedOptionsConstraintLayout = view.findViewById(R.id.selectedOptions_constraintLayout);
+        selectedOptionsConstraintLayout.setVisibility(View.GONE);   // initially gone
+
+        // load the toggle button
+        dateCheckToggleButton = view.findViewById(R.id.dateCheck_toggleButton);
+
         // load the empty text view
         emptyMealTextView = view.findViewById(R.id.emptyMeal_textView);
 
@@ -148,6 +173,34 @@ public class MealPlannerFragment extends Fragment {
             }
         });
 
+        // set up toggle button
+        dateCheckToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    // add current date to hashset
+                    selectedDateStringSet.add(dateString);
+                    updateSelectedCount();
+
+                } else {
+                    selectedDateStringSet.remove(dateString);
+                    updateSelectedCount();
+                }
+            }
+        });
+
+        // deselect button functionality
+        deselectButton = view.findViewById(R.id.deselect_button);
+        deselectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // reset the hashset
+                selectedDateStringSet.clear();
+                updateSelectedCount();
+                updateCheckButton();
+            }
+        });
+
         return view;
     }
 
@@ -162,6 +215,8 @@ public class MealPlannerFragment extends Fragment {
 
         // load recyclerview for the meals on that day
         updateMealRecyclerView();
+
+        updateCheckButton();
     }
 
     @Override
@@ -235,5 +290,26 @@ public class MealPlannerFragment extends Fragment {
         } catch (ParseException e){
             return "Invalid date";
         }
+    }
+
+    // update the selected count textview
+    public void updateSelectedCount(){
+        String s = String.valueOf(selectedDateStringSet.size()) + " selected";
+        selectedCountTextView.setText(s);
+
+        // if count > 0, show the constraint layout, hide otherwise
+        if (selectedDateStringSet.isEmpty()){
+            selectedOptionsConstraintLayout.setVisibility(View.GONE);
+
+        } else {
+            selectedOptionsConstraintLayout.setVisibility(View.VISIBLE);
+
+        }
+    }
+
+    // update the toggle button shown. this is called when dayChange() is called, or when the deselect button is pressed
+    public void updateCheckButton(){
+        // update the toggle button according to whether the date is in the selected set
+        dateCheckToggleButton.setChecked(selectedDateStringSet.contains(dateString));
     }
 }
