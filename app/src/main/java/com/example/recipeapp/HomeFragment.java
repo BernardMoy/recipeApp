@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -142,6 +143,7 @@ public class HomeFragment extends Fragment {
      * @return true if sucessfully generated, false if there are no recipes.
      */
     public boolean generateRandomRecipe(){
+
         DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
 
         // from db, get a list of all recipe ids
@@ -159,34 +161,7 @@ public class HomeFragment extends Fragment {
             int randomIndex = random.nextInt(recipeIdList.size());
             generatedRecipeId = recipeIdList.get(randomIndex);
 
-            // get info for that rid
-            Cursor cursor1 = db.getRecipeFromId(generatedRecipeId);
-            cursor1.moveToNext();
-
-            String name = cursor1.getString(0);
-            float prepTime = cursor1.getFloat(4);
-            int timesCooked = cursor1.getInt(5);
-            byte[] image = cursor1.getBlob(1);
-
-            // get the weighted cost
-            Cursor cursor2 = db.getWeightedCost(generatedRecipeId);
-            cursor2.moveToNext();
-            float cost = cursor2.getFloat(0);
-
-            // update shown parameters
-            recipeNameTextView.setText(name);
-
-            String prepTimeStr = " " + String.valueOf(prepTime) + " minutes";
-            recipePrepTimeTextView.setText(prepTimeStr);
-
-            recipeCostTextView.setText(String.valueOf(cost));
-
-            String timesCookedStr = " " + String.valueOf(timesCooked) + " cooked";
-            recipeTimesCookedTextView.setText(timesCookedStr);
-
-            Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-            recipeImageView.setImageBitmap(bitmap);
-
+            loadRecipeData();
 
             // set empty text views
             emptyRecipeTextView.setVisibility(View.GONE);
@@ -205,5 +180,52 @@ public class HomeFragment extends Fragment {
 
             return false;
         }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        loadRecipeData();
+    }
+
+    /*
+    load recipe data from the generated recipe. Does not do anything if the id is -1.
+    Called on onResume and also immediately after generated recipe
+     */
+    public void loadRecipeData(){
+        if (generatedRecipeId == -1) {
+            return;
+        }
+
+        DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
+
+        // get info for that rid
+        Cursor cursor1 = db.getRecipeFromId(generatedRecipeId);
+        cursor1.moveToNext();
+
+        String name = cursor1.getString(0);
+        float prepTime = cursor1.getFloat(4);
+        int timesCooked = cursor1.getInt(5);
+        byte[] image = cursor1.getBlob(1);
+
+        // get the weighted cost
+        Cursor cursor2 = db.getWeightedCost(generatedRecipeId);
+        cursor2.moveToNext();
+        float cost = cursor2.getFloat(0);
+
+        // update shown parameters
+        recipeNameTextView.setText(name);
+
+        String prepTimeStr = " " + String.valueOf(prepTime) + " minutes";
+        recipePrepTimeTextView.setText(prepTimeStr);
+
+        recipeCostTextView.setText(String.valueOf(cost));
+
+        String timesCookedStr = " " + String.valueOf(timesCooked) + " cooked";
+        recipeTimesCookedTextView.setText(timesCookedStr);
+
+        Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+        recipeImageView.setImageBitmap(bitmap);
+
     }
 }
