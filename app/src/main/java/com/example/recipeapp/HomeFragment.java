@@ -1,12 +1,23 @@
 package com.example.recipeapp;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +25,26 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
+
+    private Context ctx;
+
+    // the constraint layout of the random recipe shown
+    private ConstraintLayout generateRecipeConstraintLayout;
+
+    // the refresh button to generate a random recipe
+    private ImageButton refreshButton;
+
+    // empty recipe textview
+    private TextView emptyRecipeTextView;
+
+    // the views used to display the generated recipe
+    private int generatedRecipeId;
+    private ImageView recipeImageView;
+    private TextView recipeNameTextView;
+    private TextView recipePrepTimeTextView;
+    private TextView recipeCostTextView;
+    private TextView recipeTimesCookedTextView;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,6 +90,108 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        ctx = view.getContext();
+
+        // load the refresh button
+        refreshButton = view.findViewById(R.id.refresh_imageButton);
+
+        // load constraint layout
+        generateRecipeConstraintLayout = view.findViewById(R.id.generateRecipeConstraintLayout);
+
+        // load the empty text view
+        emptyRecipeTextView = view.findViewById(R.id.emptyGenerateRecipes_textView);
+        emptyRecipeTextView.setVisibility(View.GONE);
+
+        // load views for the generated recipe
+        recipeImageView = view.findViewById(R.id.generateRow_image);
+        recipeNameTextView = view.findViewById(R.id.generateRow_name);
+        recipePrepTimeTextView = view.findViewById(R.id.generateRow_prepTime);
+        recipeCostTextView = view.findViewById(R.id.generateRow_cost);
+        recipeTimesCookedTextView = view.findViewById(R.id.generateRow_timesCooked);
+
+        // set on click listener
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                generateRandomRecipe();
+            }
+        });
+
+        // generate the first recipe
+        generateRandomRecipe();
+
+        return view;
+    }
+
+    /**
+     * generates a random recipe and modify the textviews that are displayed.
+     *
+     * @return true if sucessfully generated, false if there are no recipes.
+     */
+    public boolean generateRandomRecipe(){
+        DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
+
+        // from db, get a list of all recipe ids
+        ArrayList<Integer> recipeIdList = new ArrayList<>();
+
+        Cursor cursor = db.getRecipes();
+        if (cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                int recipeId = cursor.getInt(0);
+                recipeIdList.add(recipeId);
+            }
+
+            // generate a random recipe id and change global var
+            Random random = new Random();
+            int randomIndex = random.nextInt(recipeIdList.size());
+            generatedRecipeId = recipeIdList.get(randomIndex);
+
+            // get info for that rid
+            Cursor cursor1 = db.getRecipeFromId(generatedRecipeId);
+            cursor1.moveToNext();
+
+            String name = cursor1.getString(0);
+            float prepTime = cursor1.getFloat(4);
+            int timesCooked = cursor1.getInt(5);
+            byte[] image = cursor1.getBlob(1);
+
+            // get the weighted cost
+            Cursor cursor2 = db.getWeightedCost(generatedRecipeId);
+            cursor2.moveToNext();
+            float cost = cursor2.getFloat(0);
+
+            // update shown parameters
+            recipeNameTextView.setText(name);
+
+            String prepTimeStr = " " + String.valueOf(prepTime) + " minutes";
+            recipePrepTimeTextView.setText(prepTimeStr);
+
+            recipeCostTextView.setText(String.valueOf(cost));
+
+            String timesCookedStr = " " + String.valueOf(timesCooked) + " cooked";
+            recipeTimesCookedTextView.setText(timesCookedStr);
+
+            Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+            recipeImageView.setImageBitmap(bitmap);
+
+
+            // set empty text views
+            emptyRecipeTextView.setVisibility(View.GONE);
+            generateRecipeConstraintLayout.setVisibility(View.VISIBLE);
+            generateRecipeConstraintLayout.setEnabled(true);
+            return true;
+
+        } else {
+
+            // there are no recipes
+            generatedRecipeId = -1;
+
+            emptyRecipeTextView.setVisibility(View.VISIBLE);
+            generateRecipeConstraintLayout.setVisibility(View.GONE);
+            generateRecipeConstraintLayout.setEnabled(false);
+
+            return false;
+        }
     }
 }

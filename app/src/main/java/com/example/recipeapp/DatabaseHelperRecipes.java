@@ -307,7 +307,7 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
     public Cursor getRecipeFromId(int recipeId){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT name, image, description, link, prep_time " +
+        String query = "SELECT name, image, description, link, prep_time, times_cooked " +
                 "FROM Recipes WHERE recipe_id = ?;";
 
         Cursor cursor = null;

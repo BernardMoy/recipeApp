@@ -57,7 +57,7 @@
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout"
+                android:id="@+id/generateRecipeConstraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/content_margin"
@@ -138,6 +138,19 @@
                     app:layout_constraintTop_toBottomOf="@+id/generateRow_name" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/emptyGenerateRecipes_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tap '+' to create a new recipe!"
+                android:textSize="@dimen/content_font_size"
+                android:textColor="@color/gray"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/generateRecipeConstraintLayout"
+                android:layout_marginTop="@dimen/title_margin"
+                android:layout_marginBottom="@dimen/title_margin"/>
 
 
             <ImageButton
