@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
+        // start the home fragment at the beginning
+        replaceFragment(new HomeFragment());
+
 
 
     }
