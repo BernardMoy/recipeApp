@@ -294,7 +294,20 @@ public class MealPlannerFragment extends Fragment {
 
     // update the selected count textview
     public void updateSelectedCount(){
-        String s = String.valueOf(selectedDateStringSet.size()) + " selected";
+        // format every item in the set
+        StringBuilder dates = new StringBuilder();
+        for (String t : selectedDateStringSet){
+            String[] formattedDateList = t.split("-");
+            String formattedDate = formattedDateList[2] + "/" + formattedDateList[1];
+
+            if (dates.toString().isEmpty()){
+                dates.append(formattedDate);
+            } else {
+                dates.append(", ").append(formattedDate);
+            }
+        }
+
+        String s = String.valueOf(selectedDateStringSet.size()) + " selected (" + dates + ")";
         selectedCountTextView.setText(s);
 
         // if count > 0, show the constraint layout, hide otherwise
