@@ -209,6 +209,91 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/lightGray"
+                android:padding="@dimen/content_margin"
+                android:layout_marginStart="@dimen/title_margin"
+                android:layout_marginEnd="@dimen/title_margin">
+
+                <TextView
+                    android:id="@+id/recipeSuggestion_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Suggested recipe for leftover ingredients"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:background="@drawable/custom_edit_text"
+                    android:layout_marginTop="@dimen/content_margin"
+                    android:layout_marginBottom="@dimen/content_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/recipeSuggestion_textView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+
+                    <ImageView
+                        android:id="@+id/suggestedImage_imageView"
+                        android:layout_width="@dimen/content_image_size"
+                        android:layout_height="@dimen/content_image_size"
+                        android:layout_margin="0dp"
+                        android:padding="@dimen/content_margin"
+                        android:layout_marginStart="@dimen/title_margin"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                    <TextView
+                        android:id="@+id/suggestedName_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No recipe selected"
+                        android:textSize="@dimen/content_font_size"
+                        app:layout_constraintStart_toEndOf="@+id/suggestedImage_imageView"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/suggestedCost_textView"/>
+
+                    <TextView
+                        android:id="@+id/suggestedCost_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/money_icon"
+                        android:drawableTint="@color/gray"
+                        android:text=" 0.00"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/content_font_size"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/suggestedImage_imageView"
+                        app:layout_constraintTop_toBottomOf="@id/suggestedName_textView" />
+
+                    <Button
+                        android:id="@+id/suggestionSelect_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cornerRadius = "0dp"
+                        android:backgroundTint="@color/primaryColor"
+                        android:text="Select"
+                        android:textColor="@color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="@dimen/content_margin"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
             <SearchView
                 android:id="@+id/mealRecipes_searchView"
                 android:layout_width="match_parent"
