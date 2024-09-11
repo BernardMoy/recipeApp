@@ -41,7 +41,9 @@
             android:background="@color/lightGray"
             android:paddingBottom="@dimen/content_margin"
             android:layout_marginStart="@dimen/title_margin"
-            android:layout_marginEnd="@dimen/title_margin">
+            android:layout_marginEnd="@dimen/title_margin"
+            android:layout_marginTop="@dimen/title_margin"
+            android:layout_marginBottom="@dimen/title_margin">
 
             <TextView
                 android:id="@+id/generate_textView"
@@ -164,6 +166,153 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/white" />
 
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lightColor"
+            android:layout_marginStart="@dimen/title_margin"
+            android:layout_marginEnd="@dimen/title_margin"
+            android:layout_marginTop="@dimen/content_margin"
+            android:layout_marginBottom="@dimen/content_margin"
+            android:paddingBottom="@dimen/content_margin">
+
+            <TextView
+                android:id="@+id/titleRecipes_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recipes"
+                android:textStyle="bold"
+                android:textSize="@dimen/title_font_size"
+                android:textColor="@color/primaryColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="@dimen/content_margin"
+                android:layout_marginTop="@dimen/content_margin"/>
+
+            <ImageButton
+                android:id="@+id/recipeArrow_imageButton"
+                android:layout_width="@dimen/image_button_size"
+                android:layout_height="@dimen/image_button_size"
+                android:background="@color/primaryColor"
+                android:contentDescription="View"
+                android:src="@drawable/arrow_forward_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/descRecipes_textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/recipe_description"
+                android:textSize="@dimen/content_font_size"
+                app:layout_constraintTop_toBottomOf="@id/titleRecipes_textView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/recipeArrow_imageButton"
+                android:paddingStart="@dimen/content_margin"
+                android:paddingEnd="@dimen/content_margin"
+                android:layout_marginTop="@dimen/content_margin"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lightColor"
+            android:layout_marginStart="@dimen/title_margin"
+            android:layout_marginEnd="@dimen/title_margin"
+            android:layout_marginTop="@dimen/content_margin"
+            android:layout_marginBottom="@dimen/content_margin"
+            android:paddingBottom="@dimen/content_margin">
+
+            <TextView
+                android:id="@+id/titleShoppingLists_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shopping lists"
+                android:textStyle="bold"
+                android:textSize="@dimen/title_font_size"
+                android:textColor="@color/primaryColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="@dimen/content_margin"
+                android:layout_marginTop="@dimen/content_margin"/>
+
+            <ImageButton
+                android:id="@+id/shoppingListsArrow_imageButton"
+                android:layout_width="@dimen/image_button_size"
+                android:layout_height="@dimen/image_button_size"
+                android:background="@color/primaryColor"
+                android:contentDescription="View"
+                android:src="@drawable/arrow_forward_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/descShoppingLists_textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/shopping_list_description"
+                android:textSize="@dimen/content_font_size"
+                app:layout_constraintTop_toBottomOf="@id/titleShoppingLists_textView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/shoppingListsArrow_imageButton"
+                android:paddingStart="@dimen/content_margin"
+                android:paddingEnd="@dimen/content_margin"
+                android:layout_marginTop="@dimen/content_margin"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lightColor"
+            android:layout_marginStart="@dimen/title_margin"
+            android:layout_marginEnd="@dimen/title_margin"
+            android:layout_marginTop="@dimen/content_margin"
+            android:layout_marginBottom="@dimen/content_margin"
+            android:paddingBottom="@dimen/content_margin">
+
+            <TextView
+                android:id="@+id/titleMealPlanner_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Meal planner"
+                android:textStyle="bold"
+                android:textSize="@dimen/title_font_size"
+                android:textColor="@color/primaryColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="@dimen/content_margin"
+                android:layout_marginTop="@dimen/content_margin"/>
+
+            <ImageButton
+                android:id="@+id/mealPlannerArrow_imageButton"
+                android:layout_width="@dimen/image_button_size"
+                android:layout_height="@dimen/image_button_size"
+                android:background="@color/primaryColor"
+                android:contentDescription="View"
+                android:src="@drawable/arrow_forward_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/descPlanner_textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/meal_planner_description"
+                android:textSize="@dimen/content_font_size"
+                app:layout_constraintTop_toBottomOf="@id/titleMealPlanner_textView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/mealPlannerArrow_imageButton"
+                android:paddingStart="@dimen/content_margin"
+                android:paddingEnd="@dimen/content_margin"
+                android:layout_marginTop="@dimen/content_margin"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,6 +6,10 @@
     <string name="floating_action_button_description">Add new item</string>
     <string name="total_weighted_cost_default"> Total weighted cost: 0.00 </string>
     <string name="total_cost_default"> Total cost: 0.00 </string>
+    
+    <string name="recipe_description"> Create recipes that can be marked in calendar, or used to create shopping list </string>
+    <string name="shopping_list_description"> Create shopping lists to mark ingredients and costs </string>
+    <string name="meal_planner_description"> Plan your meal ahead to plan the optimal shopping list </string>
 
     <string-array name="orderBy">
         <item>Latest added</item>
