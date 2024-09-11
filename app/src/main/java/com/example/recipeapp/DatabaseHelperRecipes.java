@@ -34,8 +34,7 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
                         "description TEXT," +
                         "link TEXT," +
                         "prep_time FLOAT," +
-                        "is_favourited BOOLEAN DEFAULT FALSE," +
-                        "times_cooked INTEGER DEFAULT 0" +
+                        "is_favourited BOOLEAN DEFAULT FALSE" +
                         ");";
 
         String createTags =
@@ -177,15 +176,38 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
         return true;
     }
 
-    // method to extract information needed to display the recipes
-    public Cursor getRecipes() {
+    // method to extract information needed to display the recipes, given the ordering option.
+    public Cursor getRecipes(int orderingOption) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Extract all recipe data
         // the 3rd item is the times cooked of that recipe
-        String queryRecipe = "SELECT r.recipe_id, name, prep_time, COALESCE(COUNT(m.meal_id), 0) AS times_cooked, is_favourited, image " +
-                "FROM Recipes r LEFT JOIN Meals m ON r.recipe_id = m.recipe_id " +
-                "GROUP BY r.recipe_id; ";  // ensure no duplicates
+        String queryRecipe;
+
+        // different ordering methods based on the ordering option
+        switch(orderingOption){
+            case 1:
+                queryRecipe = "SELECT R.recipe_id, R.name, prep_time, COALESCE(COUNT(m.meal_id), 0) AS times_cooked, is_favourited, image " +
+                        "FROM Recipes R LEFT JOIN Meals m ON R.recipe_id = m.recipe_id " +
+                        "LEFT JOIN Recipe_ingredients RI ON R.recipe_id = RI.recipe_id "+
+                        "LEFT JOIN Ingredients I ON RI.ingredient_id = I.ingredient_id "+
+                        "GROUP BY R.recipe_id " +
+                        "ORDER BY (SELECT ROUND(SUM(I.cost*I.amount), 2)) DESC;";
+                break;
+
+            case 2:
+                queryRecipe = "SELECT r.recipe_id, name, prep_time, COALESCE(COUNT(m.meal_id), 0) AS times_cooked, is_favourited, image " +
+                        "FROM Recipes r LEFT JOIN Meals m ON r.recipe_id = m.recipe_id " +
+                        "GROUP BY R.recipe_id " +
+                        "ORDER BY times_cooked ASC;";
+                break;
+
+            default:
+                queryRecipe = "SELECT r.recipe_id, name, prep_time, COALESCE(COUNT(m.meal_id), 0) AS times_cooked, is_favourited, image " +
+                        "FROM Recipes r LEFT JOIN Meals m ON r.recipe_id = m.recipe_id " +
+                        "GROUP BY r.recipe_id; ";
+                break;
+        }
 
         Cursor cursor = null;
         if (db != null) {

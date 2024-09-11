@@ -96,7 +96,7 @@ public class AddNewMeal extends AppCompatActivity {
         // extract recipe data from db
         previewList = new ArrayList<>();
         DatabaseHelperRecipes db = new DatabaseHelperRecipes(AddNewMeal.this);
-        Cursor cursor = db.getRecipes();
+        Cursor cursor = db.getRecipes(0);
         if (cursor.getCount() > 0){
             while (cursor.moveToNext()){
                 int recipeId = cursor.getInt(0);

@@ -81,6 +81,10 @@ public class RecipeFragment extends Fragment {
     private LinearLayout filterOptionsLinearLayout;
 
 
+    // 0 = latest, 1 = lowest cost, 2 = most frequent;
+    private int orderingOption;
+
+
 
     public RecipeFragment() {
         // Required empty public constructor
@@ -147,12 +151,19 @@ public class RecipeFragment extends Fragment {
         // Listener to make the view show dropdown
         autoCompleteTextView.setOnClickListener(view1 -> autoCompleteTextView.showDropDown());
 
+        // ordering option is initially 0
+        orderingOption = 0;
+
         // Listener to do something to the selected object
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String selectedOption = getResources().getStringArray(R.array.orderBy)[i];    // i is the position of selected elem
-                Log.d("Dropdown menu", selectedOption);
+                // i is the position clicked
+                // 0 = latest added, 1 = lowest cost, 2 = most frequently cooked
+                orderingOption = i;
+
+                // call the onResume method -> Reload the entire recyclerview using same logic
+                onResume();
             }
         });
 
@@ -386,7 +397,7 @@ public class RecipeFragment extends Fragment {
 
         // extract all recipes data from the database
         DatabaseHelperRecipes db = new DatabaseHelperRecipes(getActivity().getApplicationContext());
-        Cursor cursor = db.getRecipes();
+        Cursor cursor = db.getRecipes(orderingOption);
 
         // if have data
         if (cursor.getCount() > 0){

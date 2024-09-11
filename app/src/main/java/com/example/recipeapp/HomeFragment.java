@@ -185,7 +185,7 @@ public class HomeFragment extends Fragment {
         // from db, get a list of all recipe ids
         ArrayList<Integer> recipeIdList = new ArrayList<>();
 
-        Cursor cursor = db.getRecipes();
+        Cursor cursor = db.getRecipes(0);
         if (cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
                 int recipeId = cursor.getInt(0);
