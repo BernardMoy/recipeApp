@@ -210,6 +210,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/suggestion_constraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/lightGray"
@@ -221,7 +222,7 @@
                     android:id="@+id/recipeSuggestion_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Suggested recipe for leftover ingredients"
+                    android:text="Suggested recipe utilising leftover ingredients"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>
 
@@ -229,7 +230,7 @@
                     android:id="@+id/percentage_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="This recipe uses 0% of the leftover ingredients"
+                    android:text="You saved 0 by using leftover ingredients"
                     android:textColor="@color/green"
                     app:layout_constraintTop_toBottomOf="@id/recipeSuggestion_textView"
                     app:layout_constraintStart_toStartOf="parent"/>
