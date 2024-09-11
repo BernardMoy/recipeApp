@@ -603,6 +603,15 @@
 
                     <TextView
                         android:gravity="center_horizontal"
+                        android:text="Shelf life"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/content_font_size" />
+
+                    <TextView
+                        android:gravity="center_horizontal"
                         android:layout_width="@dimen/image_button_size"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"

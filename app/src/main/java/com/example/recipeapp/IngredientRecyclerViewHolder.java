@@ -17,6 +17,7 @@ public class IngredientRecyclerViewHolder extends RecyclerView.ViewHolder {
     private TextView costTextView;
     private ImageButton deleteButton;
     private TableRow tableRow;
+    private TextView shelfLifeTextView;
 
     public IngredientRecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -24,6 +25,7 @@ public class IngredientRecyclerViewHolder extends RecyclerView.ViewHolder {
         amountTextView = itemView.findViewById(R.id.amount_textView);
         supermarketTextView = itemView.findViewById(R.id.supermarket_textView);
         costTextView = itemView.findViewById(R.id.cost_textView);
+        shelfLifeTextView = itemView.findViewById(R.id.shelfLife_textView);
         deleteButton = itemView.findViewById(R.id.ingredientDelete_button);
         tableRow = itemView.findViewById(R.id.recipeIngredient_tableRow);
     }
@@ -50,5 +52,9 @@ public class IngredientRecyclerViewHolder extends RecyclerView.ViewHolder {
 
     public TableRow getTableRow() {
         return tableRow;
+    }
+
+    public TextView getShelfLifeTextView() {
+        return shelfLifeTextView;
     }
 }

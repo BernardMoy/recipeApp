@@ -152,8 +152,9 @@ public class AddNewRecipe extends AppCompatActivity {
                         Float ingredientAmount = cursorIngredients.getFloat(1);
                         String ingredientSupermarket = cursorIngredients.getString(2);
                         Float ingredientCost = cursorIngredients.getFloat(3);
+                        Float ingredientShelfLife = cursorIngredients.getFloat(4);
 
-                        Ingredient ingredient = new Ingredient(ingredientName, ingredientAmount, ingredientSupermarket, ingredientCost);
+                        Ingredient ingredient = new Ingredient(ingredientName, ingredientAmount, ingredientSupermarket, ingredientCost, ingredientShelfLife);
                         ingredientList.add(ingredient);
                     }
                 }
@@ -259,11 +260,14 @@ public class AddNewRecipe extends AppCompatActivity {
         TextView amountEditText = (TextView) findViewById(R.id.recipeAmount_edittext);
         TextView supermarketEditText = (TextView) findViewById(R.id.recipeSupermarket_edittext);
         TextView costEditText = (TextView) findViewById(R.id.recipeCost_edittext);
+        TextView shelfLifeEditText = (TextView) findViewById(R.id.shelfLife_textView);
+
         // reset fields
         ingredientEditText.setText("");
         amountEditText.setText("");
         supermarketEditText.setText("");
         costEditText.setText("");
+        shelfLifeEditText.setText("");
     }
 
     // method when the plus button after writing a new tag is pressed
@@ -298,11 +302,13 @@ public class AddNewRecipe extends AppCompatActivity {
         TextView amountEditText = (TextView) findViewById(R.id.recipeAmount_edittext);
         TextView supermarketEditText = (TextView) findViewById(R.id.recipeSupermarket_edittext);
         TextView costEditText = (TextView) findViewById(R.id.recipeCost_edittext);
+        TextView shelfLifeEditText = (TextView) findViewById(R.id.recipeShelfLife_edittext);
 
         String ingredient = ingredientEditText.getText().toString();
         String amountStr = amountEditText.getText().toString();
         String supermarket = supermarketEditText.getText().toString();
         String costStr = costEditText.getText().toString();
+        String shelfLifeStr = shelfLifeEditText.getText().toString();
 
         // empty ingredient name submitted
         if (ingredient.isEmpty()){
@@ -325,8 +331,15 @@ public class AddNewRecipe extends AppCompatActivity {
             cost = Math.round(cost * 100) / 100.0f;  // trim to 2 dp
         }
 
+        // empty shelf life
+        float shelfLife = 365.0f;
+        if (!shelfLifeStr.isEmpty()){
+            shelfLife = Float.parseFloat(shelfLifeStr);
+            shelfLife = Math.round(shelfLife * 100) / 100.0f;  // trim to 2 dp
+        }
+
         // construct ingredient and add to arraylist
-        Ingredient newIngredient = new Ingredient(ingredient, amount, supermarket, cost);
+        Ingredient newIngredient = new Ingredient(ingredient, amount, supermarket, cost, shelfLife);
         ingredientList.add(newIngredient);
 
         // modify the recycler view that displays list of items
@@ -340,6 +353,7 @@ public class AddNewRecipe extends AppCompatActivity {
         ingredientEditText.setText("");
         amountEditText.setText("");
         costEditText.setText("");
+        shelfLifeEditText.setText("");
 
         updateCost();
     }

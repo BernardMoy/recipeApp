@@ -49,7 +49,8 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
                         "name VARCHAR(50) NOT NULL," +
                         "amount FLOAT CHECK(amount >= 0)," +
                         "supermarket VARCHAR(50)," +
-                        "cost FLOAT CHECK(cost >= 0)" +
+                        "cost FLOAT CHECK(cost >= 0), " +
+                        "shelf_life FLOAT CHECK(shelf_life >= 0) DEFAULT 365.0" +
                         ");";
 
         String createRecipeTags =
@@ -153,11 +154,13 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
             Float amount = ingredient.getAmount();
             String supermarket = ingredient.getSupermarket();
             Float cost = ingredient.getCost();
+            Float shelfLife = ingredient.getShelfLife();
 
             contentValuesIngredients.put("name", ingredientName);
             contentValuesIngredients.put("amount", amount);
             contentValuesIngredients.put("supermarket", supermarket);
             contentValuesIngredients.put("cost", cost);
+            contentValuesIngredients.put("shelf_life", shelfLife);
 
             long resultIngredients = db.insert("Ingredients", null, contentValuesIngredients);
             if (resultIngredients == -1) {
@@ -363,7 +366,7 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
     public Cursor getIngredientsFromId(int recipeId){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT I.name, I.amount, I.supermarket, I.cost " +
+        String query = "SELECT I.name, I.amount, I.supermarket, I.cost, I.shelf_life " +
                 "FROM Recipes R JOIN Recipe_ingredients RI ON R.recipe_id = RI.recipe_id " +
                 "JOIN Ingredients I ON RI.ingredient_id = I.ingredient_id " +
                 "WHERE R.recipe_id = ?;";
@@ -459,11 +462,13 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
             Float amount = ingredient.getAmount();
             String supermarket = ingredient.getSupermarket();
             Float cost = ingredient.getCost();
+            Float shelfLife = ingredient.getShelfLife();
 
             contentValuesIngredients.put("name", ingredientName);
             contentValuesIngredients.put("amount", amount);
             contentValuesIngredients.put("supermarket", supermarket);
             contentValuesIngredients.put("cost", cost);
+            contentValuesIngredients.put("shelf_life", shelfLife);
 
             long resultIngredients = db.insert("Ingredients", null, contentValuesIngredients);
             if (resultIngredients == -1) {

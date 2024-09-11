@@ -34,11 +34,15 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull IngredientRecyclerViewHolder holder, int position) {
+
+        Ingredient currentIngredient = ingredientList.get(position);
+
         // set text for the item row
-        holder.getIngredientTextView().setText(ingredientList.get(position).getIngredient());
-        holder.getAmountTextView().setText(String.valueOf(ingredientList.get(position).getAmount()));
-        holder.getSupermarketTextView().setText(ingredientList.get(position).getSupermarket());
-        holder.getCostTextView().setText(String.valueOf(ingredientList.get(position).getCost()));
+        holder.getIngredientTextView().setText(currentIngredient.getIngredient());
+        holder.getAmountTextView().setText(String.valueOf(currentIngredient.getAmount()));
+        holder.getSupermarketTextView().setText(currentIngredient.getSupermarket());
+        holder.getCostTextView().setText(String.valueOf(currentIngredient.getCost()));
+        holder.getShelfLifeTextView().setText(String.valueOf(currentIngredient.getShelfLife()));
 
         // set alternating row colours
         if (position % 2 == 0){
