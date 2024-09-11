@@ -1,5 +1,8 @@
 package com.example.recipeapp;
 
+import static android.text.TextUtils.replace;
+
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -47,6 +50,10 @@ public class HomeFragment extends Fragment {
     private TextView recipeCostTextView;
     private TextView recipeTimesCookedTextView;
 
+    // the 3 arrow buttons that direct to different fragment
+    private ImageButton recipeArrowImageButton;
+    private ImageButton shoppingListArrowImageButton;
+    private ImageButton mealPlannerArrowImageButton;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -133,6 +140,35 @@ public class HomeFragment extends Fragment {
 
         // generate the first recipe
         generateRandomRecipe();
+
+        // load the arrow image buttons
+        recipeArrowImageButton = view.findViewById(R.id.recipeArrow_imageButton);
+        shoppingListArrowImageButton = view.findViewById(R.id.shoppingListsArrow_imageButton);
+        mealPlannerArrowImageButton = view.findViewById(R.id.mealPlannerArrow_imageButton);
+
+        recipeArrowImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).selectBarItem(1);
+                ((MainActivity) getActivity()).replaceFragment(new RecipeFragment());
+            }
+        });
+
+        shoppingListArrowImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).selectBarItem(2);
+                ((MainActivity) getActivity()).replaceFragment(new ShoppingListFragment());
+            }
+        });
+
+        mealPlannerArrowImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).selectBarItem(3);
+                ((MainActivity) getActivity()).replaceFragment(new MealPlannerFragment());
+            }
+        });
 
         return view;
     }

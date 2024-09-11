@@ -61,11 +61,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // function to replace fragment
-    private void replaceFragment(Fragment f){
+    protected void replaceFragment(Fragment f){
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.frameLayout, f);   // replace the frame layout with the fragment provided
         transaction.commit();
+    }
+
+    // function to select bottom navbar item programmatically
+    // 0,1,2,3 = home, recipe, shoppingList, mealPlanner
+    protected void selectBarItem(int i){
+        switch (i){
+            case 0:
+                binding.bottomNavigationView.setSelectedItemId(R.id.home_navbar);
+                break;
+            case 1:
+                binding.bottomNavigationView.setSelectedItemId(R.id.recipes_navbar);
+                break;
+            case 2:
+                binding.bottomNavigationView.setSelectedItemId(R.id.shoppingList_navbar);
+                break;
+            case 3:
+                binding.bottomNavigationView.setSelectedItemId(R.id.mealPlanner_navbar);
+                break;
+        }
     }
 
     // function called by clicking the plus sign floating button
