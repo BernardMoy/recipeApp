@@ -104,6 +104,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
         if (!firstTag.isEmpty()){
             // first tag is not empty: There are tags (>=1)
             holder.getTag().setText(recipePreviewList.get(position).getTag());
+            holder.getTag().setTextColor(ContextCompat.getColor(ctx, R.color.white));
+            holder.getTag().setBackgroundColor(ContextCompat.getColor(ctx, R.color.primaryColor));
 
             int tagPlus = recipePreviewList.get(position).getTagPlus();
             if (tagPlus != 0){
@@ -120,7 +122,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
             holder.getTag().setText("No tags");
             holder.getTag().setTextColor(ContextCompat.getColor(ctx, R.color.gray));
             holder.getTag().setBackgroundColor(Color.TRANSPARENT);
-            holder.getTag().setPadding(0,0,0,0);
             // remove the tag plus text
             holder.getTagPlus().setText("");
         }
@@ -131,7 +132,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
         String prepTimeString = " " + String.valueOf(recipePreviewList.get(position).getPrepTime()) + " minutes";
         holder.getPrepTime().setText(prepTimeString);
 
-        String timesCookedString = " " + String.valueOf(String.valueOf(recipePreviewList.get(position).getTimesCooked())) + " times cooked";
+        String timesCookedString = " " + String.valueOf(String.valueOf(recipePreviewList.get(position).getTimesCooked())) + " cooked";
         holder.getTimesCooked().setText(timesCookedString);
 
         byte[] imageByteArray = recipePreviewList.get(position).getImage();

@@ -182,7 +182,7 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Extract all recipe data
-        String queryRecipe = "SELECT recipe_id, name, prep_time, times_cooked, is_favourited, image FROM Recipes";
+        String queryRecipe = "SELECT recipe_id, name, prep_time, 3, is_favourited, image FROM Recipes";
         Cursor cursor = null;
         if (db != null) {
             cursor = db.rawQuery(queryRecipe, null);
