@@ -1,19 +1,24 @@
 package com.example.recipeapp;
 
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Filter;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -35,6 +40,12 @@ public class AddNewMeal extends AppCompatActivity {
     private RecyclerView mealRecipesRecyclerView;
     private MealRecipeSuggestionRecyclerViewAdapter mealRecipeSuggestionRecyclerViewAdapter;
     private SearchView searchView;
+
+    private ConstraintLayout suggestionConstraintLayout;
+    private TextView suggestedNameTextView;
+    private ImageView suggestedImageView;
+    private TextView suggestedCostTextView;
+    private TextView savedCostTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +158,18 @@ public class AddNewMeal extends AppCompatActivity {
         } else {
             emptyTextView.setVisibility(View.GONE);
         }
+
+
+
+        // load suggestion constraint layout
+        suggestionConstraintLayout = findViewById(R.id.suggestion_constraintLayout);
+        suggestedNameTextView = findViewById(R.id.suggestedName_textView);
+        suggestedImageView = findViewById(R.id.suggestedImage_imageView);
+        suggestedCostTextView = findViewById(R.id.suggestedCost_textView);
+        savedCostTextView = findViewById(R.id.savedCost_textView);
+
+        updateSuggestedRecipe();
+
     }
 
     public String dbToDisplayDateFormatter(String dateStr){
@@ -176,6 +199,54 @@ public class AddNewMeal extends AppCompatActivity {
     // Return to previous activity
     public void exitActivity(View v){
         getOnBackPressedDispatcher().onBackPressed();
+    }
+
+
+    public void updateSuggestedRecipe(){
+        // if there are no meals or no recipes, hide
+        DatabaseHelperRecipes db = new DatabaseHelperRecipes(getApplicationContext());
+        Cursor cursor = db.getRecipesCount();
+        cursor.moveToNext();
+        int recipeCount = cursor.getInt(0);
+        Cursor cursor1 = db.getMealCount();
+        cursor1.moveToNext();
+        int mealCount = cursor1.getInt(0);
+
+        if (recipeCount == 0 || mealCount == 0){
+            suggestionConstraintLayout.setVisibility(View.GONE);
+            suggestionConstraintLayout.setEnabled(false);
+
+        } else {
+            // generate suggestion
+            RecipeSuggester recipeSuggester = new RecipeSuggester(getApplicationContext(), dateString);
+            Pair<Integer, Float> pair = recipeSuggester.suggestRecipe();
+
+            // get info from that recipe
+            Cursor cursor2 = db.getRecipeFromId(pair.first);
+            cursor2.moveToNext();
+            String suggestedName = cursor2.getString(0);
+            byte[] suggestedImage = cursor2.getBlob(1);
+
+            Cursor cursor3 = db.getWeightedCost(pair.first);
+            cursor3.moveToNext();
+            float suggestedCost = cursor3.getFloat(0);
+
+            // update suggest data
+            suggestedNameTextView.setText(suggestedName);
+            suggestedCostTextView.setText(String.valueOf(suggestedCost));
+
+            Bitmap bitmap = BitmapFactory.decodeByteArray(suggestedImage, 0, suggestedImage.length);
+            suggestedImageView.setImageBitmap(bitmap);
+
+            // update the cost text
+            float savedCostTrimmed = (float) Math.round(pair.second * 100) / 100;
+            String costStr = "You saved " + String.valueOf(savedCostTrimmed) + " by using leftover ingredients";
+            savedCostTextView.setText(costStr);
+
+            // show the constraint layout
+            suggestionConstraintLayout.setVisibility(View.VISIBLE);
+            suggestionConstraintLayout.setEnabled(true);
+        }
     }
 
 }

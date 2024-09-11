@@ -575,11 +575,24 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
                 "FROM Meals M JOIN Recipes R ON M.recipe_id = R.recipe_id " +
                 "JOIN Recipe_ingredients RI ON R.recipe_id = RI.recipe_id " +
                 "JOIN Ingredients I ON RI.ingredient_id = I.ingredient_id " +
-                "WHERE M.dates <= ?;";
+                "WHERE M.date <= ?;";
 
         Cursor cursor = null;
         if (db != null) {
             cursor = db.rawQuery(query, new String[]{dateString});
+        }
+        return cursor;
+    }
+
+    // method to return the recipe count. Used to display on the recipe fragment page
+    public Cursor getMealCount() {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String queryRecipesCount = "SELECT COUNT(*) FROM Meals;";
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(queryRecipesCount, null);
         }
         return cursor;
     }
