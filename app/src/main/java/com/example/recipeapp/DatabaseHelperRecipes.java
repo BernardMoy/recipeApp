@@ -182,7 +182,11 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Extract all recipe data
-        String queryRecipe = "SELECT recipe_id, name, prep_time, 3, is_favourited, image FROM Recipes";
+        // the 3rd item is the times cooked of that recipe
+        String queryRecipe = "SELECT r.recipe_id, name, prep_time, COALESCE(COUNT(m.meal_id), 0) AS times_cooked, is_favourited, image " +
+                "FROM Recipes r LEFT JOIN Meals m ON r.recipe_id = m.recipe_id " +
+                "GROUP BY r.recipe_id; ";  // ensure no duplicates
+
         Cursor cursor = null;
         if (db != null) {
             cursor = db.rawQuery(queryRecipe, null);
@@ -307,8 +311,10 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
     public Cursor getRecipeFromId(int recipeId){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT name, image, description, link, prep_time, times_cooked " +
-                "FROM Recipes WHERE recipe_id = ?;";
+        String query = "SELECT name, image, description, link, prep_time, COALESCE(COUNT(m.meal_id), 0) AS times_cooked " +
+                "FROM Recipes r LEFT JOIN Meals m ON r.recipe_id = m.recipe_id " +
+                "WHERE r.recipe_id = ? " +
+                "GROUP BY r.recipe_id;";
 
         Cursor cursor = null;
         if (db != null) {
