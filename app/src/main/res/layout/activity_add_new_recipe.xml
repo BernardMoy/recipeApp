@@ -133,30 +133,43 @@
                 android:layout_gravity="center_vertical"
                 android:textSize="@dimen/content_font_size" />
 
-            <EditText
-                android:id="@+id/recipeName_edittext"
-                android:layout_width="187dp"
-                android:layout_height="match_parent"
-                android:inputType="text"
-                android:textSize="@dimen/content_font_size"
-                android:background="@drawable/custom_edit_text"
-                android:hint=" Name"
-                android:maxLength="100"
-                android:textColor="@color/gray"
-                android:drawableStart="@drawable/brush_icon"
-                android:drawableTint="@color/gray"
-                android:paddingLeft="@dimen/content_margin"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <ImageButton
-                android:id="@+id/imageButton5"
-                android:layout_width="@dimen/image_button_size"
-                android:layout_height="@dimen/image_button_size"
-                android:backgroundTint="@android:color/transparent"
-                android:contentDescription="Clear"
-                android:onClick="clearName"
-                app:srcCompat="@drawable/cancel_icon"
-                app:tint="@color/secondaryColor" />
+                <EditText
+                    android:id="@+id/recipeName_edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/custom_edit_text"
+                    android:drawableStart="@drawable/brush_icon"
+                    android:drawableTint="@color/gray"
+                    android:hint=" Name"
+                    android:inputType="text"
+                    android:maxLength="100"
+                    android:paddingLeft="@dimen/content_margin"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/content_font_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imageButton5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/imageButton5"
+                    android:layout_width="@dimen/image_button_size"
+                    android:layout_height="@dimen/image_button_size"
+                    android:backgroundTint="@android:color/transparent"
+                    android:contentDescription="Clear"
+                    android:onClick="clearName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@drawable/cancel_icon"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:tint="@color/secondaryColor" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -174,29 +187,42 @@
                 android:layout_gravity="center_vertical"
                 android:textSize="@dimen/content_font_size" />
 
-            <EditText
-                android:id="@+id/recipeDesc_edittext"
-                android:layout_width="250dp"
-                android:layout_height="match_parent"
-                android:inputType="textMultiLine"
-                android:textSize="@dimen/content_font_size"
-                android:background="@drawable/custom_edit_text"
-                android:hint=" Description"
-                android:textColor="@color/gray"
-                android:drawableStart="@drawable/text_snippet_icon"
-                android:drawableTint="@color/gray"
-                android:paddingStart="@dimen/content_margin"
-                android:paddingEnd="@dimen/content_margin"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-            <ImageButton
-                android:id="@+id/imageButton6"
-                android:layout_width="@dimen/image_button_size"
-                android:layout_height="@dimen/image_button_size"
-                android:backgroundTint="@android:color/transparent"
-                android:contentDescription="Clear"
-                android:onClick="clearDesc"
-                app:srcCompat="@drawable/cancel_icon"
-                app:tint="@color/secondaryColor" />
+                <EditText
+                    android:id="@+id/recipeDesc_edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/custom_edit_text"
+                    android:drawableStart="@drawable/text_snippet_icon"
+                    android:drawableTint="@color/gray"
+                    android:hint=" Description"
+                    android:inputType="textMultiLine"
+                    android:paddingStart="@dimen/content_margin"
+                    android:paddingEnd="@dimen/content_margin"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/content_font_size"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/imageButton6"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/imageButton6"
+                    android:layout_width="@dimen/image_button_size"
+                    android:layout_height="@dimen/image_button_size"
+                    android:backgroundTint="@android:color/transparent"
+                    android:contentDescription="Clear"
+                    android:onClick="clearDesc"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:srcCompat="@drawable/cancel_icon"
+                    app:tint="@color/secondaryColor" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -214,40 +240,57 @@
                 android:layout_gravity="center_vertical"
                 android:textSize="@dimen/content_font_size" />
 
-            <EditText
-                android:id="@+id/recipeNewTag_edittext"
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:inputType="text"
-                android:textSize="@dimen/content_font_size"
-                android:maxLength="20"
-                android:background="@drawable/custom_edit_text"
-                android:hint=" New tag"
-                android:textColor="@color/gray"
-                android:drawableStart="@drawable/add_icon"
-                android:drawableTint="@color/gray"
-                android:paddingLeft="@dimen/content_margin"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <ImageButton
-                android:id="@+id/imageButton7"
-                android:layout_width="@dimen/image_button_size"
-                android:layout_height="@dimen/image_button_size"
-                android:backgroundTint="@android:color/transparent"
-                android:contentDescription="Add"
-                android:onClick="addNewTag"
-                app:srcCompat="@drawable/add_circle_icon"
-                app:tint="@color/primaryColor" />
+                <EditText
+                    android:id="@+id/recipeNewTag_edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/custom_edit_text"
+                    android:drawableStart="@drawable/add_icon"
+                    android:drawableTint="@color/gray"
+                    android:hint=" New tag"
+                    android:inputType="text"
+                    android:maxLength="20"
+                    android:paddingLeft="@dimen/content_margin"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/content_font_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imageButton7"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
 
-            <ImageButton
-                android:id="@+id/imageButton8"
-                android:layout_width="@dimen/image_button_size"
-                android:layout_height="@dimen/image_button_size"
-                android:backgroundTint="@android:color/transparent"
-                android:contentDescription="Clear"
-                android:onClick="clearNewTag"
-                app:srcCompat="@drawable/cancel_icon"
-                app:tint="@color/secondaryColor" />
+                <ImageButton
+                    android:id="@+id/imageButton7"
+                    android:layout_width="@dimen/image_button_size"
+                    android:layout_height="@dimen/image_button_size"
+                    android:backgroundTint="@android:color/transparent"
+                    android:contentDescription="Add"
+                    android:onClick="addNewTag"
+                    app:srcCompat="@drawable/add_circle_icon"
+                    app:tint="@color/primaryColor"
+                    app:layout_constraintEnd_toStartOf="@id/imageButton8"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <ImageButton
+                    android:id="@+id/imageButton8"
+                    android:layout_width="@dimen/image_button_size"
+                    android:layout_height="@dimen/image_button_size"
+                    android:backgroundTint="@android:color/transparent"
+                    android:contentDescription="Clear"
+                    android:onClick="clearNewTag"
+                    app:srcCompat="@drawable/cancel_icon"
+                    app:tint="@color/secondaryColor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -329,29 +372,43 @@
                 android:layout_gravity="center_vertical"
                 android:textSize="@dimen/content_font_size" />
 
-            <EditText
-                android:id="@+id/recipeLink_edittext"
-                android:layout_width="187dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/custom_edit_text"
-                android:drawableStart="@drawable/link_icon"
-                android:drawableTint="@color/gray"
-                android:hint=" Recipe Link"
-                android:inputType="text"
-                android:paddingLeft="@dimen/content_margin"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/content_font_size" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-            <ImageButton
-                android:id="@+id/imageButton10"
-                android:layout_width="@dimen/image_button_size"
-                android:layout_height="@dimen/image_button_size"
-                android:backgroundTint="@android:color/transparent"
-                android:contentDescription="Clear"
-                android:onClick="clearLink"
-                app:srcCompat="@drawable/cancel_icon"
-                app:tint="@color/secondaryColor" />
+                <EditText
+                    android:id="@+id/recipeLink_edittext"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/custom_edit_text"
+                    android:drawableStart="@drawable/link_icon"
+                    android:drawableTint="@color/gray"
+                    android:hint=" Recipe Link"
+                    android:inputType="text"
+                    android:paddingLeft="@dimen/content_margin"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/content_font_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imageButton10"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/imageButton10"
+                    android:layout_width="@dimen/image_button_size"
+                    android:layout_height="@dimen/image_button_size"
+                    android:backgroundTint="@android:color/transparent"
+                    android:contentDescription="Clear"
+                    android:onClick="clearLink"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:srcCompat="@drawable/cancel_icon"
+                    app:tint="@color/secondaryColor" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -411,6 +468,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/content_margin"
                     android:orientation="horizontal">
                     <EditText
                         android:id="@+id/recipeSupermarket_edittext"
@@ -440,6 +498,26 @@
                         android:textSize="@dimen/content_font_size" />
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/recipeShelfLife_edittext"
+                        android:layout_width="0dp"
+                        android:layout_weight="5"
+                        android:layout_height="@dimen/small_box_size"
+                        android:background="@drawable/custom_edit_text"
+                        android:hint="Shelf life (Days) - Default 365 days"
+                        android:maxLength="20"
+                        android:inputType="numberDecimal"
+                        android:paddingLeft="@dimen/content_margin"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/content_font_size" />
+
+                </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
