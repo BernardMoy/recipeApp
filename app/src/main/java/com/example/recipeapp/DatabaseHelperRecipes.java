@@ -50,7 +50,7 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
                         "amount FLOAT CHECK(amount >= 0)," +
                         "supermarket VARCHAR(50)," +
                         "cost FLOAT CHECK(cost >= 0), " +
-                        "shelf_life FLOAT CHECK(shelf_life >= 0) DEFAULT 365.0" +
+                        "shelf_life INT CHECK(shelf_life >= 0) DEFAULT 365" +
                         ");";
 
         String createRecipeTags =
@@ -154,7 +154,7 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
             Float amount = ingredient.getAmount();
             String supermarket = ingredient.getSupermarket();
             Float cost = ingredient.getCost();
-            Float shelfLife = ingredient.getShelfLife();
+            int shelfLife = ingredient.getShelfLife();
 
             contentValuesIngredients.put("name", ingredientName);
             contentValuesIngredients.put("amount", amount);
@@ -462,7 +462,7 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
             Float amount = ingredient.getAmount();
             String supermarket = ingredient.getSupermarket();
             Float cost = ingredient.getCost();
-            Float shelfLife = ingredient.getShelfLife();
+            int shelfLife = ingredient.getShelfLife();
 
             contentValuesIngredients.put("name", ingredientName);
             contentValuesIngredients.put("amount", amount);
@@ -558,6 +558,24 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "SELECT recipe_id FROM Meals WHERE date = ?; ";
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, new String[]{dateString});
+        }
+        return cursor;
+    }
+
+
+    // get all ingredients by looking at every meal before the date specified.
+    public Cursor getIngredientsFromMealTillDate(String dateString){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT I.name, I.amount, I.supermarket, I.cost, I.shelf_life, M.date " +
+                "FROM Meals M JOIN Recipes R ON M.recipe_id = R.recipe_id " +
+                "JOIN Recipe_ingredients RI ON R.recipe_id = RI.recipe_id " +
+                "JOIN Ingredients I ON RI.ingredient_id = I.ingredient_id " +
+                "WHERE M.dates <= ?;";
 
         Cursor cursor = null;
         if (db != null) {

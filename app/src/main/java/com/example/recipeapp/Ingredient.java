@@ -5,9 +5,9 @@ public class Ingredient {
     private float amount;
     private String supermarket;
     private float cost;
-    private float shelfLife;
+    private int shelfLife;
 
-    public Ingredient(String ingredientName, float amount, String supermarket, float cost, float shelfLife){
+    public Ingredient(String ingredientName, float amount, String supermarket, float cost, int shelfLife){
         this.ingredientName = ingredientName;
         this.amount = amount;
         this.supermarket = supermarket;
@@ -31,7 +31,7 @@ public class Ingredient {
         return cost;
     }
 
-    public float getShelfLife() {
+    public int getShelfLife() {
         return shelfLife;
     }
 }

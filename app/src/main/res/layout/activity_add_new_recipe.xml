@@ -510,8 +510,8 @@
                         android:layout_height="@dimen/small_box_size"
                         android:background="@drawable/custom_edit_text"
                         android:hint="Shelf life (Days) - Default 365 days"
-                        android:maxLength="20"
-                        android:inputType="numberDecimal"
+                        android:maxLength="10"
+                        android:inputType="number"
                         android:paddingLeft="@dimen/content_margin"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/content_font_size" />

@@ -152,7 +152,7 @@ public class AddNewRecipe extends AppCompatActivity {
                         Float ingredientAmount = cursorIngredients.getFloat(1);
                         String ingredientSupermarket = cursorIngredients.getString(2);
                         Float ingredientCost = cursorIngredients.getFloat(3);
-                        Float ingredientShelfLife = cursorIngredients.getFloat(4);
+                        int ingredientShelfLife = cursorIngredients.getInt(4);
 
                         Ingredient ingredient = new Ingredient(ingredientName, ingredientAmount, ingredientSupermarket, ingredientCost, ingredientShelfLife);
                         ingredientList.add(ingredient);
@@ -332,10 +332,9 @@ public class AddNewRecipe extends AppCompatActivity {
         }
 
         // empty shelf life
-        float shelfLife = 365.0f;
+        int shelfLife = 365;
         if (!shelfLifeStr.isEmpty()){
-            shelfLife = Float.parseFloat(shelfLifeStr);
-            shelfLife = Math.round(shelfLife * 100) / 100.0f;  // trim to 2 dp
+            shelfLife = Integer.parseInt(shelfLifeStr);
         }
 
         // construct ingredient and add to arraylist
