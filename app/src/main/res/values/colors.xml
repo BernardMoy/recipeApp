@@ -16,6 +16,7 @@
     <color name = "starColor"> #EBC634 </color>
 
     <color name="green">#34B35E</color>
+    <color name="lightGreen">#D3EFDC</color>
     <color name = "Red">#F5425D</color>
     <color name = "Orange">#DB852A</color>
 </resources>
