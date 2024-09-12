@@ -48,6 +48,8 @@ public class AddNewMeal extends AppCompatActivity {
     private TextView suggestedCostTextView;
     private TextView savedCostTextView;
 
+    private int suggestedRecipeId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,7 +107,22 @@ public class AddNewMeal extends AppCompatActivity {
         });
 
 
-        // extract recipe data from db
+
+        // 1. load suggestion constraint layout, and update suggested recipe. do this first
+        suggestedRecipeId = -1;
+
+        suggestionConstraintLayout = findViewById(R.id.suggestion_constraintLayout);
+        noSuggestionTextView = findViewById(R.id.noSuggestion_textView);
+
+        suggestedNameTextView = findViewById(R.id.suggestedName_textView);
+        suggestedImageView = findViewById(R.id.suggestedImage_imageView);
+        suggestedCostTextView = findViewById(R.id.suggestedCost_textView);
+        savedCostTextView = findViewById(R.id.savedCost_textView);
+
+        updateSuggestedRecipe();
+
+
+        // 2. Then, extract recipe data from db and then update the recyclerview with passed parameters
         previewList = new ArrayList<>();
         DatabaseHelperRecipes db = new DatabaseHelperRecipes(AddNewMeal.this);
         Cursor cursor = db.getRecipes(0);
@@ -132,7 +149,7 @@ public class AddNewMeal extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         mealRecipesRecyclerView.setLayoutManager(linearLayoutManager);
 
-        mealRecipeSuggestionRecyclerViewAdapter = new MealRecipeSuggestionRecyclerViewAdapter(AddNewMeal.this, previewList, dateString);
+        mealRecipeSuggestionRecyclerViewAdapter = new MealRecipeSuggestionRecyclerViewAdapter(AddNewMeal.this, previewList, dateString, suggestedRecipeId);
         mealRecipesRecyclerView.setAdapter(mealRecipeSuggestionRecyclerViewAdapter);
 
 
@@ -159,19 +176,6 @@ public class AddNewMeal extends AppCompatActivity {
         } else {
             emptyTextView.setVisibility(View.GONE);
         }
-
-
-
-        // load suggestion constraint layout
-        suggestionConstraintLayout = findViewById(R.id.suggestion_constraintLayout);
-        noSuggestionTextView = findViewById(R.id.noSuggestion_textView);
-
-        suggestedNameTextView = findViewById(R.id.suggestedName_textView);
-        suggestedImageView = findViewById(R.id.suggestedImage_imageView);
-        suggestedCostTextView = findViewById(R.id.suggestedCost_textView);
-        savedCostTextView = findViewById(R.id.savedCost_textView);
-
-        updateSuggestedRecipe();
 
     }
 
@@ -218,7 +222,7 @@ public class AddNewMeal extends AppCompatActivity {
         // generate suggestion
         RecipeSuggester recipeSuggester = new RecipeSuggester(getApplicationContext(), dateString);
         Pair<Integer, Float> pair = recipeSuggester.suggestRecipe();
-        int suggestedRecipeId = pair.first;
+        suggestedRecipeId = pair.first;
 
         // if the suggested id is -1, then there are no meals or no ingredients that are remaining. In this case show "NO SUGGESTION"
         if (suggestedRecipeId == -1){

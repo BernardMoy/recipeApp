@@ -40,12 +40,17 @@ public class MealRecipeSuggestionRecyclerViewAdapter extends RecyclerView.Adapte
     // store the current date string passed from add new meal activity
     private String dateString;
 
+    // store the suggested recipe id. This is passed to this adapter when it is updated
+    private int suggestedRecipeId;
+    private Button suggestionSelectButton;
 
-    public MealRecipeSuggestionRecyclerViewAdapter(Context ctx, ArrayList<MealRecipeSuggestionPreview> previewList, String dateString){
+
+    public MealRecipeSuggestionRecyclerViewAdapter(Context ctx, ArrayList<MealRecipeSuggestionPreview> previewList, String dateString, int suggestedRecipeId){
         this.ctx = ctx;
         this.previewListFull = previewList;
         this.previewList = new ArrayList<>(previewListFull);
         this.dateString = dateString;
+        this.suggestedRecipeId = suggestedRecipeId;
     }
 
     @NonNull
@@ -72,6 +77,7 @@ public class MealRecipeSuggestionRecyclerViewAdapter extends RecyclerView.Adapte
         selectedImageView = ((Activity) ctx).findViewById(R.id.selectedImage_imageView);
         selectedNameTextView = ((Activity) ctx).findViewById(R.id.selectedName_textView);
         selectedCostTextView = ((Activity) ctx).findViewById(R.id.selectedCost_textView);
+        suggestionSelectButton = ((Activity) ctx).findViewById(R.id.suggestionSelect_button);
 
         holder.getSelectButton().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +98,43 @@ public class MealRecipeSuggestionRecyclerViewAdapter extends RecyclerView.Adapte
 
             }
         });
+
+
+
+        // set on click listener for the suggestion select button, if not -1
+        if (suggestedRecipeId != -1){
+            suggestionSelectButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // iterate the preview list FULL to find the one with the recipe id = suggested id
+                    MealRecipeSuggestionPreview selectedRecipe = previewListFull.get(0);
+
+                    for (MealRecipeSuggestionPreview preview1 : previewListFull){
+                        if (preview1.getRecipeId() == suggestedRecipeId){
+                            selectedRecipe = preview1;
+                            break;
+                        }
+                    }
+                    selectedRecipeId = suggestedRecipeId;  // modify global var
+
+                    // modify the selected data
+                    byte[] selectedImageByteArray = selectedRecipe.getRecipeImage();
+                    Bitmap bm = BitmapFactory.decodeByteArray(selectedImageByteArray, 0, selectedImageByteArray.length);
+                    selectedImageView.setImageBitmap(bm);
+
+                    selectedNameTextView.setText(selectedRecipe.getRecipeName());
+
+                    selectedCostTextView.setText(String.valueOf(selectedRecipe.getRecipeCost()));
+                }
+            });
+
+        } else {
+            suggestionSelectButton.setOnClickListener(null);
+
+        }
+
+
+
 
         // set the on click listener for the DONE button
         doneButton = ((Activity) ctx).findViewById(R.id.done_button);
