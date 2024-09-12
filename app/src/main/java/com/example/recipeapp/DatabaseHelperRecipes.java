@@ -571,11 +571,11 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
     public Cursor getIngredientsFromMealTillDate(String dateString){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT I.ingredient_id, I.name, I.amount, I.supermarket, I.cost, I.shelf_life, M.date " +
+        String query = "SELECT I.ingredient_id, I.name, I.amount, I.supermarket, I.cost, I.shelf_life, M.date AS date " +
                 "FROM Meals M JOIN Recipes R ON M.recipe_id = R.recipe_id " +
                 "JOIN Recipe_ingredients RI ON R.recipe_id = RI.recipe_id " +
                 "JOIN Ingredients I ON RI.ingredient_id = I.ingredient_id " +
-                "WHERE M.date <= ?;";
+                "WHERE date <= ? ORDER BY date ASC;";
 
         Cursor cursor = null;
         if (db != null) {
