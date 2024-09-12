@@ -2,6 +2,7 @@ package com.example.recipeapp;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +14,7 @@ public class IngredientSuggestionRecyclerViewHolder extends RecyclerView.ViewHol
     private TextView supermarketTextView;
     private TextView costTextView;
     private TextView shelfLifeTextView;
-    private Button checkButton;
+    private ImageButton checkButton;
 
     public IngredientSuggestionRecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -22,7 +23,7 @@ public class IngredientSuggestionRecyclerViewHolder extends RecyclerView.ViewHol
         supermarketTextView = itemView.findViewById(R.id.supermarket_textView);
         costTextView = itemView.findViewById(R.id.cost_textView);
         shelfLifeTextView = itemView.findViewById(R.id.shelfLife_textView);
-        checkButton = itemView.findViewById(R.id.ingredient_checkButton);
+        checkButton = itemView.findViewById(R.id.ingredientCheck_button);
     }
 
     public TextView getIngredientNameTextView() {
@@ -41,7 +42,7 @@ public class IngredientSuggestionRecyclerViewHolder extends RecyclerView.ViewHol
         return shelfLifeTextView;
     }
 
-    public Button getCheckButton() {
+    public ImageButton getCheckButton() {
         return checkButton;
     }
 }

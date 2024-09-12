@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,12 +19,14 @@ public class IngredientSuggestionRecyclerViewAdapter extends RecyclerView.Adapte
     // an arraylist to store all ingredient suggestion objects
     private ArrayList<IngredientSuggestion> ingredientSuggestionList;
     private ArrayList<IngredientSuggestion> ingredientSuggestionListFull;
+    private LinearLayout ingredientFieldsLinearLayout;
     private Context ctx;
 
-    public IngredientSuggestionRecyclerViewAdapter(Context ctx, ArrayList<IngredientSuggestion> ingredientSuggestionList){
+    public IngredientSuggestionRecyclerViewAdapter(Context ctx, ArrayList<IngredientSuggestion> ingredientSuggestionList, LinearLayout ingredientFieldsLinearLayout){
         this.ctx = ctx;
         this.ingredientSuggestionListFull = ingredientSuggestionList;
         this.ingredientSuggestionList = new ArrayList<>(ingredientSuggestionListFull);
+        this.ingredientFieldsLinearLayout = ingredientFieldsLinearLayout;
     }
 
     @NonNull
@@ -36,11 +40,24 @@ public class IngredientSuggestionRecyclerViewAdapter extends RecyclerView.Adapte
     public void onBindViewHolder(@NonNull IngredientSuggestionRecyclerViewHolder holder, int position) {
         IngredientSuggestion ingredientSuggestion = ingredientSuggestionList.get(position);
 
+        String newName = ingredientSuggestion.getIngredient();
+        String newSupermarket = ingredientSuggestion.getSupermarket();
+        float newCost = ingredientSuggestion.getCost();
+        int newShelfLife = ingredientSuggestion.getShelfLife();
+
         // load data
-        holder.getIngredientNameTextView().setText(ingredientSuggestion.getIngredient());
-        holder.getSupermarketTextView().setText(ingredientSuggestion.getSupermarket());
-        holder.getCostTextView().setText(String.valueOf(ingredientSuggestion.getCost()));
-        holder.getShelfLifeTextView().setText(String.valueOf(ingredientSuggestion.getShelfLife()));
+        holder.getIngredientNameTextView().setText(newName);
+        holder.getSupermarketTextView().setText(newSupermarket);
+        holder.getCostTextView().setText(String.valueOf(newCost));
+        holder.getShelfLifeTextView().setText(String.valueOf(newShelfLife));
+
+        // set on click listener for the check button
+        holder.getCheckButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateFields(newName, newSupermarket, newCost, newShelfLife);
+            }
+        });
     }
 
     @Override
@@ -85,4 +102,17 @@ public class IngredientSuggestionRecyclerViewAdapter extends RecyclerView.Adapte
             notifyDataSetChanged();
         }
     };
+
+    // method to update the linear layout fields, when given name, supermarket, cost and shelf life
+    public void updateFields(String newName, String newSupermarket, float newCost, int newShelfLife){
+        TextView name = ingredientFieldsLinearLayout.findViewById(R.id.recipeIngredient_edittext);
+        TextView supermarket = ingredientFieldsLinearLayout.findViewById(R.id.recipeSupermarket_edittext);
+        TextView cost = ingredientFieldsLinearLayout.findViewById(R.id.recipeCost_edittext);
+        TextView shelfLife = ingredientFieldsLinearLayout.findViewById(R.id.recipeShelfLife_edittext);
+
+        name.setText(newName);
+        supermarket.setText(newSupermarket);
+        cost.setText(String.valueOf(newCost));
+        shelfLife.setText(String.valueOf(newShelfLife));
+    }
 }

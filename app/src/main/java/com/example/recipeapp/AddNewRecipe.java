@@ -70,6 +70,9 @@ public class AddNewRecipe extends AppCompatActivity {
     private RecyclerView ingredientSuggestionRecyclerView;
     private IngredientSuggestionRecyclerViewAdapter ingredientSuggestionRecyclerViewAdapter;
 
+    // store the ingredient input fields. Passed to the ing suggestion adapter to modify values
+    private LinearLayout ingredientFieldsLinearLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,8 +205,10 @@ public class AddNewRecipe extends AppCompatActivity {
 
 
 
-        // load the linear layout
+        // load the linear layouts
         ingredientSuggestionLinearLayout = findViewById(R.id.ingredientSuggestion_linearLayout);
+        ingredientFieldsLinearLayout = findViewById(R.id.ingredientFields_linearLayout);
+
         // initially, it is not visible
         ingredientSuggestionLinearLayout.setVisibility(View.GONE);
 
@@ -213,7 +218,7 @@ public class AddNewRecipe extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
 
         ingredientSuggestionRecyclerView.setLayoutManager(linearLayoutManager);
-        ingredientSuggestionRecyclerViewAdapter = new IngredientSuggestionRecyclerViewAdapter(getApplicationContext(), ingredientSuggestionList);
+        ingredientSuggestionRecyclerViewAdapter = new IngredientSuggestionRecyclerViewAdapter(getApplicationContext(), ingredientSuggestionList, ingredientFieldsLinearLayout);
         ingredientSuggestionRecyclerView.setAdapter(ingredientSuggestionRecyclerViewAdapter);
 
         // set up the ingredient edit text
