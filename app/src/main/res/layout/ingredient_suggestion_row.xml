@@ -52,9 +52,8 @@
             android:layout_width="@dimen/image_button_size"
             android:layout_height="@dimen/image_button_size"
             android:background="@color/green"
-            android:tint="@color/white"
             android:contentDescription="Fill"
-            app:srcCompat="@drawable/check_icon"
+            android:src="@drawable/check_icon_white"
             tools:ignore="UseAppTint" />
 
     </TableRow>
