@@ -8,9 +8,13 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +59,17 @@ public class AddNewRecipe extends AppCompatActivity {
     If recipeId == -1, it is in "Creating new recipe" mode, otherwise it is updating/editing recipe.
      */
     private int recipeId;
+
+    // the edittext for ingredient name
+    private TextView ingredientEditText;
+
+    // the linearlayout for displaying ingredient suggestions
+    private LinearLayout ingredientSuggestionLinearLayout;
+
+    // the adapter for displaying ing suggestions
+    private RecyclerView ingredientSuggestionRecyclerView;
+    private IngredientSuggestionRecyclerViewAdapter ingredientSuggestionRecyclerViewAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,8 +196,50 @@ public class AddNewRecipe extends AppCompatActivity {
             } else {
                 Toast.makeText(getApplicationContext(), "Recipe not found", Toast.LENGTH_SHORT).show();
             }
-
         }
+
+
+
+
+
+        // load the linear layout
+        ingredientSuggestionLinearLayout = findViewById(R.id.ingredientSuggestion_linearLayout);
+        // initially, it is not visible
+        ingredientSuggestionLinearLayout.setVisibility(View.GONE);
+
+        // load the ingredient suggestion adapter here: No need dynamic update -> Not added to db yet
+        ingredientSuggestionRecyclerView = findViewById(R.id.ingredientSuggestion_recyclerView);
+        ArrayList<IngredientSuggestion> ingredientSuggestionList = displayIngredientSuggestionsFromDatabase();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+
+        ingredientSuggestionRecyclerView.setLayoutManager(linearLayoutManager);
+        ingredientSuggestionRecyclerViewAdapter = new IngredientSuggestionRecyclerViewAdapter(getApplicationContext(), ingredientSuggestionList);
+        ingredientSuggestionRecyclerView.setAdapter(ingredientSuggestionRecyclerViewAdapter);
+
+        // set up the ingredient edit text
+        ingredientEditText = (TextView) findViewById(R.id.recipeIngredient_edittext);
+        ingredientEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // empty charsequence -> Set linear layout invisible
+                if (charSequence.length() == 0){
+                    ingredientSuggestionLinearLayout.setVisibility(View.GONE);
+
+                } else {
+                    ingredientSuggestionLinearLayout.setVisibility(View.VISIBLE);
+
+                    //
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
     }
 
     // Return to previous activity
@@ -256,7 +313,6 @@ public class AddNewRecipe extends AppCompatActivity {
 
     // method for clearing new ingredient
     public void clearNewIngredient(View v){
-        TextView ingredientEditText = (TextView) findViewById(R.id.recipeIngredient_edittext);
         TextView amountEditText = (TextView) findViewById(R.id.recipeAmount_edittext);
         TextView supermarketEditText = (TextView) findViewById(R.id.recipeSupermarket_edittext);
         TextView costEditText = (TextView) findViewById(R.id.recipeCost_edittext);
@@ -298,7 +354,6 @@ public class AddNewRecipe extends AppCompatActivity {
     // method to add new ingredient row to the table when plus icon is pressed
     public void addNewIngredient(View v){
         // get fields that are submitted
-        TextView ingredientEditText = (TextView) findViewById(R.id.recipeIngredient_edittext);
         TextView amountEditText = (TextView) findViewById(R.id.recipeAmount_edittext);
         TextView supermarketEditText = (TextView) findViewById(R.id.recipeSupermarket_edittext);
         TextView costEditText = (TextView) findViewById(R.id.recipeCost_edittext);
@@ -441,5 +496,28 @@ public class AddNewRecipe extends AppCompatActivity {
             }
 
         }
+    }
+
+    // used for the adapter.
+    public ArrayList<IngredientSuggestion> displayIngredientSuggestionsFromDatabase(){
+        ArrayList<IngredientSuggestion> ingredientSuggestionList = new ArrayList<>();
+
+        DatabaseHelperRecipes db = new DatabaseHelperRecipes(getApplicationContext());
+
+        Cursor cursor = db.getIngredients();
+        if (cursor.getCount() > 0){
+            while (cursor.moveToNext()){
+                String name = cursor.getString(0);
+                String supermarket = cursor.getString(1);
+                float cost = cursor.getFloat(2);
+                int shelfLife = cursor.getInt(3);
+
+                IngredientSuggestion ingredientSuggestion = new IngredientSuggestion(name, supermarket, cost, shelfLife);
+                ingredientSuggestionList.add(ingredientSuggestion);
+
+            }
+        }
+
+        return ingredientSuggestionList;
     }
 }

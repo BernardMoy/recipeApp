@@ -589,12 +589,24 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String queryRecipesCount = "SELECT COUNT(*) FROM Meals;";
+        String queryMealCount = "SELECT COUNT(*) FROM Meals;";
         Cursor cursor = null;
         if (db != null) {
-            cursor = db.rawQuery(queryRecipesCount, null);
+            cursor = db.rawQuery(queryMealCount, null);
         }
         return cursor;
     }
 
+    // method to return all registered ingredients -- in a way that uniquely identifies them
+    // an ingredient is uniquely identified by (name, supermarket, cost, shelfLife)
+    public Cursor getIngredients(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT DISTINCT name, supermarket, cost, shelf_life FROM Ingredients;";
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
+    }
 }

@@ -2,6 +2,7 @@
 
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -9,7 +10,7 @@
 
 
         <TextView
-            android:id="@+id/ingredient_textView"
+            android:id="@+id/ingredientName_textView"
             android:layout_width="0dp"
             android:layout_height="@dimen/image_button_size"
             android:layout_weight="3"
@@ -51,9 +52,10 @@
             android:layout_width="@dimen/image_button_size"
             android:layout_height="@dimen/image_button_size"
             android:background="@color/green"
-            app:tint="@color/white"
+            android:tint="@color/white"
             android:contentDescription="Fill"
-            app:srcCompat="@drawable/check_icon" />
+            app:srcCompat="@drawable/check_icon"
+            tools:ignore="UseAppTint" />
 
     </TableRow>
 

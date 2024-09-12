@@ -18,7 +18,7 @@ public class IngredientSuggestionRecyclerViewHolder extends RecyclerView.ViewHol
     public IngredientSuggestionRecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        ingredientNameTextView = itemView.findViewById(R.id.ingredient_textView);
+        ingredientNameTextView = itemView.findViewById(R.id.ingredientName_textView);
         supermarketTextView = itemView.findViewById(R.id.supermarket_textView);
         costTextView = itemView.findViewById(R.id.cost_textView);
         shelfLifeTextView = itemView.findViewById(R.id.shelfLife_textView);

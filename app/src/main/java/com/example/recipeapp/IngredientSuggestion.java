@@ -7,6 +7,7 @@ public class IngredientSuggestion {
     private int shelfLife;
 
     public IngredientSuggestion(String ingredientName, String supermarket, float cost, int shelfLife){
+        this.ingredientName = ingredientName;
         this.supermarket = supermarket;
         this.cost = cost;
         this.shelfLife = shelfLife;
