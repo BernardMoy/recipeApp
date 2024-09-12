@@ -42,6 +42,7 @@ public class AddNewMeal extends AppCompatActivity {
     private SearchView searchView;
 
     private ConstraintLayout suggestionConstraintLayout;
+    private TextView noSuggestionTextView;
     private TextView suggestedNameTextView;
     private ImageView suggestedImageView;
     private TextView suggestedCostTextView;
@@ -163,6 +164,8 @@ public class AddNewMeal extends AppCompatActivity {
 
         // load suggestion constraint layout
         suggestionConstraintLayout = findViewById(R.id.suggestion_constraintLayout);
+        noSuggestionTextView = findViewById(R.id.noSuggestion_textView);
+
         suggestedNameTextView = findViewById(R.id.suggestedName_textView);
         suggestedImageView = findViewById(R.id.suggestedImage_imageView);
         suggestedCostTextView = findViewById(R.id.suggestedCost_textView);
@@ -212,15 +215,18 @@ public class AddNewMeal extends AppCompatActivity {
         cursor1.moveToNext();
         int mealCount = cursor1.getInt(0);
 
-        if (recipeCount == 0 || mealCount == 0){
+        // generate suggestion
+        RecipeSuggester recipeSuggester = new RecipeSuggester(getApplicationContext(), dateString);
+        Pair<Integer, Float> pair = recipeSuggester.suggestRecipe();
+        int suggestedRecipeId = pair.first;
+
+        // if the suggested id is -1, then there are no meals or no ingredients that are remaining. In this case show "NO SUGGESTION"
+        if (suggestedRecipeId == -1){
             suggestionConstraintLayout.setVisibility(View.GONE);
             suggestionConstraintLayout.setEnabled(false);
+            noSuggestionTextView.setVisibility(View.VISIBLE);
 
         } else {
-            // generate suggestion
-            RecipeSuggester recipeSuggester = new RecipeSuggester(getApplicationContext(), dateString);
-            Pair<Integer, Float> pair = recipeSuggester.suggestRecipe();
-
             // get info from that recipe
             Cursor cursor2 = db.getRecipeFromId(pair.first);
             cursor2.moveToNext();
@@ -246,6 +252,8 @@ public class AddNewMeal extends AppCompatActivity {
             // show the constraint layout
             suggestionConstraintLayout.setVisibility(View.VISIBLE);
             suggestionConstraintLayout.setEnabled(true);
+            noSuggestionTextView.setVisibility(View.GONE);
+
         }
     }
 
