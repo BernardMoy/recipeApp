@@ -232,7 +232,8 @@ public class AddNewRecipe extends AppCompatActivity {
                 } else {
                     ingredientSuggestionLinearLayout.setVisibility(View.VISIBLE);
 
-                    //
+                    // get filter and filter it by the input string
+                    ingredientSuggestionRecyclerViewAdapter.getFilter().filter(charSequence);
                 }
             }
 
