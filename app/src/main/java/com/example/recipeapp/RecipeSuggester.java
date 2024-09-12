@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import kotlin.Triple;
+
 public class RecipeSuggester {
     private String currentDate;
     private Context ctx;
@@ -27,7 +29,7 @@ public class RecipeSuggester {
      */
     public Pair<Integer, Float> suggestRecipe(){
 
-        HashMap<Integer, Float> map = getAllUnexpiredIngredients();
+        HashMap<Triple<String, String, Float>, Pair<String, Float>> map = getAllUnexpiredIngredients();
 
         float currentAmountSaved = 0.0f;
         int currentRecipeId = -1;
@@ -58,20 +60,23 @@ public class RecipeSuggester {
      * @param map map of type (ingID: count)
      * @return the cost that is saved.
      */
-    public float calculateCostSavedFromRecipe(int recipeId, HashMap<Integer, Float> map){
+    public float calculateCostSavedFromRecipe(int recipeId, HashMap<Triple<String, String, Float>, Pair<String, Float>> map){
         float amountSaved = 0.0f;
 
         DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
         Cursor cursor = db.getIngredientsFromId(recipeId);
         if (cursor.getCount() > 0){
             while (cursor.moveToNext()){
-                int ingredientId = cursor.getInt(5);
+                String name = cursor.getString(0);
                 float amount = cursor.getFloat(1);
+                String supermarket = cursor.getString(2);
                 float cost = cursor.getFloat(3);
 
+                Triple<String, String, Float> currentIngredient = new Triple<>(name, supermarket, cost);
+
                 // get the min amount of this amount and the leftover amount
-                if (map.containsKey(ingredientId)){
-                    float minAmount = Math.min(amount, map.get(ingredientId));
+                if (map.containsKey(currentIngredient)){
+                    float minAmount = Math.min(amount, map.get(currentIngredient).second);
                     amountSaved += minAmount*cost;
                 }
             }
@@ -82,11 +87,16 @@ public class RecipeSuggester {
 
     /**
      * get all ingredients that haven't expired till the current date.
+     * When adding ingredient to hashmap, if it is already in the hashmap with current amount n and required amount m:
+     * if m<n, then n -= m
+     * else, m = ceil(m-n) - (m-n) and update date to new current date -- (m-n) is the amount that is used after deducting remaining ing
      *
-     * @return A hashmap key = ingredientID, value = the LEFTOVER amount of it
+     * @return A hashmap where
+     * key = (name, supermarket, cost) which identifies an ingredient
+     * value = (date Last used, amount leftover)
      */
-    public HashMap<Integer, Float> getAllUnexpiredIngredients(){
-        HashMap<Integer, Float> map = new HashMap<>();
+    public HashMap<Triple<String, String, Float>, Pair<String, Float>> getAllUnexpiredIngredients(){
+        HashMap<Triple<String, String, Float>, Pair<String, Float>> map = new HashMap<>();
 
         // iterate every meal.
         DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
@@ -97,35 +107,42 @@ public class RecipeSuggester {
                 int ingredientId = cursor.getInt(0);
                 String name = cursor.getString(1);
                 float amount = cursor.getFloat(2);
+                String supermarket = cursor.getString(3);
+                Float cost = cursor.getFloat(4);
                 int shelfLife = cursor.getInt(5);
                 String mealDate = cursor.getString(6);
 
-                if (differenceOfTwoDates(mealDate, currentDate) <= shelfLife){
-                    if (map.containsKey(ingredientId)){
-                        float originalCount = map.get(ingredientId);
-                        map.put(ingredientId, originalCount + amount);
+                Triple<String, String, Float> currentIngredient = new Triple<>(name, supermarket, cost);
 
+                if (map.containsKey(currentIngredient)){
+                    // if the current ingredient is already in the map
+                    Pair<String, Float> pair = map.get(currentIngredient);
+                    String lastUsedDate = pair.first;
+                    float remainingAmount = pair.second;
+
+                    Pair<String, Float> newPair;
+                    // compare the meal date to the expiry date of the ingredient
+                    if (differenceOfTwoDates(lastUsedDate, mealDate) <= shelfLife){
+                        // use the remaining ingredient as you can
+                        if (amount < remainingAmount){
+                            newPair = new Pair<>(lastUsedDate, remainingAmount - amount);
+
+                        } else {
+                            // update the date to the meal date
+                            newPair = new Pair<>(mealDate, (float)(Math.ceil(amount-remainingAmount)-(amount-remainingAmount)));
+                        }
                     } else {
-                        map.put(ingredientId, amount);
+                        // Update the date to the meal date -- the remaining ingredient cannot be used
+                        newPair = new Pair<>(mealDate, (float)(Math.ceil(amount)-amount));
                     }
+
+                    // update the newPair into the map
+                    map.put(currentIngredient, newPair);
+
+                } else {
+                    Pair<String, Float> newPair = new Pair<>(mealDate, (float)(Math.ceil(amount)-amount));
+                    map.put(currentIngredient, newPair);
                 }
-            }
-        }
-
-        // for each item in the map, convert their value to the LEFTOVER ingredient value
-        for (Map.Entry<Integer, Float> entry : map.entrySet()){
-            int key = entry.getKey();
-            float value = entry.getValue();
-
-            float newValue = (float)(Math.ceil(value) - value);
-
-            // update value
-            if (newValue == 0){
-                map.remove(key);
-
-            } else {
-                map.put(key, newValue);
-
             }
         }
 
