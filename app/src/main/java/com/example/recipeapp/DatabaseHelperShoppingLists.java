@@ -67,14 +67,14 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
     }
 
     // reset database
-    public void reset() {
+    public void clearShoppingLists() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS Shopping_lists;");
         db.execSQL("DROP TABLE IF EXISTS Ingredients;");
         db.execSQL("DROP TABLE IF EXISTS Shopping_list_supermarket_ingredients;");
 
         onCreate(db);     // recreate the database
-        Toast.makeText(context, "Shopping list database reset", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Shopping lists reset", Toast.LENGTH_SHORT).show();
     }
 
 

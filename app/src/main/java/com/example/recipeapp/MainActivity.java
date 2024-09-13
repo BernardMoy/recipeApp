@@ -125,20 +125,5 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-    }
-
-
-    // function to reset the database through the temp delete button
-    // temp method to reset the database
-    public void resetRecipeDb(View v){
-        DatabaseHelperRecipes db = new DatabaseHelperRecipes(this);
-        db.reset();
-    }
-
-    // function to reset shopping list db
-    public void resetShoppingListDb(View v){
-        DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(this);
-        db.reset();
     }
 }

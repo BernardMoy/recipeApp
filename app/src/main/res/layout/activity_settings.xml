@@ -71,6 +71,7 @@
             android:background="@android:color/darker_gray"/>
 
         <TextView
+            android:id="@+id/clearRecipes_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Delete recipes data"
@@ -83,9 +84,10 @@
             android:paddingBottom="@dimen/content_margin"/>
 
         <TextView
+            android:id="@+id/clearMeals_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Delete shopping lists data"
+            android:text="Delete meals data"
             android:textSize="@dimen/content_font_size"
             android:drawableEnd="@drawable/arrow_forward_simple_icon"
             android:drawableTint="@color/primaryColor"
@@ -94,11 +96,11 @@
             android:paddingTop="@dimen/content_margin"
             android:paddingBottom="@dimen/content_margin"/>
 
-
         <TextView
+            android:id="@+id/clearShoppingLists_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Delete meals data"
+            android:text="Delete shopping lists data"
             android:textSize="@dimen/content_font_size"
             android:drawableEnd="@drawable/arrow_forward_simple_icon"
             android:drawableTint="@color/primaryColor"

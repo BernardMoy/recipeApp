@@ -96,18 +96,6 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS Meals;");
     }
 
-    // reset database
-    public void reset() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DROP TABLE IF EXISTS Recipes;");
-        db.execSQL("DROP TABLE IF EXISTS Tags;");
-        db.execSQL("DROP TABLE IF EXISTS Ingredients;");
-        db.execSQL("DROP TABLE IF EXISTS Recipe_tags;");
-        db.execSQL("DROP TABLE IF EXISTS Recipe_ingredients;");
-        db.execSQL("DROP TABLE IF EXISTS Meals;");
-        onCreate(db);     // recreate the database
-        Toast.makeText(context, "Recipe database reset", Toast.LENGTH_SHORT).show();
-    }
 
     // method to add new recipe
     public boolean addRecipe(String name, byte[] image, String description, String link, float prepTime, List<String> tagList, List<Ingredient> ingredientList) {
@@ -608,5 +596,26 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
             cursor = db.rawQuery(query, null);
         }
         return cursor;
+    }
+
+    // method to clear recipes
+    public void clearRecipes(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS Recipes;");
+        db.execSQL("DROP TABLE IF EXISTS Tags;");
+        db.execSQL("DROP TABLE IF EXISTS Ingredients;");
+        db.execSQL("DROP TABLE IF EXISTS Recipe_tags;");
+        db.execSQL("DROP TABLE IF EXISTS Recipe_ingredients;");
+        db.execSQL("DROP TABLE IF EXISTS Meals;");
+        onCreate(db);     // recreate the database
+        Toast.makeText(context, "Recipes reset", Toast.LENGTH_SHORT).show();
+    }
+
+    // method to clear meals
+    public void clearMeals(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS Meals;");
+        onCreate(db);     // recreate the database
+        Toast.makeText(context, "Meals reset", Toast.LENGTH_SHORT).show();
     }
 }
