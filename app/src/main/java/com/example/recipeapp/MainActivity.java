@@ -1,18 +1,26 @@
 package com.example.recipeapp;
 
+import static androidx.core.content.ContextCompat.getDrawable;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.example.recipeapp.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -20,6 +28,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class MainActivity extends AppCompatActivity {
 
     private ImageButton settingsButton;
+
+    private ImageButton exitbutton;
 
     FloatingActionButton floatingButton;
     ActivityMainBinding binding;
@@ -66,12 +76,46 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        // set up the exit button
+        exitbutton = findViewById(R.id.exit_imageButton);
+        exitbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // set up dialog
+                Dialog dialog = new Dialog(MainActivity.this);
+                dialog.setContentView(R.layout.confirm_exit_window);
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.custom_edit_text, null));
+                dialog.setCancelable(false);
+
+                // load the two buttons
+                Button cancelButton = dialog.findViewById(R.id.confirmCancel_button);
+                Button exitButton = dialog.findViewById(R.id.confirmExit_button);
+
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                exitButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                        Toast.makeText(MainActivity.this, "See you next time!", Toast.LENGTH_SHORT).show();
+                        System.exit(0);
+                    }
+                });
+
+
+
+                dialog.show();
+            }
+        });
+
     }
 
-    // function to close app
-    public void exitApp(View v){
-        System.exit(0);
-    }
 
     // function to replace fragment
     protected void replaceFragment(Fragment f){

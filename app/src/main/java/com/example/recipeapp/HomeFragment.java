@@ -53,9 +53,9 @@ public class HomeFragment extends Fragment {
     private TextView recipeTimesCookedTextView;
 
     // the 3 arrow buttons that direct to different fragment
-    private ImageButton recipeArrowImageButton;
-    private ImageButton shoppingListArrowImageButton;
-    private ImageButton mealPlannerArrowImageButton;
+    private ConstraintLayout recipesConstraintLayout;
+    private ConstraintLayout shoppingListsConstraintLayout;
+    private ConstraintLayout mealPlannerConstraintLayout;
 
     // greeting textview that changes over time
     private TextView greetingTextView;
@@ -147,11 +147,11 @@ public class HomeFragment extends Fragment {
         generateRandomRecipe();
 
         // load the arrow image buttons
-        recipeArrowImageButton = view.findViewById(R.id.recipeArrow_imageButton);
-        shoppingListArrowImageButton = view.findViewById(R.id.shoppingListsArrow_imageButton);
-        mealPlannerArrowImageButton = view.findViewById(R.id.mealPlannerArrow_imageButton);
+        recipesConstraintLayout = view.findViewById(R.id.recipes_constraintLayout);
+        shoppingListsConstraintLayout = view.findViewById(R.id.shoppingLists_constraintLayout);
+        mealPlannerConstraintLayout = view.findViewById(R.id.mealPlanner_constraintLayout);
 
-        recipeArrowImageButton.setOnClickListener(new View.OnClickListener() {
+        recipesConstraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ((MainActivity) getActivity()).selectBarItem(1);
@@ -159,7 +159,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        shoppingListArrowImageButton.setOnClickListener(new View.OnClickListener() {
+        shoppingListsConstraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ((MainActivity) getActivity()).selectBarItem(2);
@@ -167,7 +167,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        mealPlannerArrowImageButton.setOnClickListener(new View.OnClickListener() {
+        mealPlannerConstraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ((MainActivity) getActivity()).selectBarItem(3);

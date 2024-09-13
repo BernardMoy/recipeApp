@@ -182,6 +182,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/recipes_constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/background1"
@@ -204,16 +205,18 @@
                 android:layout_marginStart="@dimen/content_margin"
                 android:layout_marginTop="@dimen/content_margin"/>
 
-            <ImageButton
-                android:id="@+id/recipeArrow_imageButton"
-                android:layout_width="@dimen/image_button_size"
-                android:layout_height="@dimen/image_button_size"
+            <ImageView
+                android:id="@+id/recipeArrow_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:contentDescription="View"
                 android:src="@drawable/arrow_forward_simple_icon"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/primaryColor" />
+                app:tint="@color/primaryColor"
+                android:layout_marginEnd="@dimen/content_margin"
+                android:layout_marginTop="@dimen/content_margin"/>
 
             <TextView
                 android:id="@+id/descRecipes_textView"
@@ -223,7 +226,7 @@
                 android:textSize="@dimen/content_font_size"
                 app:layout_constraintTop_toBottomOf="@id/titleRecipes_textView"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/recipeArrow_imageButton"
+                app:layout_constraintEnd_toStartOf="@id/recipeArrow_imageView"
                 android:paddingStart="@dimen/content_margin"
                 android:paddingEnd="@dimen/content_margin"
                 android:paddingBottom="@dimen/content_margin"
@@ -232,6 +235,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/shoppingLists_constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/background2"
@@ -254,16 +258,18 @@
                 android:layout_marginStart="@dimen/content_margin"
                 android:layout_marginTop="@dimen/content_margin"/>
 
-            <ImageButton
-                android:id="@+id/shoppingListsArrow_imageButton"
-                android:layout_width="@dimen/image_button_size"
-                android:layout_height="@dimen/image_button_size"
+            <ImageView
+                android:id="@+id/shoppingListArrow_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:contentDescription="View"
                 android:src="@drawable/arrow_forward_simple_icon"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/primaryColor" />
+                app:tint="@color/primaryColor"
+                android:layout_marginEnd="@dimen/content_margin"
+                android:layout_marginTop="@dimen/content_margin"/>
 
             <TextView
                 android:id="@+id/descShoppingLists_textView"
@@ -273,7 +279,7 @@
                 android:textSize="@dimen/content_font_size"
                 app:layout_constraintTop_toBottomOf="@id/titleShoppingLists_textView"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/shoppingListsArrow_imageButton"
+                app:layout_constraintEnd_toStartOf="@id/shoppingListArrow_imageView"
                 android:paddingStart="@dimen/content_margin"
                 android:paddingEnd="@dimen/content_margin"
                 android:paddingBottom="@dimen/content_margin"
@@ -282,6 +288,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mealPlanner_constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/background3"
@@ -304,16 +311,18 @@
                 android:layout_marginStart="@dimen/content_margin"
                 android:layout_marginTop="@dimen/content_margin"/>
 
-            <ImageButton
-                android:id="@+id/mealPlannerArrow_imageButton"
-                android:layout_width="@dimen/image_button_size"
-                android:layout_height="@dimen/image_button_size"
+            <ImageView
+                android:id="@+id/mealPlannerArrow_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:contentDescription="View"
                 android:src="@drawable/arrow_forward_simple_icon"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/primaryColor" />
+                app:tint="@color/primaryColor"
+                android:layout_marginEnd="@dimen/content_margin"
+                android:layout_marginTop="@dimen/content_margin"/>
 
             <TextView
                 android:id="@+id/descPlanner_textView"
@@ -323,7 +332,7 @@
                 android:textSize="@dimen/content_font_size"
                 app:layout_constraintTop_toBottomOf="@id/titleMealPlanner_textView"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/mealPlannerArrow_imageButton"
+                app:layout_constraintEnd_toStartOf="@id/mealPlannerArrow_imageView"
                 android:paddingStart="@dimen/content_margin"
                 android:paddingEnd="@dimen/content_margin"
                 android:paddingBottom="@dimen/content_margin"
