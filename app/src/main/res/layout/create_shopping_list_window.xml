@@ -78,8 +78,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/title_margin">
+        android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/confirmShoppingListCreateCancel_button"
@@ -87,12 +86,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/title_margin"
             android:text="Cancel"
-            app:cornerRadius = "@dimen/corner_radius"
+            app:cornerRadius = "@dimen/button_corner_radius"
             android:backgroundTint="@color/lightGray"
             android:textColor="@color/black"
             app:layout_constraintEnd_toStartOf="@+id/confirmShoppingListCreate_button"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/createShoppingListName_edittext" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/confirmShoppingListCreate_button"
@@ -100,10 +99,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/title_margin"
             android:text="Create!"
-            app:cornerRadius = "@dimen/corner_radius"
+            app:cornerRadius = "@dimen/button_corner_radius"
             android:backgroundTint="@color/primaryColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/confirmShoppingListCreateCancel_button"
-            app:layout_constraintTop_toBottomOf="@+id/createShoppingListName_edittext" />
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
