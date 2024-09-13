@@ -21,7 +21,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Random;
 
 /**
@@ -54,6 +56,9 @@ public class HomeFragment extends Fragment {
     private ImageButton recipeArrowImageButton;
     private ImageButton shoppingListArrowImageButton;
     private ImageButton mealPlannerArrowImageButton;
+
+    // greeting textview that changes over time
+    private TextView greetingTextView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -169,6 +174,20 @@ public class HomeFragment extends Fragment {
                 ((MainActivity) getActivity()).replaceFragment(new MealPlannerFragment());
             }
         });
+
+
+        // load the greeting textview by the current time
+        greetingTextView = view.findViewById(R.id.greeting_textView);
+
+        LocalTime time = LocalTime.now();
+        int hour = time.getHour();
+
+        if (hour < 5 || hour >= 18){
+            greetingTextView.setText("Good evening!");
+
+        } else if (hour >= 12) {
+            greetingTextView.setText("Good afternoon!");
+        }
 
         return view;
     }

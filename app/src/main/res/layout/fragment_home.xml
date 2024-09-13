@@ -25,15 +25,26 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/greeting_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="What are you cooking today?"
+            android:text="Good morning!"
             android:textStyle="bold"
             android:textSize="@dimen/title_font_size"
             android:layout_marginStart="@dimen/title_margin"
             android:layout_marginEnd="@dimen/content_margin"
             android:layout_marginTop="@dimen/title_margin"
-            android:layout_marginBottom="@dimen/title_margin" />
+            android:layout_marginBottom="@dimen/content_margin" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="What are you cooking today?"
+            android:textSize="@dimen/content_font_size"
+            android:textColor="@color/gray"
+            android:layout_marginStart="@dimen/title_margin"
+            android:layout_marginEnd="@dimen/content_margin"
+            android:layout_marginBottom="@dimen/content_margin" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
