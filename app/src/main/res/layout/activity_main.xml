@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/lightColor"
-        android:minHeight="?attr/actionBarSize"
+        android:minHeight="@dimen/toolbar_height"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,33 +42,29 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/close_icon" />
 
-    <ImageButton
-        android:id="@+id/imageButton3"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/content_margin"
-        android:background="@color/secondaryColor"
-        android:padding="@dimen/content_margin"
-        android:tint="@color/white"
-        android:onClick="resetRecipeDb"
-        app:layout_constraintStart_toEndOf="@+id/imageButton"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/delete_icon"
-        tools:ignore="UseAppTint" />
+        android:text="@string/app_name"
+        android:textSize="@dimen/title_font_size"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/content_margin"
-        android:background="@color/Red"
-        android:padding="@dimen/content_margin"
-        android:tint="@color/white"
-        android:onClick="resetShoppingListDb"
-        app:layout_constraintStart_toEndOf="@+id/imageButton3"
+        android:id="@+id/settings_button"
+        android:layout_width="@dimen/image_button_size"
+        android:layout_height="@dimen/image_button_size"
+        android:layout_marginStart="@dimen/content_margin"
+        android:backgroundTint="@android:color/transparent"
+        android:contentDescription="Settings"
+        android:onClick="exitApp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/delete_icon"
-        tools:ignore="UseAppTint" />
+        app:srcCompat="@drawable/settings_icon" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"

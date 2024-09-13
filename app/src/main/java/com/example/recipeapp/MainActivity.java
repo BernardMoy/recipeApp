@@ -5,17 +5,21 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.PopupMenu;
 
 import com.example.recipeapp.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ImageButton settingsButton;
 
     FloatingActionButton floatingButton;
     ActivityMainBinding binding;
@@ -51,12 +55,21 @@ public class MainActivity extends AppCompatActivity {
         // start the home fragment at the beginning
         replaceFragment(new HomeFragment());
 
+        // settings button functionality
+        settingsButton = findViewById(R.id.settings_button);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), Settings.class);
+                startActivity(i);
+            }
+        });
 
 
     }
 
     // function to close app
-    public void exitApp(){
+    public void exitApp(View v){
         System.exit(0);
     }
 
