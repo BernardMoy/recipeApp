@@ -112,9 +112,10 @@
                 android:id="@+id/addMeal_imageButton"
                 android:layout_width="@dimen/image_button_size"
                 android:layout_height="@dimen/image_button_size"
-                android:backgroundTint="@color/primaryColor"
                 android:layout_marginEnd="@dimen/content_margin"
+                android:background="@color/primaryColor"
                 android:src="@drawable/add_icon"
+                app:cornerRadius = "@dimen/corner_radius"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/white" />
