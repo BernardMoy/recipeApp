@@ -263,5 +263,7 @@ public class HomeFragment extends Fragment {
         Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
         recipeImageView.setImageBitmap(bitmap);
 
+        db.close();
+
     }
 }

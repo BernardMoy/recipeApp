@@ -142,6 +142,7 @@ public class AddNewMeal extends AppCompatActivity {
                 previewList.add(mealRecipeSuggestionPreview);
             }
         }
+        db.close();
 
         // set up recyclerview to display recipes
         mealRecipesRecyclerView = findViewById(R.id.mealRecipes_recyclerView);
@@ -259,6 +260,7 @@ public class AddNewMeal extends AppCompatActivity {
             noSuggestionTextView.setVisibility(View.GONE);
 
         }
+        db.close();
     }
 
 }

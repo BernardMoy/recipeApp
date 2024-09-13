@@ -89,6 +89,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListRecycl
                     db.updateShoppingListUnFavourite(clickedShoppingListId);
                     shoppingListPreviewList.get(pos).setIsFavourited(false);
                 }
+                db.close();
             }
         });
 
@@ -166,7 +167,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListRecycl
                         // delete SL from db
                         DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(ctx);
                         db.deleteShoppingListFromId(clickedShoppingListId);
-
+                        db.close();
                         // dismiss dialog
                         dialog.dismiss();
 

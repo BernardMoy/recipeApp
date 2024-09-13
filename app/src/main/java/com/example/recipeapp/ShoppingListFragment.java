@@ -156,14 +156,14 @@ public class ShoppingListFragment extends Fragment {
     public int displayShoppingListCountFromDatabase(){
         DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(getActivity().getApplicationContext());
         Cursor cursor = db.getShoppingListsCount();
+        int count = 0;
 
         // there is guaranteed to have one data
-        if (cursor.getCount() > 0){
-            cursor.moveToNext();
-            return cursor.getInt(0);
-        } else {
-            return 0;
-        }
+        cursor.moveToNext();
+        count = cursor.getInt(0);
+
+        db.close();
+        return count;
     }
 
 
@@ -194,7 +194,7 @@ public class ShoppingListFragment extends Fragment {
                 shoppingListPreviewArrayList.add(shoppingListPreview);
             }
         }
-
+        db.close();
         return shoppingListPreviewArrayList;
     }
 

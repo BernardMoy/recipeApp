@@ -99,6 +99,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealRecyclerViewHolder> {
                         // delete meal from db
                         DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
                         db.deleteMealFromId(mealId);
+                        db.close();
 
                         // dismiss dialog
                         dialog.dismiss();

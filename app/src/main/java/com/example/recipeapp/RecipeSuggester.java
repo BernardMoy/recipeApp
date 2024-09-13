@@ -84,6 +84,7 @@ public class RecipeSuggester {
                 }
             }
         }
+        db.close();
 
         return amountSaved;
     }
@@ -153,6 +154,7 @@ public class RecipeSuggester {
                 }
             }
         }
+        db.close();
 
         // in the map, remove all ingredients that are expired with respect to CURRENT DATE
         ArrayList<FourItems<String, String, Float, Integer>> toBeRemovedList = new ArrayList<>();

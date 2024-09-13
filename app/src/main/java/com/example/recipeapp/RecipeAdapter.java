@@ -169,6 +169,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                     db.updateRecipeUnFavourite(clickedRecipeId);
                     recipePreviewList.get(pos).setIsFavourited(false);
                 }
+                db.close();
             }
         });
 
@@ -323,6 +324,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
                         // delete SL from db
                         DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
                         db.deleteRecipeFromId(clickedRecipeId);
+                        db.close();
 
                         // deselect all, if some are selected
                         if (!selectedRecipeIdMap.isEmpty()){
@@ -511,6 +513,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
         }
 
         boolean tagsValidated = actualTagsSet.containsAll(selectedTagsSet);
+        db.close();
         return tagsValidated;
     }
 

@@ -271,6 +271,7 @@ public class MealPlannerFragment extends Fragment {
                                     }
                                 }
                             }
+                            db.close();
 
                             // generate SL from recipes
                             ShoppingListGenerator shoppingListGenerator = new ShoppingListGenerator(ctx, selectedRecipeIdMap);
@@ -359,6 +360,7 @@ public class MealPlannerFragment extends Fragment {
                 mealPreviewList.add(mealPreview);
             }
         }
+        db.close();
 
         // set up recyclerview
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ctx, LinearLayoutManager.VERTICAL, true);

@@ -166,6 +166,8 @@ public class MealRecipeSuggestionRecyclerViewAdapter extends RecyclerView.Adapte
                     ((Activity) ctx).onBackPressed();  // exit activity
                 }
 
+                db.close();
+
             }
         });
     }

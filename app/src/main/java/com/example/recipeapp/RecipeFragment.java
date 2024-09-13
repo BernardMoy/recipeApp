@@ -377,19 +377,20 @@ public class RecipeFragment extends Fragment {
         recipeTagsFilterRecyclerView.setLayoutManager(gridLayoutManager);
         recipeTagsFilterAdapter = new TagFilterAdapter(ctx, tagList); // to be referenced later
         recipeTagsFilterRecyclerView.setAdapter(recipeTagsFilterAdapter);
+        db.close();
     }
 
     public int displayRecipesCountFromDatabase(){
         DatabaseHelperRecipes db = new DatabaseHelperRecipes(getActivity().getApplicationContext());
         Cursor cursor = db.getRecipesCount();
+        int count = 0;
 
         // there is guaranteed to have one data
-        if (cursor.getCount() > 0){
-            cursor.moveToNext();
-            return cursor.getInt(0);
-        } else {
-            return 0;
-        }
+        cursor.moveToNext();
+        count = cursor.getInt(0);
+
+        db.close();
+        return count;
     }
 
     public ArrayList<RecipePreview> displayRecipesFromDatabase(){
@@ -446,6 +447,7 @@ public class RecipeFragment extends Fragment {
                 recipePreviewArrayList.add(recipePreview);
             }
         }
+        db.close();
         return recipePreviewArrayList;
     }
 

@@ -66,6 +66,7 @@ public class ShoppingListGenerator {
 
                 }
             }
+            db.close();
         }
 
         // 2. Create the LinkedHashMap from the set of ingredient triples
@@ -101,6 +102,7 @@ public class ShoppingListGenerator {
         if (!shoppingListIngredientMap.isEmpty()){
             DatabaseHelperShoppingLists dbs = new DatabaseHelperShoppingLists(ctx);
             dbs.addShoppingList(shoppingListName, "", shoppingListIngredientMap);
+            dbs.close();
             return true;
         }
 

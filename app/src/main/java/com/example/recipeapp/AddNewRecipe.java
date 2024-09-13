@@ -197,6 +197,8 @@ public class AddNewRecipe extends AppCompatActivity {
                     totalCostTextView.setText(totalCostString);
                 }
 
+                db.close();
+
             } else {
                 Toast.makeText(getApplicationContext(), "Recipe not found", Toast.LENGTH_SHORT).show();
             }
@@ -511,6 +513,8 @@ public class AddNewRecipe extends AppCompatActivity {
             }
 
         }
+
+        db.close();
     }
 
     // used for the adapter.
@@ -532,6 +536,8 @@ public class AddNewRecipe extends AppCompatActivity {
 
             }
         }
+
+        db.close();
 
         return ingredientSuggestionList;
     }

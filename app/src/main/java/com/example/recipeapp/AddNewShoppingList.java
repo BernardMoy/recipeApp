@@ -120,6 +120,7 @@ public class AddNewShoppingList extends AppCompatActivity {
                     addToHashMap(supermarket, ingredient);
                 }
             }
+            db.close();
 
             // 3. Load the recyclerview from hashmap
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(AddNewShoppingList.this, LinearLayoutManager.VERTICAL, false);
@@ -247,6 +248,8 @@ public class AddNewShoppingList extends AppCompatActivity {
             }
 
         }
+
+        db.close();
     }
 
     // method to add to hashmap when given a supermarket and ingredient
