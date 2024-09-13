@@ -5,6 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:background="@drawable/custom_edit_text"
         android:layout_marginBottom="@dimen/content_margin"
+        android:padding="@dimen/content_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -39,7 +40,7 @@
             android:id="@+id/deleteMeal_imageButton"
             android:layout_width="@dimen/image_button_size"
             android:layout_height="@dimen/image_button_size"
-            android:background="@color/secondaryColor"
+            android:background="@drawable/secondary_color_background"
             android:contentDescription="Delete meal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

@@ -80,10 +80,11 @@
         android:focusable="true"
         android:onClick="onClick_floatingButton"
         android:contentDescription="@string/floating_action_button_description"
-        app:backgroundTint="@color/lightColor"
+        app:backgroundTint="@color/primaryColor"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/add_icon" />
+        app:srcCompat="@drawable/add_icon"
+        app:tint = "@color/white"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"

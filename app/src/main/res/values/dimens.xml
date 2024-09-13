@@ -3,7 +3,7 @@
     <dimen name="title_font_size"> 20sp </dimen>
     <dimen name="subtitle_font_size"> 20sp </dimen>
     <dimen name = "content_font_size"> 15sp </dimen>
-    <dimen name = "title_image_size"> 100dp </dimen>
+    <dimen name = "title_image_size"> 90dp </dimen>
     <dimen name="content_image_size"> 50dp </dimen>
     <dimen name = "title_margin"> 20dp </dimen>
     <dimen name = "content_margin"> 10dp </dimen>
