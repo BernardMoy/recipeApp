@@ -13,6 +13,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -238,7 +239,15 @@ public class AddNewRecipe extends AppCompatActivity {
                     ingredientSuggestionLinearLayout.setVisibility(View.VISIBLE);
 
                     // get filter and filter it by the input string
-                    ingredientSuggestionRecyclerViewAdapter.getFilter().filter(charSequence);
+                    ingredientSuggestionRecyclerViewAdapter.getFilter().filter(charSequence, new Filter.FilterListener() {
+                        @Override
+                        public void onFilterComplete(int i) {
+                            // if there are no results, then set the recyclerview to be invisible
+                            if (i == 0){
+                                ingredientSuggestionLinearLayout.setVisibility(View.GONE);
+                            }
+                        }
+                    });
                 }
             }
 
