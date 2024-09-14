@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/backgroundColor"
     android:layout_marginBottom="@dimen/bottom_view_height"
     tools:context=".ShoppingListFragment">
 
@@ -16,7 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
-            android:background="@color/lightGray"
+            android:background="@color/primaryColor"
             android:minHeight="@dimen/toolbar_height"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/backgroundColor"
     android:layout_marginBottom="@dimen/bottom_view_height"
     tools:context=".MealPlannerFragment">
 
@@ -16,7 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
-            android:background="@color/lightGray"
+            android:background="@color/primaryColor"
             android:minHeight="@dimen/toolbar_height"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
@@ -114,7 +115,7 @@
                 android:layout_height="@dimen/image_button_size"
                 android:layout_marginEnd="@dimen/content_margin"
                 android:background="@drawable/primary_color_background"
-                android:src="@drawable/add_icon"
+                android:src="@drawable/calendar_edit_icon"
                 app:cornerRadius = "@dimen/corner_radius"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
