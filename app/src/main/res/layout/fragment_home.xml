@@ -54,8 +54,8 @@
             android:padding="@dimen/content_margin"
             android:layout_marginStart="@dimen/title_margin"
             android:layout_marginEnd="@dimen/title_margin"
-            android:layout_marginTop="@dimen/title_margin"
-            android:layout_marginBottom="@dimen/title_margin">
+            android:layout_marginTop="@dimen/content_margin"
+            android:layout_marginBottom="@dimen/content_margin">
 
             <TextView
                 android:id="@+id/generate_textView"
@@ -182,6 +182,17 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Suggested for you"
+            android:textSize="@dimen/content_font_size"
+            android:textColor="@color/gray"
+            android:layout_marginTop="@dimen/content_margin"
+            android:layout_marginStart="@dimen/title_margin"
+            android:layout_marginEnd="@dimen/content_margin"
+            android:layout_marginBottom="@dimen/content_margin" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/recipes_constraintLayout"
             android:layout_width="match_parent"
@@ -200,7 +211,7 @@
                 android:text="Recipes"
                 android:textStyle="bold"
                 android:textSize="@dimen/title_font_size"
-                android:textColor="@color/primaryColor"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginStart="@dimen/content_margin"
@@ -215,7 +226,7 @@
                 android:src="@drawable/arrow_forward_simple_icon"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/primaryColor"
+                app:tint="@color/white"
                 android:layout_marginEnd="@dimen/content_margin"
                 android:layout_marginTop="@dimen/content_margin"/>
 
@@ -228,6 +239,7 @@
                 app:layout_constraintTop_toBottomOf="@id/titleRecipes_textView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/recipeArrow_imageView"
+                android:textColor="@color/white"
                 android:paddingStart="@dimen/content_margin"
                 android:paddingEnd="@dimen/content_margin"
                 android:paddingBottom="@dimen/content_margin"
@@ -235,112 +247,272 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/shoppingLists_constraintLayout"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background2"
-            android:layout_marginStart="@dimen/title_margin"
-            android:layout_marginEnd="@dimen/title_margin"
-            android:layout_marginTop="@dimen/content_margin"
-            android:layout_marginBottom="@dimen/content_margin"
-            android:padding="@dimen/content_margin">
+            android:layout_marginStart="@dimen/content_margin"
+            android:layout_marginEnd="@dimen/content_margin"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/titleShoppingLists_textView"
-                android:layout_width="wrap_content"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/shoppingLists_constraintLayout"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Shopping lists"
-                android:textStyle="bold"
-                android:textSize="@dimen/title_font_size"
-                android:textColor="@color/primaryColor"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/background2"
                 android:layout_marginStart="@dimen/content_margin"
-                android:layout_marginTop="@dimen/content_margin"/>
+                android:layout_marginEnd="@dimen/content_margin_half"
+                android:layout_marginBottom="@dimen/content_margin"
+                android:padding="@dimen/content_margin">
 
-            <ImageView
-                android:id="@+id/shoppingListArrow_imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:contentDescription="View"
-                android:src="@drawable/arrow_forward_simple_icon"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/primaryColor"
-                android:layout_marginEnd="@dimen/content_margin"
-                android:layout_marginTop="@dimen/content_margin"/>
+                <TextView
+                    android:id="@+id/titleShoppingLists_textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/content_margin"
+                    android:layout_marginTop="@dimen/content_margin"
+                    android:text="Shopping lists"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/title_font_size"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/shoppingListArrow_imageView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/descShoppingLists_textView"
+                <ImageView
+                    android:id="@+id/shoppingListArrow_imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="View"
+                    android:src="@drawable/arrow_forward_simple_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/white"
+                    android:layout_marginEnd="@dimen/content_margin"
+                    android:layout_marginTop="@dimen/content_margin"/>
+
+                <TextView
+                    android:id="@+id/descShoppingLists_textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/content_margin"
+                    android:paddingStart="@dimen/content_margin"
+                    android:paddingEnd="@dimen/content_margin"
+                    android:paddingBottom="@dimen/content_margin"
+                    android:text="@string/shopping_list_description"
+                    android:textSize="@dimen/content_font_size"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/titleShoppingLists_textView" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/mealPlanner_constraintLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/shopping_list_description"
-                android:textSize="@dimen/content_font_size"
-                app:layout_constraintTop_toBottomOf="@id/titleShoppingLists_textView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/shoppingListArrow_imageView"
-                android:paddingStart="@dimen/content_margin"
-                android:paddingEnd="@dimen/content_margin"
-                android:paddingBottom="@dimen/content_margin"
-                android:layout_marginTop="@dimen/content_margin"/>
+                android:layout_weight="1"
+                android:background="@drawable/background3"
+                android:layout_marginStart="@dimen/content_margin_half"
+                android:layout_marginEnd="@dimen/content_margin"
+                android:layout_marginBottom="@dimen/content_margin"
+                android:padding="@dimen/content_margin">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/titleMealPlanner_textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/content_margin"
+                    android:layout_marginTop="@dimen/content_margin"
+                    android:text="Meal planner"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/title_font_size"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/mealPlannerArrow_imageView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/mealPlanner_constraintLayout"
+                <ImageView
+                    android:id="@+id/mealPlannerArrow_imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="View"
+                    android:src="@drawable/arrow_forward_simple_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/white"
+                    android:layout_marginEnd="@dimen/content_margin"
+                    android:layout_marginTop="@dimen/content_margin"/>
+
+                <TextView
+                    android:id="@+id/descPlanner_textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/content_margin"
+                    android:paddingStart="@dimen/content_margin"
+                    android:paddingEnd="@dimen/content_margin"
+                    android:paddingBottom="@dimen/content_margin"
+                    android:text="@string/meal_planner_description"
+                    android:textSize="@dimen/content_font_size"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/titleMealPlanner_textView" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background3"
-            android:layout_marginStart="@dimen/title_margin"
-            android:layout_marginEnd="@dimen/title_margin"
+            android:text="Analytics"
+            android:textSize="@dimen/content_font_size"
+            android:textColor="@color/gray"
             android:layout_marginTop="@dimen/content_margin"
-            android:layout_marginBottom="@dimen/content_margin"
-            android:padding="@dimen/content_margin">
+            android:layout_marginStart="@dimen/title_margin"
+            android:layout_marginEnd="@dimen/content_margin"
+            android:layout_marginBottom="@dimen/content_margin" />
 
-            <TextView
-                android:id="@+id/titleMealPlanner_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Meal planner"
-                android:textStyle="bold"
-                android:textSize="@dimen/title_font_size"
-                android:textColor="@color/primaryColor"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="@dimen/content_margin"
-                android:layout_marginTop="@dimen/content_margin"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/mealPlannerArrow_imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:contentDescription="View"
-                android:src="@drawable/arrow_forward_simple_icon"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/primaryColor"
-                android:layout_marginEnd="@dimen/content_margin"
-                android:layout_marginTop="@dimen/content_margin"/>
-
-            <TextView
-                android:id="@+id/descPlanner_textView"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/recipesMarked_constraintLayout"
                 android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="@string/meal_planner_description"
-                android:textSize="@dimen/content_font_size"
-                app:layout_constraintTop_toBottomOf="@id/titleMealPlanner_textView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/mealPlannerArrow_imageView"
-                android:paddingStart="@dimen/content_margin"
-                android:paddingEnd="@dimen/content_margin"
-                android:paddingBottom="@dimen/content_margin"
-                android:layout_marginTop="@dimen/content_margin"/>
+                android:background="@drawable/light_gray_color_background"
+                android:layout_marginStart="@dimen/content_margin"
+                android:layout_marginEnd="@dimen/content_margin_half"
+                android:layout_marginBottom="@dimen/content_margin"
+                android:padding="@dimen/content_margin">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/recipesAddedTitle_textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/content_margin"
+                    android:layout_marginTop="@dimen/content_margin"
+                    android:text="Recipes cooked"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/content_font_size"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginEnd="@dimen/content_margin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+
+                <TextView
+                    android:id="@+id/recipesAdded_textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:paddingStart="@dimen/content_margin"
+                    android:paddingEnd="@dimen/content_margin"
+                    android:paddingBottom="@dimen/content_margin"
+                    android:text="0"
+                    android:textColor="@color/primaryColor"
+                    android:layout_marginTop="@dimen/content_margin"
+                    android:textSize="@dimen/title_font_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recipesAddedTitle_textView" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/spent7_constraintLayout"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/light_gray_color_background"
+                android:layout_marginStart="@dimen/content_margin"
+                android:layout_marginEnd="@dimen/content_margin_half"
+                android:layout_marginBottom="@dimen/content_margin"
+                android:padding="@dimen/content_margin">
+
+                <TextView
+                    android:id="@+id/spent7Title_textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/content_margin"
+                    android:layout_marginTop="@dimen/content_margin"
+                    android:text="Amount spent on shopping last 7 days"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/content_font_size"
+                    android:layout_marginEnd="@dimen/content_margin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/spent7_textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/content_margin"
+                    android:paddingEnd="@dimen/content_margin"
+                    android:paddingBottom="@dimen/content_margin"
+                    android:text="0"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="@dimen/title_font_size"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spent7Title_textView" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/spent30_constraintLayout"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/light_gray_color_background"
+                android:layout_marginStart="@dimen/content_margin"
+                android:layout_marginEnd="@dimen/content_margin_half"
+                android:layout_marginBottom="@dimen/content_margin"
+                android:padding="@dimen/content_margin">
+
+                <TextView
+                    android:id="@+id/spent30Title_textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/content_margin"
+                    android:layout_marginTop="@dimen/content_margin"
+                    android:text="Amount spent on shopping last 30 days"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/content_font_size"
+                    android:layout_marginEnd="@dimen/content_margin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/spent30_textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/content_margin"
+                    android:paddingEnd="@dimen/content_margin"
+                    android:paddingBottom="@dimen/content_margin"
+                    android:text="0"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="@dimen/title_font_size"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spent30Title_textView" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>
 
