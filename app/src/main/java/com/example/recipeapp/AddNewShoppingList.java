@@ -3,6 +3,8 @@ package com.example.recipeapp;
 import android.app.Dialog;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -188,8 +190,8 @@ public class AddNewShoppingList extends AppCompatActivity {
                 currentSupermarketSet.add(cursor.getString(0));
             }
         }
-        String[] currentSupermarketSetStrings = currentSupermarketSet.toArray(new String[]{});
-        ArrayAdapter<String> arrayAdapterSupermarket = new ArrayAdapter<>(AddNewShoppingList.this, R.layout.recipe_dropdown_item, currentSupermarketSetStrings);
+        ArrayList<String> currentSupermarketSetStrings = new ArrayList<>(currentSupermarketSet);
+        StartsWithFilterArrayAdapter arrayAdapterSupermarket = new StartsWithFilterArrayAdapter(AddNewShoppingList.this, R.layout.recipe_dropdown_item, currentSupermarketSetStrings);
         ingredientSupermarketAutoCompleteTextView.setAdapter(arrayAdapterSupermarket);
 
         ingredientSupermarketAutoCompleteTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -198,6 +200,27 @@ public class AddNewShoppingList extends AppCompatActivity {
                 if (b){
                     ingredientSupermarketAutoCompleteTextView.showDropDown();
                 }
+            }
+        });
+
+        ingredientSupermarketAutoCompleteTextView.setThreshold(1);
+
+        ingredientSupermarketAutoCompleteTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // filter here if text changed
+                arrayAdapterSupermarket.getFilter().filter(charSequence);
+                ingredientSupermarketAutoCompleteTextView.showDropDown();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
     }
