@@ -179,8 +179,7 @@ public class AddNewShoppingList extends AppCompatActivity {
         });
 
 
-        // set up the ingredient supermarket auto complete text view
-        // first, load all supermarket names from the db to the set
+        // load all supermarket names from the db to the set
         currentSupermarketSet = new HashSet<>();
 
         DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(getApplicationContext());
@@ -190,6 +189,14 @@ public class AddNewShoppingList extends AppCompatActivity {
                 currentSupermarketSet.add(cursor.getString(0));
             }
         }
+        db.close();
+
+        setUpSupermarketAutoCompleteTextView();
+    }
+
+    // method to set up supermarket auto complete text view. Called at the start or when a new ingredient is added.
+    public void setUpSupermarketAutoCompleteTextView(){
+
         ArrayList<String> currentSupermarketSetStrings = new ArrayList<>(currentSupermarketSet);
         StartsWithFilterArrayAdapter arrayAdapterSupermarket = new StartsWithFilterArrayAdapter(AddNewShoppingList.this, R.layout.recipe_dropdown_item, currentSupermarketSetStrings);
         ingredientSupermarketAutoCompleteTextView.setAdapter(arrayAdapterSupermarket);
@@ -224,6 +231,7 @@ public class AddNewShoppingList extends AppCompatActivity {
             }
         });
     }
+
 
     // methods for the inputs
     public void clearName(View v){
@@ -291,8 +299,11 @@ public class AddNewShoppingList extends AppCompatActivity {
         ShoppingListSupermarketAdapter supermarketAdapter = new ShoppingListSupermarketAdapter(AddNewShoppingList.this, shoppingListIngredientsHashMap);  // supply the hash map here
         supermarketsRecyclerView.setAdapter(supermarketAdapter);
 
-        // add the supermarket name to the currently stored hashmap
-        currentSupermarketSet.add(supermarket);
+        // add the supermarket name to the currently stored hashmap, if it is new
+        if (!currentSupermarketSet.contains(supermarket)){
+            currentSupermarketSet.add(supermarket);
+            setUpSupermarketAutoCompleteTextView();
+        }
 
         // reset fields
         ingredientNameEditText.setText("");
