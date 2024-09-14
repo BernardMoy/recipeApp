@@ -1,5 +1,6 @@
 package com.example.recipeapp;
 
+import android.app.Dialog;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,9 +10,12 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.Filter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -19,6 +23,7 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -178,6 +183,40 @@ public class AddNewMeal extends AppCompatActivity {
             emptyTextView.setVisibility(View.GONE);
         }
 
+        // set up exit button
+        ImageButton exitButton = findViewById(R.id.exit_imageButton);
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // set up dialog
+                Dialog dialog = new Dialog(AddNewMeal.this);
+                dialog.setContentView(R.layout.confirm_unsaved_changes_window);
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.custom_edit_text, null));
+                dialog.setCancelable(true);
+
+                // load the two buttons
+                Button confirmCancelButton = dialog.findViewById(R.id.confirmCancel_button);
+                Button confirmExitButton = dialog.findViewById(R.id.confirmExit_button);
+
+                confirmCancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                confirmExitButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                        getOnBackPressedDispatcher().onBackPressed();
+                    }
+                });
+
+                dialog.show();
+            }
+        });
     }
 
     public String dbToDisplayDateFormatter(String dateStr){

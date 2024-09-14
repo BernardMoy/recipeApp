@@ -101,7 +101,7 @@
             android:id="@+id/recipeRow_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/primaryColor"
+            android:background="@drawable/primary_color_background"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:text="Tag"

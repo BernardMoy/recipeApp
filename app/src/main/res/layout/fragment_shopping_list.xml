@@ -70,8 +70,8 @@
 
             <ToggleButton
                 android:id="@+id/fav_toggleButton"
-                android:layout_width="@dimen/image_button_size"
-                android:layout_height="@dimen/image_button_size"
+                android:layout_width="@dimen/toggle_button_size"
+                android:layout_height="@dimen/toggle_button_size"
                 android:layout_marginEnd="@dimen/content_margin"
                 android:text=""
                 android:textOff=""

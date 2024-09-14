@@ -4,7 +4,7 @@
     android:id="@+id/boxText"
     android:text="Test"
     android:textColor="@color/primaryColor"
-    android:background="@color/veryLightColor"
+    android:background="@drawable/very_light_color_background"
     android:textSize="@dimen/content_font_size"
     android:paddingStart="10dp"
     android:paddingEnd="10dp"

@@ -1,5 +1,6 @@
 package com.example.recipeapp;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -10,10 +11,11 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -257,11 +260,42 @@ public class AddNewRecipe extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
             }
         });
-    }
 
-    // Return to previous activity
-    public void exitActivity(View v){
-       getOnBackPressedDispatcher().onBackPressed();
+
+        // set up exit button
+        ImageButton exitButton = findViewById(R.id.exit_imageButton);
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // set up dialog
+                Dialog dialog = new Dialog(AddNewRecipe.this);
+                dialog.setContentView(R.layout.confirm_unsaved_changes_window);
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.custom_edit_text, null));
+                dialog.setCancelable(true);
+
+                // load the two buttons
+                Button confirmCancelButton = dialog.findViewById(R.id.confirmCancel_button);
+                Button confirmExitButton = dialog.findViewById(R.id.confirmExit_button);
+
+                confirmCancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                confirmExitButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                        getOnBackPressedDispatcher().onBackPressed();
+                    }
+                });
+
+                dialog.show();
+            }
+        });
     }
 
     // method for the button to get image

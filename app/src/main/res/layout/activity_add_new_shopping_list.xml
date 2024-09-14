@@ -33,18 +33,17 @@
         app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/exit_imageButton"
         android:layout_width="@dimen/image_button_size"
         android:layout_height="@dimen/image_button_size"
         android:layout_marginStart="@dimen/content_margin"
-        android:tint="@color/white"
         android:backgroundTint="@android:color/transparent"
         android:contentDescription="Discard"
-        android:onClick="exitActivity"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintStart_toStartOf="@+id/toolbar"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/close_icon" />
+        app:srcCompat="@drawable/close_icon"
+        app:tint="@color/white" />
 
     <Button
         android:id="@+id/buttonDone"

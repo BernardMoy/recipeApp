@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog.setContentView(R.layout.confirm_exit_window);
                 dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.custom_edit_text, null));
-                dialog.setCancelable(false);
+                dialog.setCancelable(true);
 
                 // load the two buttons
                 Button cancelButton = dialog.findViewById(R.id.confirmCancel_button);
