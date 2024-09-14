@@ -311,4 +311,22 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
         db.execSQL(del3, new String[]{String.valueOf(shoppingListId)});
 
     }
+
+    // return a single number (The percentage that the shopping list is completed)
+    public Cursor getShoppingListPercentage(int shoppingListId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Extract all SL data
+        String queryShoppingList = "SELECT 1.0*SUM(I.checked) / COUNT(I.ingredient_id) " +
+                "FROM Shopping_lists SL "+
+                "JOIN Shopping_list_supermarket_ingredients SLSI ON SL.shopping_list_id = SLSI.shopping_list_id "+
+                "JOIN Ingredients I ON SLSI.ingredient_id = I.ingredient_id " +
+                "WHERE SL.shopping_list_id = ?";
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(queryShoppingList, new String[]{String.valueOf(shoppingListId)});
+        }
+        return cursor;
+    }
 }

@@ -16,6 +16,7 @@ public class ShoppingListRecyclerViewHolder extends RecyclerView.ViewHolder {
     private TextView costTextView;
     private ToggleButton favouriteButton;
     private ImageButton deleteShoppingListButton;
+    private TextView statusTextView;
 
     public ShoppingListRecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -25,6 +26,7 @@ public class ShoppingListRecyclerViewHolder extends RecyclerView.ViewHolder {
         costTextView = itemView.findViewById(R.id.shoppingListRow_cost);
         favouriteButton = itemView.findViewById(R.id.shoppingListRow_favButton);
         deleteShoppingListButton = itemView.findViewById(R.id.deleteShoppingList_button);
+        statusTextView = itemView.findViewById(R.id.shoppingListRow_status);
     }
 
     public TextView getNameTextView() {
@@ -49,5 +51,9 @@ public class ShoppingListRecyclerViewHolder extends RecyclerView.ViewHolder {
 
     public ImageButton getDeleteShoppingListButton() {
         return deleteShoppingListButton;
+    }
+
+    public TextView getStatusTextView() {
+        return statusTextView;
     }
 }

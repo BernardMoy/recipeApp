@@ -9,6 +9,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/shoppingListRow_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  0% Completed"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/content_font_size"
+            android:layout_marginStart="@dimen/title_margin"
+            android:drawableStart="@drawable/circle_icon_red"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/shoppingListRow_name"
@@ -17,10 +28,11 @@
             android:layout_marginStart="@dimen/title_margin"
             android:layout_weight="1"
             android:text="Shopping list name"
+            android:layout_marginTop="@dimen/content_margin"
             android:textAlignment="viewStart"
             android:textSize="@dimen/title_font_size"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/shoppingListRow_status" />
 
         <ImageButton
             android:id="@+id/deleteShoppingList_button"

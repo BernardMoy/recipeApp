@@ -6,6 +6,9 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -177,6 +182,40 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListRecycl
                 dialog.show();
             }
         });
+
+        // display the percentage of SL that is completed
+        DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(ctx);
+
+        // first get count of the ingredients
+        Cursor cursor = db.getShoppingListsNumsFromId(currentShoppingList.getShoppingListId());
+        cursor.moveToNext();
+
+        // if empty, display empty message
+        if (cursor.getInt(0) == 0){
+            String text = "  No ingredients";
+            holder.getStatusTextView().setText(text);
+            holder.getStatusTextView().setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.circle_icon_gray, 0, 0, 0);
+
+        } else {
+            // get the percentage
+            Cursor cursor1 = db.getShoppingListPercentage(currentShoppingList.getShoppingListId());
+            cursor1.moveToNext();
+            int percentage = Math.round(cursor1.getFloat(0)*100);
+            String text = "  " + String.valueOf(percentage) + "% Completed";
+            holder.getStatusTextView().setText(text);
+
+            if (percentage == 0){
+                holder.getStatusTextView().setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.circle_icon_red, 0, 0, 0);
+
+            } else if (percentage == 100){
+                holder.getStatusTextView().setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.circle_icon_green, 0, 0, 0);
+
+            } else {
+                holder.getStatusTextView().setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.circle_icon_orange, 0, 0, 0);
+            }
+        }
+
+        db.close();
     }
 
     @Override
