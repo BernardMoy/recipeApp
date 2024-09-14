@@ -25,6 +25,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
         <TextView
             android:id="@+id/greeting_textView"
             android:layout_width="match_parent"
@@ -418,7 +428,7 @@
                     android:paddingBottom="@dimen/content_margin"
                     android:text="0"
                     android:textColor="@color/primaryColor"
-                    android:layout_marginTop="@dimen/content_margin"
+                    android:layout_marginTop="@dimen/title_margin"
                     android:textSize="@dimen/title_font_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -464,6 +474,7 @@
                     android:textSize="@dimen/title_font_size"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="@dimen/title_margin"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/spent7Title_textView" />
 
@@ -506,6 +517,7 @@
                     android:textColor="@color/primaryColor"
                     android:textSize="@dimen/title_font_size"
                     android:textStyle="bold"
+                    android:layout_marginTop="@dimen/title_margin"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/spent30Title_textView" />
@@ -513,6 +525,9 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
+
+        </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 </FrameLayout>
 
