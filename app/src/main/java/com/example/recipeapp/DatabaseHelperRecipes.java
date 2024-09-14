@@ -625,4 +625,22 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
         onCreate(db);     // recreate the database
         Toast.makeText(context, "Meals reset", Toast.LENGTH_SHORT).show();
     }
+
+
+    // method to get the analytics
+    public Cursor getCostAfterDate(String dateString, String currentDate){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT ROUND(SUM(I.cost*I.amount), 2) AS total_cost " +
+                "FROM Recipes R JOIN Meals M ON R.recipe_id = M.recipe_id " +
+                "JOIN Recipe_ingredients RI ON R.recipe_id = RI.recipe_id "+
+                "JOIN Ingredients I ON RI.ingredient_id = I.ingredient_id " +
+                "WHERE M.date > ? AND M.date <= ?;";
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, new String[]{dateString, currentDate});
+        }
+        return cursor;
+    }
 }

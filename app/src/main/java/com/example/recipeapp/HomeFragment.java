@@ -1,8 +1,5 @@
 package com.example.recipeapp;
 
-import static android.text.TextUtils.replace;
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -21,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -59,6 +57,12 @@ public class HomeFragment extends Fragment {
 
     // greeting textview that changes over time
     private TextView greetingTextView;
+
+    // textviews for analytics
+    private TextView recipeAddedTextView;
+    private TextView spent7TextView;
+    private TextView spent30TextView;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -188,6 +192,49 @@ public class HomeFragment extends Fragment {
         } else if (hour >= 12) {
             greetingTextView.setText("Good afternoon!");
         }
+
+
+        // load the analytics
+        Calendar calendar1 = Calendar.getInstance();
+        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDate = dateFormat1.format(calendar1.getTime());
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, -7);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String days7ago = dateFormat.format(calendar.getTime());
+
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.add(Calendar.DAY_OF_MONTH, -30);
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+        String days30ago = dateFormat2.format(calendar2.getTime());
+
+        DatabaseHelperRecipes db = new DatabaseHelperRecipes(getActivity().getApplicationContext());
+
+        // get the meals added
+        Cursor cursor = db.getMealCount();
+        cursor.moveToNext();
+        int mealCount = cursor.getInt(0);
+
+        Cursor cursor1 = db.getCostAfterDate(days7ago, currentDate);
+        cursor1.moveToNext();
+        float costSeven = cursor1.getFloat(0);
+
+        Cursor cursor2 = db.getCostAfterDate(days30ago, currentDate);
+        cursor2.moveToNext();
+        float costThirty = cursor2.getFloat(0);
+
+        db.close();
+
+        // modify text view
+        recipeAddedTextView = view.findViewById(R.id.recipesAdded_textView);
+        spent7TextView = view.findViewById(R.id.spent7_textView);
+        spent30TextView = view.findViewById(R.id.spent30_textView);
+
+        recipeAddedTextView.setText(String.valueOf(mealCount));
+        spent7TextView.setText(String.valueOf(costSeven));
+        spent30TextView.setText(String.valueOf(costThirty));
+
 
         return view;
     }

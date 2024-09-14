@@ -32,7 +32,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/image_button_size">
 
 
         <TextView
@@ -409,7 +410,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/content_margin"
                     android:layout_marginTop="@dimen/content_margin"
-                    android:text="Recipes cooked"
+                    android:text="Recipes added to calendar"
                     android:textColor="@color/black"
                     android:textSize="@dimen/content_font_size"
                     app:layout_constraintStart_toStartOf="parent"
@@ -442,7 +443,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:background="@drawable/light_gray_color_background"
-                android:layout_marginStart="@dimen/content_margin"
+                android:layout_marginStart="@dimen/content_margin_half"
                 android:layout_marginEnd="@dimen/content_margin_half"
                 android:layout_marginBottom="@dimen/content_margin"
                 android:padding="@dimen/content_margin">
@@ -453,7 +454,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/content_margin"
                     android:layout_marginTop="@dimen/content_margin"
-                    android:text="Amount spent on shopping last 7 days"
+                    android:text="Net cost on recipes cooked last 7 days"
                     android:textColor="@color/black"
                     android:textSize="@dimen/content_font_size"
                     android:layout_marginEnd="@dimen/content_margin"
@@ -486,8 +487,8 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:background="@drawable/light_gray_color_background"
-                android:layout_marginStart="@dimen/content_margin"
-                android:layout_marginEnd="@dimen/content_margin_half"
+                android:layout_marginStart="@dimen/content_margin_half"
+                android:layout_marginEnd="@dimen/content_margin"
                 android:layout_marginBottom="@dimen/content_margin"
                 android:padding="@dimen/content_margin">
 
@@ -497,7 +498,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/content_margin"
                     android:layout_marginTop="@dimen/content_margin"
-                    android:text="Amount spent on shopping last 30 days"
+                    android:text="Net cost on recipes cooked last 30 days"
                     android:textColor="@color/black"
                     android:textSize="@dimen/content_font_size"
                     android:layout_marginEnd="@dimen/content_margin"

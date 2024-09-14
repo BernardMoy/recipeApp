@@ -282,22 +282,6 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
         return cursor;
     }
 
-    // mark an ingredient as crossed out
-    public void updateIngredientChecked(int ingredientId){
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        // mark shoppingList as fav
-        String update = "UPDATE Ingredients SET checked = TRUE WHERE ingredient_id = ?;";
-        db.execSQL(update, new String[]{String.valueOf(ingredientId)});
-    }
-
-    public void updateIngredientUnchecked(int ingredientId){
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        String update = "UPDATE Ingredients SET checked = FALSE WHERE ingredient_id = ?;";
-        db.execSQL(update, new String[]{String.valueOf(ingredientId)});
-    }
-
     public void deleteShoppingListFromId(int shoppingListId){
         SQLiteDatabase db = this.getWritableDatabase();
 
