@@ -194,46 +194,11 @@ public class HomeFragment extends Fragment {
         }
 
 
-        // load the analytics
-        Calendar calendar1 = Calendar.getInstance();
-        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
-        String currentDate = dateFormat1.format(calendar1.getTime());
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH, -7);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String days7ago = dateFormat.format(calendar.getTime());
-
-        Calendar calendar2 = Calendar.getInstance();
-        calendar2.add(Calendar.DAY_OF_MONTH, -30);
-        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
-        String days30ago = dateFormat2.format(calendar2.getTime());
-
-        DatabaseHelperRecipes db = new DatabaseHelperRecipes(getActivity().getApplicationContext());
-
-        // get the meals added
-        Cursor cursor = db.getMealCount();
-        cursor.moveToNext();
-        int mealCount = cursor.getInt(0);
-
-        Cursor cursor1 = db.getCostAfterDate(days7ago, currentDate);
-        cursor1.moveToNext();
-        float costSeven = cursor1.getFloat(0);
-
-        Cursor cursor2 = db.getCostAfterDate(days30ago, currentDate);
-        cursor2.moveToNext();
-        float costThirty = cursor2.getFloat(0);
-
-        db.close();
-
-        // modify text view
+        // load the textviews for analytics
         recipeAddedTextView = view.findViewById(R.id.recipesAdded_textView);
         spent7TextView = view.findViewById(R.id.spent7_textView);
         spent30TextView = view.findViewById(R.id.spent30_textView);
-
-        recipeAddedTextView.setText(String.valueOf(mealCount));
-        spent7TextView.setText(String.valueOf(costSeven));
-        spent30TextView.setText(String.valueOf(costThirty));
+        loadAnalytics();
 
 
         return view;
@@ -269,6 +234,8 @@ public class HomeFragment extends Fragment {
             emptyRecipeTextView.setVisibility(View.GONE);
             generateRecipeConstraintLayout.setVisibility(View.VISIBLE);
             generateRecipeConstraintLayout.setEnabled(true);
+
+            db.close();
             return true;
 
         } else {
@@ -280,6 +247,7 @@ public class HomeFragment extends Fragment {
             generateRecipeConstraintLayout.setVisibility(View.GONE);
             generateRecipeConstraintLayout.setEnabled(false);
 
+            db.close();
             return false;
         }
     }
@@ -288,6 +256,7 @@ public class HomeFragment extends Fragment {
     public void onResume(){
         super.onResume();
         loadRecipeData();
+        loadAnalytics();
     }
 
     /*
@@ -303,33 +272,79 @@ public class HomeFragment extends Fragment {
 
         // get info for that rid
         Cursor cursor1 = db.getRecipeFromId(generatedRecipeId);
-        cursor1.moveToNext();
+        // if that recipe id does not exist, skip
+        if (cursor1.getCount() > 0){
+            cursor1.moveToNext();
 
-        String name = cursor1.getString(0);
-        float prepTime = cursor1.getFloat(4);
-        int timesCooked = cursor1.getInt(5);
-        byte[] image = cursor1.getBlob(1);
+            String name = cursor1.getString(0);
+            float prepTime = cursor1.getFloat(4);
+            int timesCooked = cursor1.getInt(5);
+            byte[] image = cursor1.getBlob(1);
 
-        // get the weighted cost
-        Cursor cursor2 = db.getWeightedCost(generatedRecipeId);
-        cursor2.moveToNext();
-        float cost = cursor2.getFloat(0);
+            // get the weighted cost
+            Cursor cursor2 = db.getWeightedCost(generatedRecipeId);
+            cursor2.moveToNext();
+            float cost = cursor2.getFloat(0);
 
-        // update shown parameters
-        recipeNameTextView.setText(name);
+            // update shown parameters
+            recipeNameTextView.setText(name);
 
-        String prepTimeStr = " " + String.valueOf(prepTime) + " minutes";
-        recipePrepTimeTextView.setText(prepTimeStr);
+            String prepTimeStr = " " + String.valueOf(prepTime) + " minutes";
+            recipePrepTimeTextView.setText(prepTimeStr);
 
-        recipeCostTextView.setText(String.valueOf(cost));
+            recipeCostTextView.setText(String.valueOf(cost));
 
-        String timesCookedStr = " " + String.valueOf(timesCooked) + " cooked";
-        recipeTimesCookedTextView.setText(timesCookedStr);
+            String timesCookedStr = " " + String.valueOf(timesCooked) + " cooked";
+            recipeTimesCookedTextView.setText(timesCookedStr);
 
-        Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-        recipeImageView.setImageBitmap(bitmap);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+            recipeImageView.setImageBitmap(bitmap);
+
+        } else {
+            // in this case, the original recipe id is not found (prob due to the recipes being deleted from settings)
+            generateRandomRecipe();
+        }
 
         db.close();
 
+    }
+
+    public void loadAnalytics(){
+        Calendar calendar1 = Calendar.getInstance();
+        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDate = dateFormat1.format(calendar1.getTime());
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, -7);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String days7ago = dateFormat.format(calendar.getTime());
+
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.add(Calendar.DAY_OF_MONTH, -30);
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+        String days30ago = dateFormat2.format(calendar2.getTime());
+
+        DatabaseHelperRecipes db = new DatabaseHelperRecipes(ctx);
+
+        // get the meals added
+        Cursor cursor = db.getMealCount();
+        cursor.moveToNext();
+        int mealCount = cursor.getInt(0);
+
+        Cursor cursor1 = db.getCostAfterDate(days7ago, currentDate);
+        cursor1.moveToNext();
+        float costSeven = cursor1.getFloat(0);
+
+        Cursor cursor2 = db.getCostAfterDate(days30ago, currentDate);
+        cursor2.moveToNext();
+        float costThirty = cursor2.getFloat(0);
+
+        db.close();
+
+        // modify text view
+
+        recipeAddedTextView.setText(String.valueOf(mealCount));
+        spent7TextView.setText(String.valueOf(costSeven));
+        spent30TextView.setText(String.valueOf(costThirty));
     }
 }
