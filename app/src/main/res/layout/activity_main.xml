@@ -62,12 +62,12 @@
         android:layout_marginStart="@dimen/content_margin"
         android:backgroundTint="@android:color/transparent"
         android:contentDescription="Settings"
-        android:tint="@color/white"
         android:onClick="exitApp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/settings_icon" />
+        app:srcCompat="@drawable/settings_icon"
+        app:tint="@color/white" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

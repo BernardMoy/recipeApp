@@ -16,6 +16,7 @@
         <item>Latest added</item>
         <item>Lowest cost</item>
         <item>Most frequently cooked</item>
+        <item>Least prep time</item>
     </string-array>
 
     <string-array name="category_suggestions">

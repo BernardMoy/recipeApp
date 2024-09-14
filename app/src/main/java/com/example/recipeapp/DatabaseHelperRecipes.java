@@ -193,6 +193,13 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
                         "ORDER BY times_cooked ASC;";
                 break;
 
+            case 3:
+                queryRecipe = "SELECT r.recipe_id, name, prep_time, COALESCE(COUNT(m.meal_id), 0) AS times_cooked, is_favourited, image " +
+                        "FROM Recipes r LEFT JOIN Meals m ON r.recipe_id = m.recipe_id " +
+                        "GROUP BY R.recipe_id " +
+                        "ORDER BY prep_time DESC;";
+                break;
+
             default:
                 queryRecipe = "SELECT r.recipe_id, name, prep_time, COALESCE(COUNT(m.meal_id), 0) AS times_cooked, is_favourited, image " +
                         "FROM Recipes r LEFT JOIN Meals m ON r.recipe_id = m.recipe_id " +

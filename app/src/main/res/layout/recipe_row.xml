@@ -50,6 +50,7 @@
 
         <ImageView
             android:id="@+id/recipeRow_image"
+            android:paddingStart="@dimen/content_margin"
             android:layout_width="@dimen/title_image_size"
             android:layout_height="@dimen/title_image_size"
             android:layout_margin="0dp"
@@ -62,6 +63,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/content_margin"
+            android:layout_marginEnd="@dimen/content_margin"
             android:layout_weight="1"
             android:text="Recipe name"
             android:textAlignment="viewStart"
@@ -73,14 +75,15 @@
 
         <ToggleButton
             android:id="@+id/recipeRow_toggleButton"
-            android:layout_width="@dimen/image_button_size"
-            android:layout_height="@dimen/image_button_size"
+            android:layout_width="@dimen/toggle_button_size"
+            android:layout_height="@dimen/toggle_button_size"
+            android:layout_marginEnd="@dimen/content_margin"
             android:text=""
             android:textOff=""
             android:textOn=""
             android:background="@drawable/fav_button_selector"
             app:layout_constraintEnd_toStartOf="@id/deleteRecipes_button"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/deleteRecipes_button"

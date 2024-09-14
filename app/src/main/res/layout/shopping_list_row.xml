@@ -26,11 +26,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/title_margin"
+            android:layout_marginTop="@dimen/content_margin"
+            android:layout_marginEnd="@dimen/content_margin"
             android:layout_weight="1"
             android:text="Shopping list name"
-            android:layout_marginTop="@dimen/content_margin"
             android:textAlignment="viewStart"
             android:textSize="@dimen/title_font_size"
+            app:layout_constraintEnd_toStartOf="@+id/shoppingListRow_favButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/shoppingListRow_status" />
 
@@ -48,14 +50,15 @@
 
         <ToggleButton
             android:id="@+id/shoppingListRow_favButton"
-            android:layout_width="@dimen/image_button_size"
-            android:layout_height="@dimen/image_button_size"
+            android:layout_width="@dimen/toggle_button_size"
+            android:layout_height="@dimen/toggle_button_size"
+            android:layout_marginEnd="@dimen/content_margin"
+            android:background="@drawable/fav_button_selector"
             android:text=""
             android:textOff=""
             android:textOn=""
-            android:background="@drawable/fav_button_selector"
             app:layout_constraintEnd_toStartOf="@id/deleteShoppingList_button"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView
