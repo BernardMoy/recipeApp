@@ -313,4 +313,19 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
         }
         return cursor;
     }
+
+    // get all supermarkets distinct.
+    public Cursor getDistinctSupermarkets(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Extract all SL data
+        String queryShoppingList = "SELECT DISTINCT(supermarket) " +
+                "FROM Shopping_list_supermarket_ingredients;";
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(queryShoppingList, new String[]{});
+        }
+        return cursor;
+    }
 }

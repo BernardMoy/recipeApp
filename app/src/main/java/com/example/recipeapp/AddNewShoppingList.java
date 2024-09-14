@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -22,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 
 public class AddNewShoppingList extends AppCompatActivity {
@@ -32,7 +35,7 @@ public class AddNewShoppingList extends AppCompatActivity {
     private TextView ingredientNameEditText;
     private TextView ingredientAmountEditText;
     private TextView ingredientCostEditText;
-    private TextView ingredientSupermarketEditText;
+    private AutoCompleteTextView ingredientSupermarketAutoCompleteTextView;
 
     // hashmap for storing ingredients classified by supermarkets.
     private LinkedHashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap;
@@ -46,6 +49,8 @@ public class AddNewShoppingList extends AppCompatActivity {
     If recipeId == -1, it is in "Creating new SL" mode, otherwise it is updating/editing recipe.
      */
     private int shoppingListId;
+
+    private HashSet<String> currentSupermarketSet;
     
 
     @Override
@@ -65,7 +70,7 @@ public class AddNewShoppingList extends AppCompatActivity {
         ingredientNameEditText = findViewById(R.id.shoppingListIngredient_edittext);
         ingredientAmountEditText = findViewById(R.id.shoppingListAmount_edittext);
         ingredientCostEditText = findViewById(R.id.shoppingListCost_edittext);
-        ingredientSupermarketEditText = findViewById(R.id.shoppingListSupermarket_edittext);
+        ingredientSupermarketAutoCompleteTextView = findViewById(R.id.shoppingListSupermarket_autoCompleteTextView);
 
         // load the hashmap
         shoppingListIngredientsHashMap = new LinkedHashMap<>();
@@ -170,6 +175,31 @@ public class AddNewShoppingList extends AppCompatActivity {
                 dialog.show();
             }
         });
+
+
+        // set up the ingredient supermarket auto complete text view
+        // first, load all supermarket names from the db to the set
+        currentSupermarketSet = new HashSet<>();
+
+        DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(getApplicationContext());
+        Cursor cursor = db.getDistinctSupermarkets();
+        if (cursor.getCount() > 0){
+            while (cursor.moveToNext()){
+                currentSupermarketSet.add(cursor.getString(0));
+            }
+        }
+        String[] currentSupermarketSetStrings = currentSupermarketSet.toArray(new String[]{});
+        ArrayAdapter<String> arrayAdapterSupermarket = new ArrayAdapter<>(AddNewShoppingList.this, R.layout.recipe_dropdown_item, currentSupermarketSetStrings);
+        ingredientSupermarketAutoCompleteTextView.setAdapter(arrayAdapterSupermarket);
+
+        ingredientSupermarketAutoCompleteTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b){
+                    ingredientSupermarketAutoCompleteTextView.showDropDown();
+                }
+            }
+        });
     }
 
     // methods for the inputs
@@ -185,14 +215,13 @@ public class AddNewShoppingList extends AppCompatActivity {
         ingredientNameEditText.setText("");
         ingredientAmountEditText.setText("");
         ingredientCostEditText.setText("");
-        ingredientSupermarketEditText.setText("");
+        ingredientSupermarketAutoCompleteTextView.setText("");
     }
 
     // method to add new ingredient - sort by supermarkets
     public void addNewIngredient(View v){
 
-        String supermarket = ingredientSupermarketEditText.getText().toString();
-
+        String supermarket = ingredientSupermarketAutoCompleteTextView.getText().toString();
         String ingredientName = ingredientNameEditText.getText().toString();
         String amountStr = ingredientAmountEditText.getText().toString();
         String costStr = ingredientCostEditText.getText().toString();
@@ -238,6 +267,9 @@ public class AddNewShoppingList extends AppCompatActivity {
 
         ShoppingListSupermarketAdapter supermarketAdapter = new ShoppingListSupermarketAdapter(AddNewShoppingList.this, shoppingListIngredientsHashMap);  // supply the hash map here
         supermarketsRecyclerView.setAdapter(supermarketAdapter);
+
+        // add the supermarket name to the currently stored hashmap
+        currentSupermarketSet.add(supermarket);
 
         // reset fields
         ingredientNameEditText.setText("");
