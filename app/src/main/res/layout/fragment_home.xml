@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:text="Good morning!"
             android:textStyle="bold"
-            android:textSize="@dimen/title_font_size"
+            android:textSize="@dimen/top_title_font_size"
             android:layout_marginStart="@dimen/title_margin"
             android:layout_marginEnd="@dimen/content_margin"
             android:layout_marginTop="@dimen/title_margin"
@@ -245,16 +245,17 @@
                 android:id="@+id/descRecipes_textView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/recipe_description"
-                android:textSize="@dimen/content_font_size"
-                app:layout_constraintTop_toBottomOf="@id/titleRecipes_textView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/recipeArrow_imageView"
-                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/content_margin"
                 android:paddingStart="@dimen/content_margin"
                 android:paddingEnd="@dimen/content_margin"
                 android:paddingBottom="@dimen/content_margin"
-                android:layout_marginTop="@dimen/content_margin"/>
+                android:text="@string/recipe_description"
+                android:textColor="@color/white"
+                android:textSize="@dimen/content_font_size"
+                app:layout_constraintEnd_toStartOf="@id/recipeArrow_imageView"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleRecipes_textView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -51,7 +51,8 @@
             android:id="@+id/ingredientCheck_button"
             android:layout_width="@dimen/image_button_size"
             android:layout_height="@dimen/image_button_size"
-            android:background="@color/green"
+            android:background="@android:color/transparent"
+            app:tint="@color/green"
             android:contentDescription="Fill"
             android:src="@drawable/check_icon_white"
             tools:ignore="UseAppTint" />

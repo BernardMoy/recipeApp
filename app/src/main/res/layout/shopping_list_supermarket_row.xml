@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/content_margin"
         android:layout_marginBottom="@dimen/content_margin"
-        android:background="@color/supermarketRowColor">
+        android:padding="@dimen/content_margin"
+        android:background="@drawable/supermarket_color_background">
 
         <TextView
             android:id="@+id/supermarketName_textView"
@@ -23,9 +24,12 @@
             android:paddingStart="@dimen/content_margin"
             android:paddingEnd="@dimen/content_margin"
             android:text="Tesco"
+            android:textColor="@color/white"
+            android:textStyle="bold"
             android:textSize="@dimen/title_font_size"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
             android:id="@+id/supermarketCount_textView"
@@ -34,7 +38,7 @@
             android:paddingStart="@dimen/content_margin"
             android:paddingEnd="@dimen/content_margin"
             android:text="0 items"
-            android:textColor="@color/gray"
+            android:textColor="@color/white"
             android:textSize="@dimen/content_font_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/supermarketName_textView"
@@ -46,11 +50,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/money_icon"
-            android:drawableTint="@color/gray"
+            android:drawableTint="@color/white"
             android:paddingStart="@dimen/content_margin"
             android:paddingEnd="@dimen/content_margin"
             android:text="0.00"
-            android:textColor="@color/gray"
+            android:textColor="@color/white"
             android:textSize="@dimen/content_font_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -109,7 +113,7 @@
                 android:layout_width="@dimen/image_button_size"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:background="@color/secondaryColor"
+                android:background="@color/primaryColor"
                 android:textSize="@dimen/content_font_size" />
 
         </TableRow>

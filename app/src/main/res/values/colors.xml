@@ -9,11 +9,11 @@
     <color name = "secondaryColor">#103473</color>
     <color name = "lightColor">#D2E0F1</color>
     <color name = "veryLightColor">#E1ECF6</color>
-    <color name = "supermarketRowColor">#FFF0B4</color>
+    <color name = "supermarketRowColor">#E0B842</color>
 
     <color name = "backgroundColor">#F8F8F8</color>
 
-    <color name = "starColor"> #EBC634 </color>
+    <color name = "starColor">#F4D043</color>
 
     <color name="green">#34B35E</color>
     <color name="lightGreen">#D3EFDC</color>

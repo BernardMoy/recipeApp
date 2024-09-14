@@ -52,8 +52,8 @@
             android:id="@+id/ingredientDelete_button"
             android:layout_width="@dimen/image_button_size"
             android:layout_height="@dimen/image_button_size"
-            android:background="@color/secondaryColor"
-            app:tint="@color/white"
+            android:background="@android:color/transparent"
+            app:tint="@color/secondaryColor"
             android:contentDescription="Delete ingredient"
             app:srcCompat="@drawable/delete_icon" />
 

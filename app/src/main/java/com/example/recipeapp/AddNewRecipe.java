@@ -241,7 +241,6 @@ public class AddNewRecipe extends AppCompatActivity {
                     ingredientSuggestionLinearLayout.setVisibility(View.GONE);
 
                 } else {
-                    ingredientSuggestionLinearLayout.setVisibility(View.VISIBLE);
 
                     // get filter and filter it by the input string
                     ingredientSuggestionRecyclerViewAdapter.getFilter().filter(charSequence, new Filter.FilterListener() {
@@ -250,6 +249,8 @@ public class AddNewRecipe extends AppCompatActivity {
                             // if there are no results, then set the recyclerview to be invisible
                             if (i == 0){
                                 ingredientSuggestionLinearLayout.setVisibility(View.GONE);
+                            } else {
+                                ingredientSuggestionLinearLayout.setVisibility(View.VISIBLE);
                             }
                         }
                     });
