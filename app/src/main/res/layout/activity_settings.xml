@@ -82,6 +82,7 @@
             android:textSize="@dimen/content_font_size"
             android:drawableEnd="@drawable/arrow_forward_simple_icon"
             android:drawableTint="@color/primaryColor"
+            android:textColor = "@color/black"
             android:layout_marginTop="@dimen/content_margin"
             android:layout_marginBottom="@dimen/content_margin"
             android:paddingTop="@dimen/content_margin"
@@ -96,6 +97,7 @@
             android:drawableEnd="@drawable/arrow_forward_simple_icon"
             android:drawableTint="@color/primaryColor"
             android:layout_marginTop="@dimen/content_margin"
+            android:textColor = "@color/black"
             android:layout_marginBottom="@dimen/content_margin"
             android:paddingTop="@dimen/content_margin"
             android:paddingBottom="@dimen/content_margin"/>
@@ -108,6 +110,7 @@
             android:textSize="@dimen/content_font_size"
             android:drawableEnd="@drawable/arrow_forward_simple_icon"
             android:drawableTint="@color/primaryColor"
+            android:textColor = "@color/black"
             android:layout_marginTop="@dimen/content_margin"
             android:layout_marginBottom="@dimen/content_margin"
             android:paddingTop="@dimen/content_margin"

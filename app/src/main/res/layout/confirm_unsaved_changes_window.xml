@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/title_font_size"
         android:text="Discard unsaved changes?"
+        android:textColor = "@color/black"
         android:layout_marginBottom="@dimen/content_margin"
         android:layout_marginTop="@dimen/content_margin"/>
 
