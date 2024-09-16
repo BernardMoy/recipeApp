@@ -105,7 +105,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
             // first tag is not empty: There are tags (>=1)
             holder.getTag().setText(recipePreviewList.get(position).getTag());
             holder.getTag().setTextColor(ContextCompat.getColor(ctx, R.color.white));
-            holder.getTag().setBackgroundColor(ContextCompat.getColor(ctx, R.color.primaryColor));
+            holder.getTag().setBackground(ContextCompat.getDrawable(ctx, R.drawable.primary_color_background));
 
             int tagPlus = recipePreviewList.get(position).getTagPlus();
             if (tagPlus != 0){

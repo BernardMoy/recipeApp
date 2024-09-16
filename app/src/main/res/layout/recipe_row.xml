@@ -66,6 +66,7 @@
             android:layout_marginEnd="@dimen/content_margin"
             android:layout_weight="1"
             android:text="Recipe name"
+            android:textColor="@color/black"
             android:textAlignment="viewStart"
             android:textSize="@dimen/title_font_size"
             app:layout_constraintEnd_toStartOf="@+id/recipeRow_toggleButton"

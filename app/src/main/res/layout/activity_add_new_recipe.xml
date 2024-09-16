@@ -434,6 +434,86 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/ingredientSuggestion_linearLayout" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Suggested ingredient"
+                android:layout_marginStart="@dimen/content_margin"
+                android:textColor="@color/green" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/content_margin"
+                android:layout_marginEnd="@dimen/content_margin"
+                android:layout_marginTop="@dimen/content_margin"
+                android:layout_marginBottom="@dimen/content_margin">
+
+                <TableRow
+                    android:background="@color/green">
+
+                    <TextView
+                        android:gravity="center_horizontal"
+                        android:text="Ingredient"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/content_font_size" />
+
+                    <TextView
+                        android:gravity="center_horizontal"
+                        android:text="Supermarket"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/content_font_size" />
+
+                    <TextView
+                        android:gravity="center_horizontal"
+                        android:text="Cost"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/content_font_size" />
+
+                    <TextView
+                        android:gravity="center_horizontal"
+                        android:text="Shelf life"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/content_font_size" />
+
+                    <TextView
+                        android:gravity="center_horizontal"
+                        android:layout_width="@dimen/image_button_size"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:background="@color/green"
+                        android:textSize="@dimen/content_font_size" />
+
+                </TableRow>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/ingredientSuggestion_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/lightGreen"
+                    tools:itemCount="2">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </TableLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:layout_marginTop="@dimen/content_margin"
             android:orientation="horizontal">
@@ -470,7 +550,7 @@
                         android:maxLength="20"
                         android:textColorHint="@color/gray"
                         android:hint="Ingredient name"
-                        android:inputType="textMultiLine"
+                        android:inputType="text"
                         android:paddingLeft="@dimen/content_margin"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/content_font_size" />
@@ -583,85 +663,6 @@
             android:layout_marginBottom="@dimen/content_margin"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/ingredientSuggestion_linearLayout" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Suggested ingredient"
-                    android:layout_marginStart="@dimen/content_margin"
-                    android:textColor="@color/green" />
-
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/content_margin"
-                    android:layout_marginEnd="@dimen/content_margin"
-                    android:layout_marginTop="@dimen/content_margin"
-                    android:layout_marginBottom="@dimen/content_margin">
-
-                    <TableRow
-                        android:background="@color/green">
-
-                        <TextView
-                            android:gravity="center_horizontal"
-                            android:text="Ingredient"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/content_font_size" />
-
-                        <TextView
-                            android:gravity="center_horizontal"
-                            android:text="Supermarket"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/content_font_size" />
-
-                        <TextView
-                            android:gravity="center_horizontal"
-                            android:text="Cost"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/content_font_size" />
-
-                        <TextView
-                            android:gravity="center_horizontal"
-                            android:text="Shelf life"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/content_font_size" />
-
-                        <TextView
-                            android:gravity="center_horizontal"
-                            android:layout_width="@dimen/image_button_size"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/white"
-                            android:background="@color/green"
-                            android:textSize="@dimen/content_font_size" />
-
-                    </TableRow>
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/ingredientSuggestion_recyclerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/lightGreen"
-                        tools:itemCount="2">
-
-                    </androidx.recyclerview.widget.RecyclerView>
-                </TableLayout>
-            </LinearLayout>
 
             <TableLayout
                 android:layout_width="match_parent"

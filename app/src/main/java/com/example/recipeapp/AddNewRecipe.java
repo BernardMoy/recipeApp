@@ -11,9 +11,11 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -66,6 +68,10 @@ public class AddNewRecipe extends AppCompatActivity {
 
     // the edittext for ingredient name
     private TextView ingredientEditText;
+    private TextView amountEditText;
+    private TextView supermarketEditText;
+    private TextView costEditText;
+    private TextView shelfLifeEditText;
 
     // the linearlayout for displaying ingredient suggestions
     private LinearLayout ingredientSuggestionLinearLayout;
@@ -262,6 +268,12 @@ public class AddNewRecipe extends AppCompatActivity {
             }
         });
 
+        // load other edit texts
+        amountEditText = (TextView) findViewById(R.id.recipeAmount_edittext);
+        supermarketEditText = (TextView) findViewById(R.id.recipeSupermarket_edittext);
+        costEditText = (TextView) findViewById(R.id.recipeCost_edittext);
+        shelfLifeEditText = (TextView) findViewById(R.id.recipeShelfLife_edittext);
+
 
         // set up exit button
         ImageButton exitButton = findViewById(R.id.exit_imageButton);
@@ -365,11 +377,6 @@ public class AddNewRecipe extends AppCompatActivity {
 
     // method for clearing new ingredient
     public void clearNewIngredient(View v){
-        TextView amountEditText = (TextView) findViewById(R.id.recipeAmount_edittext);
-        TextView supermarketEditText = (TextView) findViewById(R.id.recipeSupermarket_edittext);
-        TextView costEditText = (TextView) findViewById(R.id.recipeCost_edittext);
-        TextView shelfLifeEditText = (TextView) findViewById(R.id.shelfLife_textView);
-
         // reset fields
         ingredientEditText.setText("");
         amountEditText.setText("");
@@ -405,12 +412,6 @@ public class AddNewRecipe extends AppCompatActivity {
 
     // method to add new ingredient row to the table when plus icon is pressed
     public void addNewIngredient(View v){
-        // get fields that are submitted
-        TextView amountEditText = (TextView) findViewById(R.id.recipeAmount_edittext);
-        TextView supermarketEditText = (TextView) findViewById(R.id.recipeSupermarket_edittext);
-        TextView costEditText = (TextView) findViewById(R.id.recipeCost_edittext);
-        TextView shelfLifeEditText = (TextView) findViewById(R.id.recipeShelfLife_edittext);
-
         String ingredient = ingredientEditText.getText().toString();
         String amountStr = amountEditText.getText().toString();
         String supermarket = supermarketEditText.getText().toString();

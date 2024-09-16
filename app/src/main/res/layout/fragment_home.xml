@@ -115,6 +115,7 @@
                     android:layout_marginStart="@dimen/content_margin"
                     android:layout_weight="1"
                     android:text="Recipe name"
+                    android:textColor="@color/black"
                     android:textAlignment="viewStart"
                     android:textSize="@dimen/title_font_size"
                     app:layout_constraintEnd_toEndOf="parent"
