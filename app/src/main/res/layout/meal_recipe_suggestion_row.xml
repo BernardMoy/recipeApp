@@ -26,6 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Recipe name"
+            android:textColor="@color/black"
             android:textSize="@dimen/content_font_size"
             app:layout_constraintStart_toEndOf="@+id/mealRecipeSuggestion_imageView"
             app:layout_constraintTop_toTopOf="parent"

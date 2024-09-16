@@ -230,7 +230,7 @@ public class AddNewRecipe extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
 
         ingredientSuggestionRecyclerView.setLayoutManager(linearLayoutManager);
-        ingredientSuggestionRecyclerViewAdapter = new IngredientSuggestionRecyclerViewAdapter(getApplicationContext(), ingredientSuggestionList, ingredientFieldsLinearLayout);
+        ingredientSuggestionRecyclerViewAdapter = new IngredientSuggestionRecyclerViewAdapter(this, ingredientSuggestionList, ingredientFieldsLinearLayout);
         ingredientSuggestionRecyclerView.setAdapter(ingredientSuggestionRecyclerViewAdapter);
 
         // set up the ingredient edit text

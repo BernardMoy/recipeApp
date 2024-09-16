@@ -1,9 +1,13 @@
 package com.example.recipeapp;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.LinearLayout;
@@ -56,6 +60,12 @@ public class IngredientSuggestionRecyclerViewAdapter extends RecyclerView.Adapte
             @Override
             public void onClick(View view) {
                 updateFields(newName, newSupermarket, newCost, newShelfLife);
+
+                View currentFocus = ((Activity) ctx).getCurrentFocus();
+                if (currentFocus != null) {
+                    InputMethodManager imm = (InputMethodManager) ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
+                }
             }
         });
     }
