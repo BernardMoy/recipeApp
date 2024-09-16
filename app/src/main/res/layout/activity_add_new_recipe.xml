@@ -397,21 +397,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
+                <ImageButton
+                    android:id="@+id/redirect_imageButton"
+                    android:layout_width="@dimen/image_button_size"
+                    android:layout_height="@dimen/image_button_size"
+                    android:backgroundTint="@android:color/transparent"
+                    android:contentDescription="Redirect"
+                    android:onClick="addNewTag"
+                    app:srcCompat="@drawable/link_icon"
+                    app:tint="@color/primaryColor"
+                    app:layout_constraintEnd_toStartOf="@id/imageButton10"
+                    app:layout_constraintStart_toEndOf="@id/recipeLink_edittext"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
                 <EditText
                     android:id="@+id/recipeLink_edittext"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:background="@drawable/custom_edit_text"
-                    android:drawableStart="@drawable/link_icon"
-                    android:drawableTint="@color/gray"
-                    android:hint=" Recipe Link"
+                    android:hint=" youtube.com/..."
                     android:inputType="text"
                     android:textColorHint="@color/gray"
                     android:paddingLeft="@dimen/content_margin"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/content_font_size"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageButton10"
+                    app:layout_constraintEnd_toStartOf="@+id/redirect_imageButton"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -83,6 +84,8 @@ public class AddNewRecipe extends AppCompatActivity {
     // store the ingredient input fields. Passed to the ing suggestion adapter to modify values
     private LinearLayout ingredientFieldsLinearLayout;
 
+    // link redirect icon
+    private ImageButton redirectImageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -309,6 +312,30 @@ public class AddNewRecipe extends AppCompatActivity {
                 dialog.show();
             }
         });
+
+
+        // set up the image button to redirect to link
+        redirectImageButton = findViewById(R.id.redirect_imageButton);
+        redirectImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // get the url
+                String url = ((TextView) findViewById(R.id.recipeLink_edittext)).getText().toString();
+                if (!url.isEmpty()){
+                    // append the start if it doesnt start with it
+                    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                        url = "http://" + url;
+                    }
+
+                    // open url
+                    Intent urlIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(urlIntent);
+                } else {
+                    Toast.makeText(AddNewRecipe.this, "Recipe link is empty", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
     // method for the button to get image
