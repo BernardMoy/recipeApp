@@ -10,6 +10,7 @@
         <item name="colorSecondaryVariant">@color/bg2</item>
 
         <item name="android:statusBarColor">@color/primaryColor</item>
+        <item name="android:windowBackground">@color/backgroundColor</item>
     </style>
 
     <style name="Theme.RecipeApp" parent="Base.Theme.RecipeApp" />

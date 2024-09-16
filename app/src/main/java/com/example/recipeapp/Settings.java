@@ -77,7 +77,7 @@ public class Settings extends AppCompatActivity {
         dialog.setContentView(R.layout.confirm_window);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.custom_edit_text, null));
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
 
         // load the two buttons
         cancelButton = dialog.findViewById(R.id.confirmRecipeCancel_button);

@@ -48,6 +48,7 @@
             android:layout_height="wrap_content"
             android:text="Exit"
             app:cornerRadius = "@dimen/button_corner_radius"
+            android:textColor="@color/white"
             android:backgroundTint="@color/primaryColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
