@@ -1,5 +1,7 @@
 package com.example.recipeapp;
 
+import static androidx.core.content.ContextCompat.getColor;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -84,7 +86,7 @@ public class ShoppingListFragment extends Fragment {
         // set up search bar
         searchString = "";
         // Set up query text listener for search view.
-        SearchView searchView = (SearchView) view.findViewById(R.id.shoppingList_searchView);
+        SearchView searchView = (SearchView) view.findViewById(R.id.shoppingLists_searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -100,6 +102,14 @@ public class ShoppingListFragment extends Fragment {
                 return false;
             }
         });
+
+        int id = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+        TextView textView = (TextView) searchView.findViewById(id);
+        // Set search text color
+        textView.setTextColor(getColor(getContext(), R.color.gray));
+        // Set search hints color
+        textView.setHintTextColor(getColor(getContext(), R.color.gray));
+
 
         // set up state change listener for the favourite toggle button
         favToggleButton = view.findViewById(R.id.fav_toggleButton);

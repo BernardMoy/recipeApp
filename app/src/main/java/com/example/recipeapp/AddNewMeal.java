@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,9 +15,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -217,6 +220,15 @@ public class AddNewMeal extends AppCompatActivity {
                 dialog.show();
             }
         });
+
+        int id = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+        TextView textView = (TextView) searchView.findViewById(id);
+
+        // Set search text color
+        textView.setTextColor(getColor(R.color.gray));
+
+        // Set search hints color
+        textView.setHintTextColor(getColor(R.color.gray));
     }
 
     public String dbToDisplayDateFormatter(String dateStr){

@@ -115,6 +115,7 @@
                     android:maxLength="50"
                     android:drawableStart="@drawable/brush_icon"
                     android:drawableTint="@color/gray"
+                    android:textColorHint="@color/gray"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/custom_edit_text"
                     app:layout_constraintStart_toEndOf="@id/textView5"

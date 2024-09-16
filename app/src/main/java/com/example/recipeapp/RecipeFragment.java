@@ -1,5 +1,7 @@
 package com.example.recipeapp;
 
+import static androidx.core.content.ContextCompat.getColor;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -83,7 +85,6 @@ public class RecipeFragment extends Fragment {
 
     // 0 = latest, 1 = lowest cost, 2 = most frequent;
     private int orderingOption;
-
 
 
     public RecipeFragment() {
@@ -223,6 +224,13 @@ public class RecipeFragment extends Fragment {
             }
         });
 
+        int id = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+        TextView textView = (TextView) searchView.findViewById(id);
+        // Set search text color
+        textView.setTextColor(getColor(getContext(), R.color.gray));
+        // Set search hints color
+        textView.setHintTextColor(getColor(getContext(), R.color.gray));
+
         // Set up on click listener for each box of the tag filter recycler view
         selectedTagsSet = new HashSet<>();
         recipeTagsFilterRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
@@ -254,8 +262,8 @@ public class RecipeFragment extends Fragment {
                             recipeAdapter.setSelectedTagList(selectedTagsSet);
 
                             // change the appearance of boxes depending whether or not they are in set
-                            item.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightColor));
-                            item.setTextColor(ContextCompat.getColor(getContext(), R.color.primaryColor));
+                            item.setBackgroundColor(getColor(getContext(), R.color.lightColor));
+                            item.setTextColor(getColor(getContext(), R.color.primaryColor));
 
                         } else {
                             // Add the selected item to the set
@@ -264,8 +272,8 @@ public class RecipeFragment extends Fragment {
                             recipeAdapter.setSelectedTagList(selectedTagsSet);
 
                             // change the appearance of boxes depending whether or not they are in set
-                            item.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.primaryColor));
-                            item.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                            item.setBackgroundColor(getColor(getContext(), R.color.primaryColor));
+                            item.setTextColor(getColor(getContext(), R.color.white));
                         }
 
                         // when a position is clicked or the view is reset (onResume()), filter recipes.
