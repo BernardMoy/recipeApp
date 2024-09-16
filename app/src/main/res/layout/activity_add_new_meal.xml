@@ -279,6 +279,7 @@
                             android:layout_height="wrap_content"
                             android:text="No recipe selected"
                             android:textSize="@dimen/content_font_size"
+                            android:textColor="@color/black"
                             app:layout_constraintStart_toEndOf="@+id/suggestedImage_imageView"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toTopOf="@id/suggestedCost_textView"/>

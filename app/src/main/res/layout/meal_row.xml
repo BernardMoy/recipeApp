@@ -57,6 +57,7 @@
             android:paddingStart="@dimen/content_margin"
             android:paddingEnd="@dimen/content_margin"
             android:textSize="@dimen/subtitle_font_size"
+            android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@+id/mealRow_imageView"
             app:layout_constraintTop_toTopOf="@+id/mealRow_imageView"
             app:layout_constraintBottom_toTopOf="@id/mealRowCost_textView"/>
