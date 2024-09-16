@@ -412,9 +412,9 @@ public class AddNewRecipe extends AppCompatActivity {
 
     // method to add new ingredient row to the table when plus icon is pressed
     public void addNewIngredient(View v){
-        String ingredient = ingredientEditText.getText().toString();
+        String ingredient = ingredientEditText.getText().toString().trim();
         String amountStr = amountEditText.getText().toString();
-        String supermarket = supermarketEditText.getText().toString();
+        String supermarket = supermarketEditText.getText().toString().trim();
         String costStr = costEditText.getText().toString();
         String shelfLifeStr = shelfLifeEditText.getText().toString();
 

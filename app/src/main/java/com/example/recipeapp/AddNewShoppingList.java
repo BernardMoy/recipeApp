@@ -252,8 +252,8 @@ public class AddNewShoppingList extends AppCompatActivity {
     // method to add new ingredient - sort by supermarkets
     public void addNewIngredient(View v){
 
-        String supermarket = ingredientSupermarketAutoCompleteTextView.getText().toString();
-        String ingredientName = ingredientNameEditText.getText().toString();
+        String supermarket = ingredientSupermarketAutoCompleteTextView.getText().toString().trim();
+        String ingredientName = ingredientNameEditText.getText().toString().trim();
         String amountStr = ingredientAmountEditText.getText().toString();
         String costStr = ingredientCostEditText.getText().toString();
 

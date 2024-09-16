@@ -751,7 +751,7 @@
             android:textColor = "@color/gray"
             android:text = "@string/total_weighted_cost_default"
             android:layout_marginEnd="@dimen/content_margin"
-            android:layout_marginBottom="@dimen/title_image_size"
+            android:layout_marginBottom="@dimen/bottom_margin_size"
             android:textSize="@dimen/content_font_size" />
 
 

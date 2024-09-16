@@ -264,7 +264,7 @@ public class RecipeFragment extends Fragment {
                             recipeAdapter.setSelectedTagList(selectedTagsSet);
 
                             // change the appearance of boxes depending whether or not they are in set
-                            item.setBackgroundColor(getColor(getContext(), R.color.lightColor));
+                            item.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.light_color_background));
                             item.setTextColor(getColor(getContext(), R.color.primaryColor));
 
                         } else {
@@ -274,7 +274,7 @@ public class RecipeFragment extends Fragment {
                             recipeAdapter.setSelectedTagList(selectedTagsSet);
 
                             // change the appearance of boxes depending whether or not they are in set
-                            item.setBackgroundColor(getColor(getContext(), R.color.primaryColor));
+                            item.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.primary_color_background));
                             item.setTextColor(getColor(getContext(), R.color.white));
                         }
 

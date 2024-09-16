@@ -19,5 +19,6 @@
     <dimen name="button_corner_radius"> 12dp </dimen>
     <dimen name="dropdown_width">180dp</dimen>
     <dimen name="line_thickness">1dp</dimen>
+    <dimen name="bottom_margin_size">130dp</dimen>
 
 </resources>
