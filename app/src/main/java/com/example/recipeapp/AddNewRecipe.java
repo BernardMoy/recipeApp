@@ -15,6 +15,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Filter;
@@ -40,6 +41,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Locale;
 
 public class AddNewRecipe extends AppCompatActivity {
@@ -70,7 +72,7 @@ public class AddNewRecipe extends AppCompatActivity {
     // the edittext for ingredient name
     private TextView ingredientEditText;
     private TextView amountEditText;
-    private TextView supermarketEditText;
+    private AutoCompleteTextView supermarketEditText;
     private TextView costEditText;
     private TextView shelfLifeEditText;
 
@@ -86,6 +88,9 @@ public class AddNewRecipe extends AppCompatActivity {
 
     // link redirect icon
     private ImageButton redirectImageButton;
+
+    // stores currently added supermarket names
+    private HashSet<String> currentSupermarketSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -273,7 +278,7 @@ public class AddNewRecipe extends AppCompatActivity {
 
         // load other edit texts
         amountEditText = (TextView) findViewById(R.id.recipeAmount_edittext);
-        supermarketEditText = (TextView) findViewById(R.id.recipeSupermarket_edittext);
+        supermarketEditText = findViewById(R.id.recipeSupermarket_autoCompleteTextView);
         costEditText = (TextView) findViewById(R.id.recipeCost_edittext);
         shelfLifeEditText = (TextView) findViewById(R.id.recipeShelfLife_edittext);
 
@@ -336,6 +341,59 @@ public class AddNewRecipe extends AppCompatActivity {
             }
         });
 
+
+        // load all supermarket names from the db to the set
+        currentSupermarketSet = new HashSet<>();
+
+        DatabaseHelperRecipes db = new DatabaseHelperRecipes(getApplicationContext());
+        Cursor cursor = db.getDistinctSupermarkets();
+        if (cursor.getCount() > 0){
+            while (cursor.moveToNext()){
+                currentSupermarketSet.add(cursor.getString(0));
+            }
+        }
+        db.close();
+
+        setUpSupermarketAutoCompleteTextView();
+
+    }
+
+    // method to set up supermarket auto complete text view. called at start or when new ing is added.
+    public void setUpSupermarketAutoCompleteTextView(){
+
+        ArrayList<String> currentSupermarketSetStrings = new ArrayList<>(currentSupermarketSet);
+        StartsWithFilterArrayAdapter arrayAdapterSupermarket = new StartsWithFilterArrayAdapter(AddNewRecipe.this, R.layout.recipe_dropdown_item, currentSupermarketSetStrings);
+        supermarketEditText.setAdapter(arrayAdapterSupermarket);
+
+        supermarketEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b){
+                    supermarketEditText.showDropDown();
+                }
+            }
+        });
+
+        supermarketEditText.setThreshold(1);
+
+        supermarketEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // filter here if text changed
+                arrayAdapterSupermarket.getFilter().filter(charSequence);
+                supermarketEditText.showDropDown();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     // method for the button to get image
@@ -482,6 +540,12 @@ public class AddNewRecipe extends AppCompatActivity {
 
         IngredientAdapter ingredientRecyclerViewAdapter = new IngredientAdapter(this, ingredientList);
         ingredientsRecyclerView.setAdapter(ingredientRecyclerViewAdapter);
+
+        // add supermarket to current hashset if not null
+        if (!supermarket.isEmpty() && !currentSupermarketSet.contains(supermarket)){
+            currentSupermarketSet.add(supermarket);
+            setUpSupermarketAutoCompleteTextView();
+        }
 
         // reset fields except supermarket
         ingredientEditText.setText("");

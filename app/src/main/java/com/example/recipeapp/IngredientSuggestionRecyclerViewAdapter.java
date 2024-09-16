@@ -116,7 +116,7 @@ public class IngredientSuggestionRecyclerViewAdapter extends RecyclerView.Adapte
     // method to update the linear layout fields, when given name, supermarket, cost and shelf life
     public void updateFields(String newName, String newSupermarket, float newCost, int newShelfLife){
         TextView name = ingredientFieldsLinearLayout.findViewById(R.id.recipeIngredient_edittext);
-        TextView supermarket = ingredientFieldsLinearLayout.findViewById(R.id.recipeSupermarket_edittext);
+        TextView supermarket = ingredientFieldsLinearLayout.findViewById(R.id.recipeSupermarket_autoCompleteTextView);
         TextView cost = ingredientFieldsLinearLayout.findViewById(R.id.recipeCost_edittext);
         TextView shelfLife = ingredientFieldsLinearLayout.findViewById(R.id.recipeShelfLife_edittext);
 
