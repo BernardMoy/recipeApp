@@ -91,6 +91,7 @@
         android:layout_width="match_parent"
         android:background="@color/backgroundColor"
         android:layout_height="@dimen/bottom_view_height"
+        app:itemActiveIndicatorStyle="@android:transition/fade"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

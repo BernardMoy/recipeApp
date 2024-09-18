@@ -12,6 +12,8 @@
 
         <item name="android:statusBarColor">@color/primaryColor</item>
         <item name="android:windowBackground">@color/backgroundColor</item>
+
+        <item name="android:itemBackground">@color/backgroundColor</item>
     </style>
 
     <style name="Theme.RecipeApp" parent="Base.Theme.RecipeApp" />
