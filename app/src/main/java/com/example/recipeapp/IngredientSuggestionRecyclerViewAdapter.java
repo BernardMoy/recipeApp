@@ -119,10 +119,14 @@ public class IngredientSuggestionRecyclerViewAdapter extends RecyclerView.Adapte
         TextView supermarket = ingredientFieldsLinearLayout.findViewById(R.id.recipeSupermarket_autoCompleteTextView);
         TextView cost = ingredientFieldsLinearLayout.findViewById(R.id.recipeCost_edittext);
         TextView shelfLife = ingredientFieldsLinearLayout.findViewById(R.id.recipeShelfLife_edittext);
+        TextView amount = ingredientFieldsLinearLayout.findViewById(R.id.recipeAmount_edittext);
 
         name.setText(newName);
         supermarket.setText(newSupermarket);
         cost.setText(String.valueOf(newCost));
         shelfLife.setText(String.valueOf(newShelfLife));
+
+        // change focus
+        amount.requestFocus();
     }
 }

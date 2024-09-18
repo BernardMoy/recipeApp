@@ -74,9 +74,10 @@
             <TextView
                 android:gravity="center_horizontal"
                 android:text=""
-                android:layout_width="0dp"
+                android:layout_width="@dimen/toggle_button_size"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
                 android:textColor="@color/white"
                 android:textSize="@dimen/content_font_size" />
 

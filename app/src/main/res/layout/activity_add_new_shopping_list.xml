@@ -94,7 +94,7 @@
                 <TextView
                     android:id="@+id/textView5"
                     android:layout_width="100dp"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/black"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:text="List Name"
@@ -153,7 +153,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/black"
                     android:text="Description"
                     android:layout_gravity="center_vertical"
                     android:textSize="@dimen/content_font_size" />
@@ -208,7 +208,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/black"
                     android:text="Ingredients"
                     android:layout_gravity="top"
                     android:textSize="@dimen/content_font_size" />

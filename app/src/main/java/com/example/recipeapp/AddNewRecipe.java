@@ -175,7 +175,7 @@ public class AddNewRecipe extends AppCompatActivity {
                     }
                 }
                 // modify the recyclerview of tags that are displayed
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false);
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
                 tagsRecyclerView.setLayoutManager(gridLayoutManager);
                 tagsRecyclerView.setAdapter(new StringAdapter(this, tagList));
 
