@@ -742,13 +742,18 @@
 
                 </TableRow>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recipeIngredients_recyclerView"
+                <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    tools:itemCount="2"
-                    android:background="@color/lightGray"
-                    />
+                    android:fillViewport="true">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recipeIngredients_recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/lightGray"
+                        tools:itemCount="2"/>
+                </androidx.core.widget.NestedScrollView>
 
             </TableLayout>
 

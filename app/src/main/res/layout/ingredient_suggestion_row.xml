@@ -34,7 +34,7 @@
         <TextView
             android:id="@+id/cost_textView"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@color/gold"
             android:text="Cost"
             android:layout_width="0dp"
             android:layout_height="@dimen/image_button_size"

@@ -89,7 +89,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:background="@color/backgroundColor"
+        android:background="@color/veryLightColor"
         android:layout_height="@dimen/bottom_view_height"
         app:itemActiveIndicatorStyle="@android:transition/fade"
         app:labelVisibilityMode="labeled"
