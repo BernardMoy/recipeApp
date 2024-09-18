@@ -114,6 +114,7 @@
                     android:textSize="@dimen/content_font_size"
                     android:padding="@dimen/content_margin"
                     android:maxLength="50"
+                    android:textColor="@color/black"
                     android:drawableStart="@drawable/brush_icon"
                     android:drawableTint="@color/gray"
                     android:textColorHint="@color/gray"

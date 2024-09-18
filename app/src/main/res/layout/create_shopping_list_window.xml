@@ -60,7 +60,7 @@
         android:layout_marginTop="@dimen/content_margin"
         android:inputType="text"
         android:maxLength="100"
-        android:textColor="@color/gray"
+        android:textColor="@color/black"
         android:textColorHint="@color/gray"
         android:textSize="@dimen/content_font_size"
         app:layout_constraintEnd_toEndOf="parent"
