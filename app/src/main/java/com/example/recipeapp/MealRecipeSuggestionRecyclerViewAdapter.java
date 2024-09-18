@@ -147,8 +147,7 @@ public class MealRecipeSuggestionRecyclerViewAdapter extends RecyclerView.Adapte
 
                 // check constraints
                 if (inputCategory.isEmpty()){
-                    Toast.makeText(ctx, "Category name is empty", Toast.LENGTH_SHORT).show();
-                    return;
+                    inputCategory = "No category";
                 }
                 if (selectedRecipeId == -1){
                     Toast.makeText(ctx, "No recipe selected", Toast.LENGTH_SHORT).show();

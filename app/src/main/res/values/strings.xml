@@ -22,6 +22,7 @@
     <string-array name="category_suggestions">
         <item>Breakfast</item>
         <item>Lunch</item>
+        <item>Afternoon tea</item>
         <item>Dinner</item>
         <item>Snack</item>
     </string-array>

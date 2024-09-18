@@ -160,7 +160,7 @@ public class RecipeFragment extends Fragment {
         // Listener to do something to the selected object
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View v, int i, long l) {
                 // i is the position clicked
                 // 0 = latest added, 1 = lowest cost, 2 = most frequently cooked
                 orderingOption = i;
@@ -379,6 +379,10 @@ public class RecipeFragment extends Fragment {
         selectedTagsSet = new HashSet<>();
         // update the adapter
         recipeAdapter.setSelectedTagList(selectedTagsSet);
+
+        // the fav button will be defaulted to false -> set it to be unchecked
+        favToggleButton.setChecked(false);
+
         // filter results
         filterRecipes(view);
 

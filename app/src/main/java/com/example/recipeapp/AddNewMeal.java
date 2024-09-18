@@ -80,7 +80,6 @@ public class AddNewMeal extends AppCompatActivity {
 
         // set up functionality of the auto complete text view
         categoryAutoCompleteTextView = findViewById(R.id.category_autoCompleteTextView);
-
         String[] categorySuggestionsList = getResources().getStringArray(R.array.category_suggestions);
         ArrayAdapter<String> arrayAdapterCategory = new ArrayAdapter<>(getApplicationContext(), R.layout.recipe_dropdown_item, categorySuggestionsList);
         categoryAutoCompleteTextView.setAdapter(arrayAdapterCategory);
