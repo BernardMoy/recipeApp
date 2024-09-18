@@ -600,8 +600,25 @@ public class AddNewRecipe extends AppCompatActivity {
         // this is just a safe condition check, it must pass
         if (recipeImageDrawable != null){
             Bitmap bitmap = recipeImageDrawable.getBitmap();
+            int originalWidth = bitmap.getWidth();
+            int originalHeight = bitmap.getHeight();
+
+            int newHeight = 0;
+            int newWidth = 0;
+
+            // compression algorithm --> Retain its dimensions
+            if (originalHeight >= originalWidth) {
+                newHeight = 64;
+                newWidth = Math.round((float) (originalWidth * newHeight) / originalHeight);
+            } else {
+                newWidth = 64;
+                newHeight = Math.round((float) (originalHeight * newWidth) / originalWidth);
+            }
+
+            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true);
+
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
             recipeImageByteArray = byteArrayOutputStream.toByteArray();
 
         }
