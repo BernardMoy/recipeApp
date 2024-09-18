@@ -289,7 +289,7 @@ public class HomeFragment extends Fragment {
             // update shown parameters
             recipeNameTextView.setText(name);
 
-            String prepTimeStr = " " + String.valueOf(prepTime) + " minutes";
+            String prepTimeStr = " " + String.valueOf(prepTime) + " mins";
             recipePrepTimeTextView.setText(prepTimeStr);
 
             recipeCostTextView.setText(String.valueOf(cost));

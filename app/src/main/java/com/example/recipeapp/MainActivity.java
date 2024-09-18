@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -146,7 +147,8 @@ public class MainActivity extends AppCompatActivity {
 
     // function called by clicking the plus sign floating button
     public void onClick_floatingButton(View view) {
-        PopupMenu popupMenu = new PopupMenu(this, view);
+        Context wrapper = new ContextThemeWrapper(this, R.style.popUpMenu);
+        PopupMenu popupMenu = new PopupMenu(wrapper, view);
         popupMenu.getMenuInflater().inflate(R.menu.floating_button_popup_menu, popupMenu.getMenu());
         popupMenu.setForceShowIcon(true);
         popupMenu.show();
