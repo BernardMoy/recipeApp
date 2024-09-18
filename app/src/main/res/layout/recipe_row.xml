@@ -52,10 +52,11 @@
 
         <ImageView
             android:id="@+id/recipeRow_image"
-            android:paddingStart="@dimen/content_margin"
             android:layout_width="@dimen/title_image_size"
             android:layout_height="@dimen/title_image_size"
             android:layout_margin="0dp"
+            android:paddingStart="@dimen/content_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/add_imageButton"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
