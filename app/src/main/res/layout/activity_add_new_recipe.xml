@@ -209,7 +209,8 @@
                 <EditText
                     android:id="@+id/recipeDesc_edittext"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/image_button_size"
                     android:background="@drawable/custom_edit_text"
                     android:drawableStart="@drawable/text_snippet_icon"
                     android:drawableTint="@color/gray"
@@ -417,7 +418,7 @@
                     android:layout_height="0dp"
                     android:background="@drawable/custom_edit_text"
                     android:hint=" youtube.com/..."
-                    android:inputType="text"
+                    android:inputType="textWebEmailAddress"
                     android:textColorHint="@color/gray"
                     android:paddingLeft="@dimen/content_margin"
                     android:textColor="@color/black"

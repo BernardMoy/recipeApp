@@ -15,13 +15,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Category"
-            android:textStyle="bold"
             android:paddingStart="@dimen/content_margin"
             android:paddingBottom="@dimen/content_margin"
-            android:textColor="@color/primaryColor"
+            android:text="Category"
             android:textAlignment="viewStart"
+            android:textColor="@color/primaryColor"
             android:textSize="@dimen/subtitle_font_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/deleteMeal_imageButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,16 +52,17 @@
 
         <TextView
             android:id="@+id/mealRowRecipeName_textView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Recipe name"
             android:paddingStart="@dimen/content_margin"
             android:paddingEnd="@dimen/content_margin"
-            android:textSize="@dimen/subtitle_font_size"
+            android:text="Recipe name"
             android:textColor="@color/black"
+            android:textSize="@dimen/subtitle_font_size"
+            app:layout_constraintBottom_toTopOf="@id/mealRowCost_textView"
+            app:layout_constraintEnd_toStartOf="@+id/deleteMeal_imageButton"
             app:layout_constraintStart_toEndOf="@+id/mealRow_imageView"
-            app:layout_constraintTop_toTopOf="@+id/mealRow_imageView"
-            app:layout_constraintBottom_toTopOf="@id/mealRowCost_textView"/>
+            app:layout_constraintTop_toTopOf="@+id/mealRow_imageView" />
 
         <TextView
             android:id="@+id/mealRowCost_textView"
