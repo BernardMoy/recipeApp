@@ -285,10 +285,6 @@ public class AddNewShoppingList extends AppCompatActivity {
 
 
         // create new shopping list ingredient
-        /*
-        -1 is the placeholder for the ingredientID here. The id is necessary because it is used to mark ing as checked / unchecked.
-        It will be replaced by the real ingredient ID when extracted from the db.
-         */
         ShoppingListIngredient ingredient = new ShoppingListIngredient(ingredientName, amount, cost, false);
         addToHashMap(supermarket, ingredient);
 
@@ -359,7 +355,21 @@ public class AddNewShoppingList extends AppCompatActivity {
         // Modify the hashmap based on whether same supermarket exists
         if (shoppingListIngredientsHashMap.containsKey(supermarket)){
             // add to existing key
-            shoppingListIngredientsHashMap.get(supermarket).add(ingredient);
+            ArrayList<ShoppingListIngredient> currentIngredients = shoppingListIngredientsHashMap.get(supermarket);
+
+            // iterate current ingredients to check if ingredient with same name, cost and is not checked. If yes, increment that amount, else create new.
+            /*
+            for (ShoppingListIngredient ing : currentIngredients){
+                if (ing.getIngredient().equals(ingredient.getIngredient()) && ing.getCost() == ingredient.getCost() && !ing.isChecked()){
+                    ing.incrementAmount(ingredient.getAmount());
+                    return;
+                }
+            }
+
+             */
+
+            currentIngredients.add(ingredient);
+
 
         } else {
             // create new key

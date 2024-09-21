@@ -20,6 +20,10 @@ public class ShoppingListIngredient {
         return ingredientName;
     }
 
+    public void incrementAmount(int n){
+        this.amount += n;
+    }
+
     public int getAmount() {
         return amount;
     }

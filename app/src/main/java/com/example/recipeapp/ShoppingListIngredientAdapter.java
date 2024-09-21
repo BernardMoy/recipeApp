@@ -113,7 +113,7 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
                     holder.getAmountTextView().setTextColor(ContextCompat.getColor(ctx, R.color.black));
 
                     holder.getCostTextView().setPaintFlags(0);
-                    holder.getCostTextView().setTextColor(ContextCompat.getColor(ctx, R.color.black));
+                    holder.getCostTextView().setTextColor(ContextCompat.getColor(ctx, R.color.gold));
 
                     currentIngredient.setChecked(false);
                 }
