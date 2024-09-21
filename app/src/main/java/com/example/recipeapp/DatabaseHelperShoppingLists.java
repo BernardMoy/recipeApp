@@ -273,7 +273,8 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
                 "FROM Shopping_lists SL "+
                 "JOIN Shopping_list_supermarket_ingredients SLSI ON SL.shopping_list_id = SLSI.shopping_list_id "+
                 "JOIN Ingredients I ON SLSI.ingredient_id = I.ingredient_id " +
-                "WHERE SL.shopping_list_id = ?";
+                "WHERE SL.shopping_list_id = ? " +
+                "ORDER BY I.checked;";
 
         Cursor cursor = null;
         if (db != null) {
