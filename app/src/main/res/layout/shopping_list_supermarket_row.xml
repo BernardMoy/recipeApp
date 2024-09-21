@@ -53,6 +53,7 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/money_icon"
             android:drawableTint="@color/white"
+            android:textStyle="bold"
             android:paddingStart="@dimen/content_margin"
             android:paddingEnd="@dimen/content_margin"
             android:text="0.00"

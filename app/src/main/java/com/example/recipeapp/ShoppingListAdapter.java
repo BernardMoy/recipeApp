@@ -107,7 +107,6 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListRecycl
 
                 // Start intent with passed parameters of shopping list
                 Intent i = new Intent(ctx, AddNewShoppingList.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
                 // pass the shopping list id to the edit shopping list activity.
                 // Information is extracted from db there

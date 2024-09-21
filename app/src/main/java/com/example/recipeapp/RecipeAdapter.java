@@ -413,7 +413,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeRecyclerViewHolder
 
                 // Start intent with passed parameters of recipe
                 Intent i = new Intent(ctx, AddNewRecipe.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
                 // pass the recipe id to the edit recipe activity.
                 // Information is extracted from db there
