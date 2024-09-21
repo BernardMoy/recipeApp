@@ -99,7 +99,7 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Extract all SL data
-        String queryShoppingList = "SELECT COUNT(I.ingredient_id), COUNT(DISTINCT supermarket), SUM(I.cost*I.amount) " +
+        String queryShoppingList = "SELECT SUM(I.amount), COUNT(DISTINCT supermarket), SUM(I.cost*I.amount) " +
                 "FROM Shopping_lists SL "+
                 "JOIN Shopping_list_supermarket_ingredients SLSI ON SL.shopping_list_id = SLSI.shopping_list_id "+
                 "JOIN Ingredients I ON SLSI.ingredient_id = I.ingredient_id " +
