@@ -112,7 +112,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 dialog.dismiss();
                 Toast.makeText(MainActivity.this, "See you next time!", Toast.LENGTH_SHORT).show();
-                System.exit(0);
+
+                finishAffinity();  // remove from the phone app history
+                finish();  // exit activity
             }
         });
 

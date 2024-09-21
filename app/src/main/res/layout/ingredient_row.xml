@@ -23,10 +23,10 @@
         <TextView
             android:id="@+id/amount_textView"
             android:gravity="center"
-            android:text="Amount"
+            android:text="0"
             android:layout_width="0dp"
             android:layout_height="@dimen/image_button_size"
-            android:layout_weight="2"
+            android:layout_weight="1.5"
             android:layout_gravity="center_vertical"
             android:textColor="@color/black"
             android:textSize="@dimen/content_font_size" />
@@ -34,7 +34,7 @@
         <TextView
             android:id="@+id/supermarket_textView"
             android:gravity="center"
-            android:text="Supermarket"
+            android:text="XXXXX"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -45,18 +45,18 @@
         <TextView
             android:id="@+id/cost_textView"
             android:gravity="center"
-            android:text="Cost"
+            android:text="0.00"
             android:layout_width="0dp"
             android:layout_height="@dimen/image_button_size"
             android:textColor="@color/gold"
             android:layout_gravity="center_vertical"
-            android:layout_weight="2"
+            android:layout_weight="1.5"
             android:textSize="@dimen/content_font_size" />
 
         <TextView
             android:id="@+id/shelfLife_textView"
             android:gravity="center"
-            android:text="Shelf life"
+            android:text="365"
             android:layout_width="0dp"
             android:layout_gravity="center_vertical"
             android:layout_height="@dimen/image_button_size"
