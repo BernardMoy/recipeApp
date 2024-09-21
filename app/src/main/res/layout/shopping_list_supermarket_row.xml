@@ -19,7 +19,7 @@
 
         <TextView
             android:id="@+id/supermarketName_textView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/content_margin"
             android:paddingEnd="@dimen/content_margin"
@@ -28,6 +28,7 @@
             android:textStyle="bold"
             android:textSize="@dimen/title_font_size"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/supermarketCount_textView"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
@@ -41,6 +42,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/content_font_size"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/supermarketTotalCost_textView"
             app:layout_constraintStart_toEndOf="@id/supermarketName_textView"
             app:layout_constraintTop_toTopOf="parent" />
 
