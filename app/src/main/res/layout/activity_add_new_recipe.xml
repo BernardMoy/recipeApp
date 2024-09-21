@@ -618,7 +618,7 @@
                         android:textColorHint="@color/gray"
                         android:inputType="numberDecimal"
                         android:padding = "@dimen/content_margin"
-                        android:textColor="@color/black"
+                        android:textColor="@color/gold"
                         android:textSize="@dimen/content_font_size" />
 
                 </LinearLayout>

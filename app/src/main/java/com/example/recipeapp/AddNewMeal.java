@@ -190,33 +190,7 @@ public class AddNewMeal extends AppCompatActivity {
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // set up dialog
-                Dialog dialog = new Dialog(AddNewMeal.this);
-                dialog.setContentView(R.layout.confirm_unsaved_changes_window);
-                dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.custom_edit_text, null));
-                dialog.setCancelable(true);
-
-                // load the two buttons
-                Button confirmCancelButton = dialog.findViewById(R.id.confirmCancel_button);
-                Button confirmExitButton = dialog.findViewById(R.id.confirmExit_button);
-
-                confirmCancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-
-                confirmExitButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                        getOnBackPressedDispatcher().onBackPressed();
-                    }
-                });
-
-                dialog.show();
+                customExit();
             }
         });
 
@@ -259,6 +233,41 @@ public class AddNewMeal extends AppCompatActivity {
         getOnBackPressedDispatcher().onBackPressed();
     }
 
+    // custom exit
+    public void customExit(){
+        // set up dialog
+        Dialog dialog = new Dialog(AddNewMeal.this);
+        dialog.setContentView(R.layout.confirm_unsaved_changes_window);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.custom_edit_text, null));
+        dialog.setCancelable(true);
+
+        // load the two buttons
+        Button confirmCancelButton = dialog.findViewById(R.id.confirmCancel_button);
+        Button confirmExitButton = dialog.findViewById(R.id.confirmExit_button);
+
+        confirmCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        confirmExitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                getOnBackPressedDispatcher().onBackPressed();
+            }
+        });
+
+        dialog.show();
+    }
+
+    @Override
+    public void onBackPressed(){
+        customExit();
+    }
 
     public void updateSuggestedRecipe(){
         // if there are no meals or no recipes, hide

@@ -82,42 +82,48 @@ public class MainActivity extends AppCompatActivity {
         exitbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // set up dialog
-                Dialog dialog = new Dialog(MainActivity.this);
-                dialog.setContentView(R.layout.confirm_exit_window);
-                dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.custom_edit_text, null));
-                dialog.setCancelable(true);
-
-                // load the two buttons
-                Button cancelButton = dialog.findViewById(R.id.confirmCancel_button);
-                Button exitButton = dialog.findViewById(R.id.confirmExit_button);
-
-                cancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-
-                exitButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                        Toast.makeText(MainActivity.this, "See you next time!", Toast.LENGTH_SHORT).show();
-                        System.exit(0);
-                    }
-                });
-
-
-
-                dialog.show();
+                exitApp();
             }
         });
 
     }
 
+    public void exitApp(){
+        // set up dialog
+        Dialog dialog = new Dialog(MainActivity.this);
+        dialog.setContentView(R.layout.confirm_exit_window);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.custom_edit_text, null));
+        dialog.setCancelable(true);
 
+        // load the two buttons
+        Button cancelButton = dialog.findViewById(R.id.confirmCancel_button);
+        Button exitButton = dialog.findViewById(R.id.confirmExit_button);
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                Toast.makeText(MainActivity.this, "See you next time!", Toast.LENGTH_SHORT).show();
+                System.exit(0);
+            }
+        });
+
+        dialog.show();
+    }
+
+    @Override
+    public void onBackPressed(){
+        exitApp();
+    }
+    
     // function to replace fragment
     protected void replaceFragment(Fragment f){
         FragmentManager fm = getSupportFragmentManager();

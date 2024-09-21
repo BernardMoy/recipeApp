@@ -289,33 +289,7 @@ public class AddNewRecipe extends AppCompatActivity {
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // set up dialog
-                Dialog dialog = new Dialog(AddNewRecipe.this);
-                dialog.setContentView(R.layout.confirm_unsaved_changes_window);
-                dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.custom_edit_text, null));
-                dialog.setCancelable(true);
-
-                // load the two buttons
-                Button confirmCancelButton = dialog.findViewById(R.id.confirmCancel_button);
-                Button confirmExitButton = dialog.findViewById(R.id.confirmExit_button);
-
-                confirmCancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-
-                confirmExitButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                        getOnBackPressedDispatcher().onBackPressed();
-                    }
-                });
-
-                dialog.show();
+                exitActivity();
             }
         });
 
@@ -357,6 +331,44 @@ public class AddNewRecipe extends AppCompatActivity {
 
         setUpSupermarketAutoCompleteTextView();
 
+    }
+
+
+    // function to exit activity
+    public void exitActivity(){
+        // set up dialog
+        Dialog dialog = new Dialog(AddNewRecipe.this);
+        dialog.setContentView(R.layout.confirm_unsaved_changes_window);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.custom_edit_text, null));
+        dialog.setCancelable(true);
+
+        // load the two buttons
+        Button confirmCancelButton = dialog.findViewById(R.id.confirmCancel_button);
+        Button confirmExitButton = dialog.findViewById(R.id.confirmExit_button);
+
+        confirmCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        confirmExitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                getOnBackPressedDispatcher().onBackPressed();
+            }
+        });
+
+        dialog.show();
+    }
+
+    // override the on back pressed function
+    @Override
+    public void onBackPressed() {
+        exitActivity();
     }
 
     // method to set up supermarket auto complete text view. called at start or when new ing is added.

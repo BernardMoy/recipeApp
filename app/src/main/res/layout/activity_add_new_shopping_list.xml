@@ -288,7 +288,7 @@
                             android:hint="Cost"
                             android:inputType="numberDecimal"
                             android:padding="@dimen/content_margin"
-                            android:textColor="@color/black"
+                            android:textColor="@color/gold"
                             android:textSize="@dimen/content_font_size" />
 
                     </LinearLayout>
@@ -335,7 +335,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/bottom_margin_size"
                         tools:itemCount="2" />
-                    
+
                 </LinearLayout>
 
             </androidx.core.widget.NestedScrollView>
