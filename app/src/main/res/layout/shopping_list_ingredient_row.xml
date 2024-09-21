@@ -34,26 +34,56 @@
             android:textSize="@dimen/content_font_size"
             android:textStyle="bold" />
 
+        <ImageButton
+            android:id="@+id/ingredient_minusButton"
+            android:layout_width="@dimen/toggle_button_size"
+            android:layout_height="@dimen/toggle_button_size"
+            android:text=""
+            android:textOff=""
+            android:textOn=""
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/minus_circle_icon"
+            android:background="@android:color/transparent"
+            android:layout_marginStart="@dimen/content_margin"
+            app:layout_constraintEnd_toStartOf="@id/ingredient_textView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/primaryColor" />
+
         <TextView
             android:id="@+id/amount_textView"
             android:gravity="center"
-            android:text="Amount"
+            android:text="0"
             android:textColor="@color/black"
             android:layout_width="0dp"
             android:layout_gravity="center_vertical"
             android:layout_height="@dimen/image_button_size"
-            android:layout_weight="2"
+            android:layout_weight="1.5"
             android:textSize="@dimen/content_font_size" />
+
+        <ImageButton
+            android:id="@+id/ingredient_addButton"
+            android:layout_width="@dimen/toggle_button_size"
+            android:layout_height="@dimen/toggle_button_size"
+            android:text=""
+            android:textOff=""
+            android:textOn=""
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/add_circle_icon"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toStartOf="@id/ingredient_textView"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="@dimen/content_margin"
+            app:tint="@color/primaryColor" />
 
         <TextView
             android:id="@+id/cost_textView"
             android:gravity="center"
-            android:text="Cost"
+            android:text="0"
             android:layout_width="0dp"
             android:layout_height="@dimen/image_button_size"
             android:layout_gravity="center_vertical"
             android:textColor="@color/gold"
-            android:layout_weight="2"
+            android:layout_weight="1.5"
             android:textSize="@dimen/content_font_size" />
 
         <ImageButton

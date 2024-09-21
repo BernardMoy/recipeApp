@@ -96,10 +96,28 @@
 
             <TextView
                 android:gravity="center_horizontal"
-                android:text="Amount"
+                android:text=""
+                android:layout_width="@dimen/toggle_button_size"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/content_margin"
+                android:textColor="@color/white"
+                android:textSize="@dimen/content_font_size" />
+
+            <TextView
+                android:gravity="center_horizontal"
+                android:text="Amt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="1.5"
+                android:textColor="@color/white"
+                android:textSize="@dimen/content_font_size" />
+
+            <TextView
+                android:gravity="center_horizontal"
+                android:text=""
+                android:layout_width="@dimen/toggle_button_size"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/content_margin"
                 android:textColor="@color/white"
                 android:textSize="@dimen/content_font_size" />
 
@@ -108,7 +126,7 @@
                 android:text="Cost"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="1.5"
                 android:textColor="@color/white"
                 android:textSize="@dimen/content_font_size" />
 
