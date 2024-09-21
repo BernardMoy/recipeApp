@@ -35,7 +35,7 @@
             android:textStyle="bold" />
 
         <ImageButton
-            android:id="@+id/ingredient_minusButton"
+            android:id="@+id/ingredientMinus_ImageButton"
             android:layout_width="@dimen/toggle_button_size"
             android:layout_height="@dimen/toggle_button_size"
             android:text=""
@@ -61,7 +61,7 @@
             android:textSize="@dimen/content_font_size" />
 
         <ImageButton
-            android:id="@+id/ingredient_addButton"
+            android:id="@+id/ingredientAdd_ImageButton"
             android:layout_width="@dimen/toggle_button_size"
             android:layout_height="@dimen/toggle_button_size"
             android:text=""

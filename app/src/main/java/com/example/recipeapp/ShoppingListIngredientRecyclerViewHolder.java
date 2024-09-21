@@ -17,6 +17,8 @@ public class ShoppingListIngredientRecyclerViewHolder extends RecyclerView.ViewH
     private ImageButton deleteButton;
     private TableRow tableRow;
     private ToggleButton checkButton;
+    private ImageButton addButton;
+    private ImageButton minusButton;
 
     public ShoppingListIngredientRecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -26,6 +28,8 @@ public class ShoppingListIngredientRecyclerViewHolder extends RecyclerView.ViewH
         deleteButton = itemView.findViewById(R.id.ingredientDelete_button);
         tableRow = itemView.findViewById(R.id.shoppingListIngredient_tableRow);
         checkButton = itemView.findViewById(R.id.ingredient_checkButton);
+        addButton = itemView.findViewById(R.id.ingredientAdd_ImageButton);
+        minusButton = itemView.findViewById(R.id.ingredientMinus_ImageButton);
     }
 
     public TextView getIngredientTextView() {
@@ -50,5 +54,13 @@ public class ShoppingListIngredientRecyclerViewHolder extends RecyclerView.ViewH
 
     public ToggleButton getCheckButton() {
         return checkButton;
+    }
+
+    public ImageButton getMinusButton() {
+        return minusButton;
+    }
+
+    public ImageButton getAddButton() {
+        return addButton;
     }
 }

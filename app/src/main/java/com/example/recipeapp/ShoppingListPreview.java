@@ -32,7 +32,7 @@ public class ShoppingListPreview {
     }
 
     public float getCost() {
-        return cost;
+        return Math.round(cost*100.0f)/100.0f;
     }
 
     public boolean isFavourited() {

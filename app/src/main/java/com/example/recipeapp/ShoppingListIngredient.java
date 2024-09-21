@@ -20,8 +20,13 @@ public class ShoppingListIngredient {
         return ingredientName;
     }
 
+    // designed this way to allow increment more than one at once, when the same ingredient is supplied.
     public void incrementAmount(int n){
         this.amount += n;
+    }
+
+    public void decrementAmount(int n){
+        this.amount -= n;
     }
 
     public int getAmount() {

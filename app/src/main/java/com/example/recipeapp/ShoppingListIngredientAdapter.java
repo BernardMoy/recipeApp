@@ -119,6 +119,34 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
                 }
             }
         });
+
+
+        // listener for the add and minus button next to amount
+        holder.getAddButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int currentAmount = shoppingListIngredientList.get(position).getAmount();
+
+                // only execute -- condition to be added
+                if (true){
+                    shoppingListIngredientList.get(position).incrementAmount(1);
+                    holder.getAmountTextView().setText(String.valueOf(currentAmount + 1));
+                }
+            }
+        });
+
+        holder.getMinusButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int currentAmount = shoppingListIngredientList.get(position).getAmount();
+
+                // only execute if > 1 (min = 1)
+                if (currentAmount > 1){
+                    shoppingListIngredientList.get(position).decrementAmount(1);
+                    holder.getAmountTextView().setText(String.valueOf(currentAmount - 1));
+                }
+            }
+        });
     }
 
     @Override
