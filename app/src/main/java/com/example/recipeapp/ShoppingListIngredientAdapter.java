@@ -56,18 +56,10 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
                     shoppingListIngredientList.remove(pos);
                     notifyItemRemoved(pos);  // update the displayed view
 
-                    // get the total cost of ingredients
-                    float totalCost = 0.0f;
-                    for (ShoppingListIngredient i : shoppingListIngredientList){
-                        totalCost += i.getCost()*i.getAmount();
-                    }
-
-                    // call the listener to update parent recyclerview data
-                    listener.updateCountAndCost(shoppingListIngredientList.size(), totalCost);
+                    updateSupermarketRow();
                 }
             }
         });
-
 
 
         // discard the prev listener
@@ -131,6 +123,8 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
                 if (true){
                     shoppingListIngredientList.get(position).incrementAmount(1);
                     holder.getAmountTextView().setText(String.valueOf(currentAmount + 1));
+
+                    updateSupermarketRow();
                 }
             }
         });
@@ -144,6 +138,8 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
                 if (currentAmount > 1){
                     shoppingListIngredientList.get(position).decrementAmount(1);
                     holder.getAmountTextView().setText(String.valueOf(currentAmount - 1));
+
+                    updateSupermarketRow();
                 }
             }
         });
@@ -152,5 +148,24 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
     @Override
     public int getItemCount() {
         return shoppingListIngredientList.size();
+    }
+
+    // method to update the supermarket row count and cost. Called when an item is deleted or change amt
+    public void updateSupermarketRow(){
+
+        // get the total amount
+        int totalAmount = 0;
+        for (ShoppingListIngredient i : shoppingListIngredientList){
+            totalAmount += i.getAmount();
+        }
+
+        // get the total cost of ingredients
+        float totalCost = 0.0f;
+        for (ShoppingListIngredient i : shoppingListIngredientList){
+            totalCost += i.getCost()*i.getAmount();
+        }
+
+        // call the listener to update parent recyclerview data
+        listener.updateCountAndCost(totalAmount, totalCost);
     }
 }

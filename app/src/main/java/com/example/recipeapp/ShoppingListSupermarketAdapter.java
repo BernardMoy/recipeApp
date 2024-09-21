@@ -46,7 +46,11 @@ public class ShoppingListSupermarketAdapter extends RecyclerView.Adapter<Shoppin
 
 
         // modify the supermarket count textview and the supermarket total cost textview
-        String countText = String.valueOf(ingredientList.size()) + " items";
+        int totalAmount = 0;
+        for (ShoppingListIngredient i : ingredientList){
+            totalAmount += i.getAmount();
+        }
+        String countText = String.valueOf(totalAmount) + " items";
         holder.getSupermarketCountTextView().setText(countText);
 
         // get the total cost of ingredients
@@ -66,12 +70,12 @@ public class ShoppingListSupermarketAdapter extends RecyclerView.Adapter<Shoppin
         ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
 
 
-            /*
-            This listener is called when an ingredient is deleted.
+        /*
+        This listener is called when an ingredient is deleted.
 
-            A callback is made to the parent to update the displayed count and total cost.
-            If there are no more ingredient, then delete it.
-            */
+        A callback is made to the parent to update the displayed count and total cost.
+        If there are no more ingredient, then delete it.
+        */
         ShoppingListIngredientAdapter ingredientAdapter = new ShoppingListIngredientAdapter(ctx, ingredientList, new OnIngredientChangeListener() {
             @Override
             public void updateCountAndCost(int newCount, float newTotalCost) {
