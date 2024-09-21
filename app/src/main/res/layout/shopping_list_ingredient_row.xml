@@ -57,7 +57,7 @@
             android:layout_width="0dp"
             android:layout_gravity="center_vertical"
             android:layout_height="@dimen/image_button_size"
-            android:layout_weight="1.5"
+            android:layout_weight="1"
             android:textSize="@dimen/content_font_size" />
 
         <ImageButton
@@ -83,7 +83,7 @@
             android:layout_height="@dimen/image_button_size"
             android:layout_gravity="center_vertical"
             android:textColor="@color/gold"
-            android:layout_weight="1.5"
+            android:layout_weight="1"
             android:textSize="@dimen/content_font_size" />
 
         <ImageButton

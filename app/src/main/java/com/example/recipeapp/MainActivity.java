@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed(){
         exitApp();
     }
-    
+
     // function to replace fragment
     protected void replaceFragment(Fragment f){
         FragmentManager fm = getSupportFragmentManager();
