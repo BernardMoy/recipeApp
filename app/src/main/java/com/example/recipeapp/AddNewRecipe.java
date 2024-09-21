@@ -320,14 +320,17 @@ public class AddNewRecipe extends AppCompatActivity {
         // load all supermarket names from the db to the set
         currentSupermarketSet = new HashSet<>();
 
-        DatabaseHelperRecipes db = new DatabaseHelperRecipes(getApplicationContext());
-        Cursor cursor = db.getDistinctSupermarkets();
-        if (cursor.getCount() > 0){
-            while (cursor.moveToNext()){
-                currentSupermarketSet.add(cursor.getString(0));
+        if (recipeId != -1){
+            DatabaseHelperRecipes db = new DatabaseHelperRecipes(getApplicationContext());
+            Cursor cursor = db.getDistinctSupermarkets(recipeId);
+            if (cursor.getCount() > 0){
+                while (cursor.moveToNext()){
+                    currentSupermarketSet.add(cursor.getString(0));
+                }
             }
+            db.close();
         }
-        db.close();
+
 
         setUpSupermarketAutoCompleteTextView();
 

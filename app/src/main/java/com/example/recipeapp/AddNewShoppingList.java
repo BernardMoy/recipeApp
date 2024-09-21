@@ -156,14 +156,16 @@ public class AddNewShoppingList extends AppCompatActivity {
         // load all supermarket names from the db to the set
         currentSupermarketSet = new HashSet<>();
 
-        DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(getApplicationContext());
-        Cursor cursor = db.getDistinctSupermarkets();
-        if (cursor.getCount() > 0){
-            while (cursor.moveToNext()){
-                currentSupermarketSet.add(cursor.getString(0));
+        if (shoppingListId != -1){
+            DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(getApplicationContext());
+            Cursor cursor = db.getDistinctSupermarkets(shoppingListId);
+            if (cursor.getCount() > 0){
+                while (cursor.moveToNext()){
+                    currentSupermarketSet.add(cursor.getString(0));
+                }
             }
+            db.close();
         }
-        db.close();
 
         setUpSupermarketAutoCompleteTextView();
     }

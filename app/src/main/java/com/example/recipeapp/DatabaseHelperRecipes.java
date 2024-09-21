@@ -645,16 +645,18 @@ public class DatabaseHelperRecipes extends SQLiteOpenHelper {
     }
 
     // method to get all distinct supermarkets
-    public Cursor getDistinctSupermarkets(){
+    public Cursor getDistinctSupermarkets(int id){
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Extract all SL data
         String queryShoppingList = "SELECT DISTINCT(supermarket) " +
-                "FROM Ingredients;";
+                "FROM Ingredients I JOIN Recipe_ingredients RI " +
+                "ON I.ingredient_id = RI.ingredient_id " +
+                "WHERE RI.recipe_id = ?;";
 
         Cursor cursor = null;
         if (db != null) {
-            cursor = db.rawQuery(queryShoppingList, new String[]{});
+            cursor = db.rawQuery(queryShoppingList, new String[]{String.valueOf(id)});
         }
         return cursor;
     }
