@@ -351,7 +351,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/content_margin"
                 android:layout_marginEnd="@dimen/content_margin"
-                android:layout_marginBottom="@dimen/title_margin"
+                android:layout_marginBottom="@dimen/bottom_margin_size"
                 tools:itemCount="2"/>
 
             <TextView
