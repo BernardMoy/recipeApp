@@ -15,6 +15,7 @@
             android:layout_height="@dimen/image_button_size"
             android:layout_weight="3"
             android:gravity="center"
+            android:layout_gravity="center_vertical"
             android:text="Ingredient"
             android:textColor="@color/black"
             android:textSize="@dimen/content_font_size"
@@ -29,6 +30,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/image_button_size"
             android:layout_weight="3"
+            android:layout_gravity="center_vertical"
             android:textSize="@dimen/content_font_size" />
 
         <TextView
@@ -37,6 +39,7 @@
             android:textColor="@color/gold"
             android:text="Cost"
             android:layout_width="0dp"
+            android:layout_gravity="center_vertical"
             android:layout_height="@dimen/image_button_size"
             android:layout_weight="2"
             android:textSize="@dimen/content_font_size" />
@@ -46,6 +49,7 @@
             android:textColor="@color/black"
             android:gravity="center"
             android:text="Shelf life"
+            android:layout_gravity="center_vertical"
             android:layout_width="0dp"
             android:layout_height="@dimen/image_button_size"
             android:layout_weight="2"
@@ -57,6 +61,7 @@
             android:layout_height="@dimen/image_button_size"
             android:background="@android:color/transparent"
             android:tint="@color/green"
+            android:layout_gravity="center_vertical"
             android:contentDescription="Fill"
             android:src="@drawable/check_icon_white"
             tools:ignore="UseAppTint" />
