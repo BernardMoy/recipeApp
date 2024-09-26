@@ -39,6 +39,8 @@ public class AddNewShoppingList extends AppCompatActivity {
     private TextView ingredientCostEditText;
     private AutoCompleteTextView ingredientSupermarketAutoCompleteTextView;
 
+    private Button doneButton;
+
     // hashmap for storing ingredients classified by supermarkets.
     private LinkedHashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap;
 
@@ -168,6 +170,59 @@ public class AddNewShoppingList extends AppCompatActivity {
         }
 
         setUpSupermarketAutoCompleteTextView();
+
+
+        // done button functionality
+        doneButton = findViewById(R.id.buttonDone);
+        doneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // depends if the ingredient field is valid, create a new dialog
+                String ingredientName = ingredientNameEditText.getText().toString().trim();
+
+                // if ing name is null, then add the SL to database and exit
+                if (ingredientName.isEmpty()){
+                    updateShoppingListToDatabase(view);
+                    return;
+                }
+
+                Dialog dialog = new Dialog(AddNewShoppingList.this);
+                dialog.setContentView(R.layout.confirm_add_ingredient);
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.custom_edit_text, null));
+                dialog.setCancelable(true);
+
+                // load the two buttons
+                Button confirmCancelButton = dialog.findViewById(R.id.confirmCancel_button);
+                Button confirmDoneButton = dialog.findViewById(R.id.confirmDone_button);
+
+                confirmCancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                confirmDoneButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // add the ingredient to the database
+                        addNewIngredient(view);
+
+                        // update the data to the db and exit
+                        updateShoppingListToDatabase(view);
+
+                        // dismiss dialog
+                        dialog.dismiss();
+
+                    }
+                });
+
+                dialog.show();
+            }
+        });
+
     }
 
     public void exitActivity(){

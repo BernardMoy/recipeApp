@@ -22,6 +22,7 @@
         android:textColor="@color/black"
         android:textSize="@dimen/title_font_size"
         android:text="Delete item?"
+        android:gravity="center_horizontal"
         android:layout_marginBottom="@dimen/content_margin"
         android:layout_marginTop="@dimen/content_margin"/>
 
@@ -31,6 +32,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/content_font_size"
         android:text="This process cannot be undone."
+        android:gravity="center_horizontal"
         android:layout_marginBottom="@dimen/title_margin"
         android:textColor="@color/Red" />
 

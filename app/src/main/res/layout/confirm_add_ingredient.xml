@@ -13,7 +13,7 @@
     <ImageView
         android:layout_width="@dimen/content_image_size"
         android:layout_height="@dimen/content_image_size"
-        android:src="@drawable/exit_icon"
+        android:src="@drawable/add_circle_icon"
         app:tint="@color/primaryColor" />
 
     <TextView
@@ -21,9 +21,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/title_font_size"
-        android:gravity="center_horizontal"
         android:textColor = "@color/black"
-        android:text="Exit app?"
+        android:text="Add the remaining ingredient?"
+        android:gravity="center_horizontal"
         android:layout_marginBottom="@dimen/content_margin"
         android:layout_marginTop="@dimen/content_margin"/>
 
@@ -38,16 +38,16 @@
             app:cornerRadius = "@dimen/button_corner_radius"
             android:backgroundTint="@color/lightGray"
             android:textColor="@color/black"
-            app:layout_constraintEnd_toStartOf="@+id/confirmExit_button"
+            app:layout_constraintEnd_toStartOf="@+id/confirmDone_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />
 
         <Button
-            android:id="@+id/confirmExit_button"
+            android:id="@+id/confirmDone_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Exit"
+            android:text="Yes"
             app:cornerRadius = "@dimen/button_corner_radius"
             android:textColor="@color/white"
             android:backgroundTint="@color/primaryColor"
