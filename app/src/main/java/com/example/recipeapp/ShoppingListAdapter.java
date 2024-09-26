@@ -22,6 +22,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -215,6 +216,39 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListRecycl
         }
 
         db.close();
+
+
+        // set up move to top button
+        holder.getMoveToTopButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog dialog = new Dialog(ctx);
+                dialog.setContentView(R.layout.confirm_move_top);
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().setBackgroundDrawable(getDrawable(ctx, R.drawable.custom_edit_text));
+                dialog.setCancelable(true);
+
+                // load the two buttons
+                Button confirmCancelButton = dialog.findViewById(R.id.confirmCancel_button);
+                Button confirmMoveButton = dialog.findViewById(R.id.confirmMove_button);
+
+                confirmCancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                confirmMoveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
+            }
+        });
     }
 
     @Override
