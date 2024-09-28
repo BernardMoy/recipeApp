@@ -223,7 +223,7 @@ public class AddNewShoppingList extends AppCompatActivity {
                     public void onClick(View view) {
                         // add the ingredient to the database
                         addNewIngredient(view);
-                            
+
                         // update the data to the db and exit
                         updateShoppingListToDatabase(view);
 

@@ -54,7 +54,7 @@ public class ShoppingListIngredientAdapter extends RecyclerView.Adapter<Shopping
                 int pos = holder.getAdapterPosition();
                 if (pos != -1){   // prevent clicking too fast
                     shoppingListIngredientList.remove(pos);
-                    notifyItemRemoved(pos);  // update the displayed view
+                    notifyDataSetChanged();  // update the displayed view
 
                     updateSupermarketRow();
                 }
