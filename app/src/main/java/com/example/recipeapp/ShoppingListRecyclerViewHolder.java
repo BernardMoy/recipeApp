@@ -28,7 +28,6 @@ public class ShoppingListRecyclerViewHolder extends RecyclerView.ViewHolder {
         favouriteButton = itemView.findViewById(R.id.shoppingListRow_favButton);
         deleteShoppingListButton = itemView.findViewById(R.id.deleteShoppingList_button);
         statusTextView = itemView.findViewById(R.id.shoppingListRow_status);
-        moveToTopButton = itemView.findViewById(R.id.shoppingListRow_moveToTopButton);
     }
 
     public TextView getNameTextView() {

@@ -52,19 +52,6 @@
             android:src="@drawable/delete_icon"
             tools:ignore="UseAppTint" />
 
-        <ImageButton
-            android:id="@+id/shoppingListRow_moveToTopButton"
-            android:layout_width="@dimen/toggle_button_size"
-            android:layout_height="@dimen/toggle_button_size"
-            android:layout_marginEnd="@dimen/content_margin"
-            android:contentDescription="Move to top"
-            android:text=""
-            android:textOff=""
-            android:textOn=""
-            android:background="@drawable/arrow_drop_up_icon"
-            app:layout_constraintEnd_toStartOf="@id/shoppingListRow_favButton"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <ToggleButton
             android:id="@+id/shoppingListRow_favButton"
             android:layout_width="@dimen/toggle_button_size"

@@ -63,9 +63,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        // start the home fragment at the beginning
-        replaceFragment(new HomeFragment());
-
         // settings button functionality
         settingsButton = findViewById(R.id.settings_button);
         settingsButton.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
                 exitApp();
             }
         });
+
+        // start the home fragment at the beginning
+        replaceFragment(new HomeFragment());
 
     }
 

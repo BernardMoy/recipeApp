@@ -72,21 +72,10 @@
             android:textColor="@color/black"
             android:textAlignment="viewStart"
             android:textSize="@dimen/title_font_size"
-            app:layout_constraintEnd_toStartOf="@+id/recipeRow_moveToTopButton"
+            app:layout_constraintEnd_toStartOf="@+id/recipeRow_toggleButton"
             app:layout_constraintStart_toEndOf="@+id/recipeRow_image"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/recipeRow_moveToTopButton"
-            android:layout_width="@dimen/toggle_button_size"
-            android:layout_height="@dimen/toggle_button_size"
-            android:layout_marginEnd="@dimen/content_margin"
-            android:text=""
-            android:textOff=""
-            android:textOn=""
-            android:background="@drawable/arrow_drop_up_icon"
-            app:layout_constraintEnd_toStartOf="@id/recipeRow_toggleButton"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <ToggleButton
             android:id="@+id/recipeRow_toggleButton"

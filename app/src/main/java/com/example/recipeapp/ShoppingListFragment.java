@@ -211,6 +211,10 @@ public class ShoppingListFragment extends Fragment {
     // called when search bar is updated
     public void filterShoppingLists(View view){
         // when text is changed, filter search results
+        if (shoppingListAdapter == null){
+            return;
+        }
+
         Filter shoppingListFilter = shoppingListAdapter.getFilter();
 
         // filter based on the class variable searchString

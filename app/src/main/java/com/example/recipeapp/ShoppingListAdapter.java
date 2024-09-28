@@ -219,6 +219,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListRecycl
 
 
         // set up move to top button
+        /*
         holder.getMoveToTopButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -249,6 +250,8 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListRecycl
                 dialog.show();
             }
         });
+
+         */
     }
 
     @Override

@@ -468,6 +468,10 @@ public class RecipeFragment extends Fragment {
     // method to update the recipeAdapter with a filter.
     // Called when the search view is updated or a new tag is selected or deselected
     public void filterRecipes(View view){
+        if (recipeAdapter == null){
+            return;
+        }
+
         // when text is changed, filter search results
         Filter recipeFilter = recipeAdapter.getFilter();
 
