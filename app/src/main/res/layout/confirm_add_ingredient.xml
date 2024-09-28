@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="250dp"
+    android:layout_width="@dimen/confirm_window_width"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:orientation="vertical"
@@ -38,22 +38,35 @@
             app:cornerRadius = "@dimen/button_corner_radius"
             android:backgroundTint="@color/lightGray"
             android:textColor="@color/black"
-            app:layout_constraintEnd_toStartOf="@+id/confirmDone_button"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />
 
         <Button
-            android:id="@+id/confirmDone_button"
+            android:id="@+id/confirmDiscard_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Yes"
+            android:text="Discard and Done"
+            app:cornerRadius = "@dimen/button_corner_radius"
+            android:textColor="@color/primaryColor"
+            android:backgroundTint="@color/lightColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/confirmCancel_button"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <Button
+            android:id="@+id/confirmAdd_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add and Done"
             app:cornerRadius = "@dimen/button_corner_radius"
             android:textColor="@color/white"
             android:backgroundTint="@color/primaryColor"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/confirmCancel_button"
+            app:layout_constraintTop_toBottomOf="@id/confirmDiscard_button"
+            app:layout_constraintStart_toStartOf="parent"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

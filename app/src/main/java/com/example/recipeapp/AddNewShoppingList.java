@@ -193,9 +193,10 @@ public class AddNewShoppingList extends AppCompatActivity {
                 dialog.getWindow().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.custom_edit_text, null));
                 dialog.setCancelable(true);
 
-                // load the two buttons
+                // load the three buttons
                 Button confirmCancelButton = dialog.findViewById(R.id.confirmCancel_button);
-                Button confirmDoneButton = dialog.findViewById(R.id.confirmDone_button);
+                Button confirmDiscardButton = dialog.findViewById(R.id.confirmDiscard_button);
+                Button confirmAddButton = dialog.findViewById(R.id.confirmAdd_button);
 
                 confirmCancelButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -204,11 +205,9 @@ public class AddNewShoppingList extends AppCompatActivity {
                     }
                 });
 
-                confirmDoneButton.setOnClickListener(new View.OnClickListener() {
+                confirmDiscardButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        // add the ingredient to the database
-                        addNewIngredient(view);
 
                         // update the data to the db and exit
                         updateShoppingListToDatabase(view);
@@ -216,6 +215,20 @@ public class AddNewShoppingList extends AppCompatActivity {
                         // dismiss dialog
                         dialog.dismiss();
 
+                    }
+                });
+
+                confirmAddButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // add the ingredient to the database
+                        addNewIngredient(view);
+                            
+                        // update the data to the db and exit
+                        updateShoppingListToDatabase(view);
+
+                        // dismiss dialog
+                        dialog.dismiss();
                     }
                 });
 
