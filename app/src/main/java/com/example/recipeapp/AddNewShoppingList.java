@@ -1,6 +1,8 @@
 package com.example.recipeapp;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
@@ -400,13 +402,19 @@ public class AddNewShoppingList extends AppCompatActivity {
         // add or update SL to database
         DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(this);
         if (shoppingListId == -1){
-            boolean status = db.addShoppingList(shoppingListName, shoppingListDescription, shoppingListIngredientsHashMap);
+            long status = db.addShoppingList(shoppingListName, shoppingListDescription, shoppingListIngredientsHashMap);
 
             // exit activity if successful
-            if (!status){
+            if (status == -1){
                 Toast.makeText(this, "Data adding failed", Toast.LENGTH_SHORT).show();
             }
             else{
+                // Record the data of the last item that is clicked
+                SharedPreferences sharedPreferences = this.getSharedPreferences("homePageInfo", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("lastShoppingListId", (int) status);
+                editor.apply();
+
                 Toast.makeText(this, "New shopping list added", Toast.LENGTH_SHORT).show();
                 getOnBackPressedDispatcher().onBackPressed();
             }

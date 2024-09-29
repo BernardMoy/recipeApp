@@ -112,7 +112,8 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public boolean addShoppingList(String name, String description, LinkedHashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap){
+    // return the id of the latest SL added. If unsucessful, return -1
+    public long addShoppingList(String name, String description, LinkedHashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap){
         SQLiteDatabase db = this.getReadableDatabase();
 
         ContentValues contentValuesShoppingLists = new ContentValues();
@@ -126,7 +127,7 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
         // insert into SL -- get the returned id
         long resultShoppingLists = db.insert("Shopping_lists", null, contentValuesShoppingLists);
         if (resultShoppingLists == -1){
-            return false;
+            return -1;
         }
 
         // insert into the SLSI and Ingredient table
@@ -143,7 +144,7 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
                 // insert into ingredients table
                 long resultIngredients = db.insert("Ingredients", null, contentValuesIngredients);
                 if (resultIngredients == -1){
-                    return false;
+                    return -1;
                 }
 
                 // insert into supermarket ingredients table
@@ -154,12 +155,12 @@ public class DatabaseHelperShoppingLists extends SQLiteOpenHelper {
                 // insert into supermarket ingredients table
                 long resultSupermarketIngredients = db.insert("Shopping_list_supermarket_ingredients", null, contentValuesShoppingListSupermarketIngredients);
                 if (resultSupermarketIngredients == -1){
-                    return false;
+                    return -1;
                 }
             }
         }
 
-        return true;
+        return resultShoppingLists;
     }
 
     public boolean updateShoppingListFromId(int shoppingListId, String name, String description, LinkedHashMap<String, ArrayList<ShoppingListIngredient>> shoppingListIngredientsHashMap){
