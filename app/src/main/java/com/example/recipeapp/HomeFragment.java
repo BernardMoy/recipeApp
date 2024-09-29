@@ -2,6 +2,7 @@ package com.example.recipeapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -214,6 +215,22 @@ public class HomeFragment extends Fragment {
         spent30TextView = view.findViewById(R.id.spent30_textView);
         loadAnalytics();
 
+        // load the latest viewed shopping list
+        // get that info from sharedPreferences
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("homePageInfo", Context.MODE_PRIVATE);
+        int lastShoppingListId = sharedPreferences.getInt("lastShoppingListId", -1);
+
+        // load data
+        boolean success = loadLastShoppingList(lastShoppingListId);
+
+        // if that id cannot be found or no SL, set view to gone
+        if (!success){
+            lastShoppingListConstraintLayout.setVisibility(View.GONE);
+
+        } else {
+            lastShoppingListConstraintLayout.setVisibility(View.VISIBLE);
+        }
+
 
         return view;
     }
@@ -366,8 +383,10 @@ public class HomeFragment extends Fragment {
     // method to load shopping list data to the last viewed SL from db. Return true if that id is valid.
     public boolean loadLastShoppingList(int id){
         DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(ctx);
+
         Cursor cursor = db.getShoppingListFromId(id);
-        if (cursor.getCount() != 0){
+        if (cursor.getCount() > 0){
+            cursor.moveToNext();
             lastShoppingListName.setText(cursor.getString(0));
 
         } else {
@@ -376,7 +395,8 @@ public class HomeFragment extends Fragment {
         }
 
         Cursor cursor1 = db.getShoppingListsNumsFromId(id);
-        if (cursor1.getCount() != 0){
+        if (cursor1.getCount() > 0){
+            cursor1.moveToNext();
             String itemCountString = String.valueOf(cursor1.getInt(0)) + " items";
             String placeCountString = "(" + String.valueOf(cursor1.getInt(1)) + " places)";
             String costString = String.valueOf(cursor1.getInt(2));

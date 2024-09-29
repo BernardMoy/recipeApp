@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -105,6 +106,13 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListRecycl
                 // Extract the corresponding recipe id that is clicked
                 int pos = holder.getAdapterPosition();
                 int clickedShoppingListId = shoppingListPreviewList.get(pos).getShoppingListId();
+
+                // Record the data of the last item that is clicked
+                SharedPreferences sharedPreferences = ctx.getSharedPreferences("homePageInfo", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("lastShoppingListId", clickedShoppingListId);
+                editor.apply();
+
 
                 // Start intent with passed parameters of shopping list
                 Intent i = new Intent(ctx, AddNewShoppingList.class);

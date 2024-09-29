@@ -196,6 +196,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/lastShoppingList_ConstraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/light_gray_color_background"
@@ -214,83 +215,81 @@
                     android:textSize="@dimen/title_font_size"
                     android:textColor="@color/primaryColor"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/lastShoppingList_ConstraintLayout"
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginStart="@dimen/content_margin"
                     android:layout_marginTop="@dimen/content_margin"/>
 
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/lastShoppingList_ConstraintLayout"
-                    android:layout_width="match_parent"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/content_margin"
+                android:layout_marginTop="@dimen/content_margin"
+                android:layout_marginEnd="@dimen/content_margin"
+                android:background="@drawable/custom_edit_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lastShoppingListTitle_textView"
+                app:layout_goneMarginBottom="@dimen/content_margin">
+
+
+                <TextView
+                    android:id="@+id/lastShoppingList_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/title_margin"
+                    android:layout_marginEnd="@dimen/title_margin"
+                    android:layout_weight="1"
+                    android:text="Shopping list name"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/title_font_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/lastShoppingList_itemCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/title_margin"
+                    android:layout_marginTop="@dimen/content_margin"
+                    android:text="0 items"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/content_font_size"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lastShoppingList_name" />
+
+                <TextView
+                    android:id="@+id/lastShoppingList_placeCount"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/content_margin"
                     android:layout_marginTop="@dimen/content_margin"
-                    android:layout_marginEnd="@dimen/content_margin"
-                    android:background="@drawable/custom_edit_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/lastShoppingListTitle_textView"
-                    app:layout_goneMarginBottom="@dimen/content_margin">
+                    android:text="(0 places)"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/content_font_size"
+                    app:layout_constraintStart_toEndOf="@id/lastShoppingList_itemCount"
+                    app:layout_constraintTop_toBottomOf="@+id/lastShoppingList_name" />
 
 
-                    <TextView
-                        android:id="@+id/lastShoppingList_name"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/title_margin"
-                        android:layout_marginEnd="@dimen/title_margin"
-                        android:layout_weight="1"
-                        android:text="Shopping list name"
-                        android:textAlignment="viewStart"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/title_font_size"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/lastShoppingList_cost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/title_margin"
+                    android:layout_marginTop="@dimen/content_margin"
+                    android:drawableStart="@drawable/money_icon"
+                    android:drawableTint="@color/gray"
+                    android:text=" 0.00"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/content_font_size"
+                    app:layout_constraintStart_toEndOf="@+id/lastShoppingList_placeCount"
+                    app:layout_constraintTop_toBottomOf="@+id/lastShoppingList_name" />
 
-
-
-                    <TextView
-                        android:id="@+id/lastShoppingList_itemCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0 items"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/content_font_size"
-                        android:layout_marginStart="@dimen/title_margin"
-                        android:layout_marginTop="@dimen/content_margin"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/lastShoppingList_name"/>
-
-                    <TextView
-                        android:id="@+id/lastShoppingList_placeCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="(0 places)"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/content_font_size"
-                        android:layout_marginStart="@dimen/content_margin"
-                        android:layout_marginTop="@dimen/content_margin"
-                        app:layout_constraintStart_toEndOf="@id/lastShoppingList_itemCount"
-                        app:layout_constraintTop_toBottomOf="@+id/lastShoppingList_name"/>
-
-
-                    <TextView
-                        android:id="@+id/lastShoppingList_cost"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/title_margin"
-                        android:layout_marginTop="@dimen/content_margin"
-                        android:drawableStart="@drawable/money_icon"
-                        android:text=" 0.00"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/content_font_size"
-                        android:drawableTint="@color/gray"
-                        app:layout_constraintStart_toEndOf="@+id/lastShoppingList_placeCount"
-                        app:layout_constraintTop_toBottomOf="@+id/lastShoppingList_name" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
                 android:id="@+id/lastShoppingListArrow_imageView"
@@ -300,9 +299,10 @@
                 android:background="@android:color/transparent"
                 android:contentDescription="View"
                 android:src="@drawable/arrow_forward_simple_icon"
-                app:layout_constraintBottom_toTopOf="@+id/lastShoppingList_ConstraintLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="@dimen/content_margin"
+                android:layout_marginTop="@dimen/content_margin"
                 app:tint="@color/primaryColor" />
 
 
