@@ -252,7 +252,7 @@
 
 
                     <TextView
-                        android:id="@+id/shoppingListRow_itemCount"
+                        android:id="@+id/lastShoppingList_itemCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0 items"
@@ -264,7 +264,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/lastShoppingList_name"/>
 
                     <TextView
-                        android:id="@+id/shoppingListRow_supermarketCount"
+                        android:id="@+id/lastShoppingList_placeCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="(0 places)"
@@ -272,12 +272,12 @@
                         android:textSize="@dimen/content_font_size"
                         android:layout_marginStart="@dimen/content_margin"
                         android:layout_marginTop="@dimen/content_margin"
-                        app:layout_constraintStart_toEndOf="@id/shoppingListRow_itemCount"
+                        app:layout_constraintStart_toEndOf="@id/lastShoppingList_itemCount"
                         app:layout_constraintTop_toBottomOf="@+id/lastShoppingList_name"/>
 
 
                     <TextView
-                        android:id="@+id/shoppingListRow_cost"
+                        android:id="@+id/lastShoppingList_cost"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/title_margin"
@@ -287,7 +287,7 @@
                         android:textColor="@color/gray"
                         android:textSize="@dimen/content_font_size"
                         android:drawableTint="@color/gray"
-                        app:layout_constraintStart_toEndOf="@+id/shoppingListRow_supermarketCount"
+                        app:layout_constraintStart_toEndOf="@+id/lastShoppingList_placeCount"
                         app:layout_constraintTop_toBottomOf="@+id/lastShoppingList_name" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

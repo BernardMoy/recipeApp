@@ -63,6 +63,13 @@ public class HomeFragment extends Fragment {
     private TextView spent7TextView;
     private TextView spent30TextView;
 
+    // textviews for the latest shopping list
+    private ConstraintLayout lastShoppingListConstraintLayout;
+    private TextView lastShoppingListName;
+    private TextView lastShoppingListItemCount;
+    private TextView lastShoppingListPlaceCount;
+    private TextView lastShoppingListCost;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -126,6 +133,13 @@ public class HomeFragment extends Fragment {
         recipePrepTimeTextView = view.findViewById(R.id.generateRow_prepTime);
         recipeCostTextView = view.findViewById(R.id.generateRow_cost);
         recipeTimesCookedTextView = view.findViewById(R.id.generateRow_timesCooked);
+
+        // load views for the latest shopping list
+        lastShoppingListConstraintLayout = view.findViewById(R.id.lastShoppingList_ConstraintLayout);
+        lastShoppingListName = view.findViewById(R.id.lastShoppingList_name);
+        lastShoppingListItemCount = view.findViewById(R.id.lastShoppingList_itemCount);
+        lastShoppingListPlaceCount = view.findViewById(R.id.lastShoppingList_placeCount);
+        lastShoppingListCost = view.findViewById(R.id.lastShoppingList_cost);
 
         // set on click listener
         refreshButton.setOnClickListener(new View.OnClickListener() {
@@ -346,5 +360,37 @@ public class HomeFragment extends Fragment {
         recipeAddedTextView.setText(String.valueOf(mealCount));
         spent7TextView.setText(String.valueOf(costSeven));
         spent30TextView.setText(String.valueOf(costThirty));
+    }
+
+
+    // method to load shopping list data to the last viewed SL from db. Return true if that id is valid.
+    public boolean loadLastShoppingList(int id){
+        DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(ctx);
+        Cursor cursor = db.getShoppingListFromId(id);
+        if (cursor.getCount() != 0){
+            lastShoppingListName.setText(cursor.getString(0));
+
+        } else {
+            db.close();
+            return false;
+        }
+
+        Cursor cursor1 = db.getShoppingListsNumsFromId(id);
+        if (cursor1.getCount() != 0){
+            String itemCountString = String.valueOf(cursor1.getInt(0)) + " items";
+            String placeCountString = "(" + String.valueOf(cursor1.getInt(1)) + " places)";
+            String costString = String.valueOf(cursor1.getInt(2));
+
+            lastShoppingListItemCount.setText(itemCountString);
+            lastShoppingListPlaceCount.setText(placeCountString);
+            lastShoppingListCost.setText(costString);
+
+        } else {
+            db.close();
+            return false;
+        }
+
+        db.close();
+        return true;
     }
 }
