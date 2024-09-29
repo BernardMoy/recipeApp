@@ -215,36 +215,7 @@ public class HomeFragment extends Fragment {
         spent30TextView = view.findViewById(R.id.spent30_textView);
         loadAnalytics();
 
-        // load the latest viewed shopping list
-        // get that info from sharedPreferences
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("homePageInfo", Context.MODE_PRIVATE);
-        int lastShoppingListId = sharedPreferences.getInt("lastShoppingListId", -1);
-
-        // load data
-        boolean success = loadLastShoppingList(lastShoppingListId);
-
-        if (!success){
-            // if that id cannot be found or no SL, set view to gone
-            lastShoppingListConstraintLayout.setVisibility(View.GONE);
-            lastShoppingListConstraintLayout.setEnabled(false);
-
-        } else {
-            // success
-            lastShoppingListConstraintLayout.setEnabled(true);
-            lastShoppingListConstraintLayout.setVisibility(View.VISIBLE);
-
-            // set a on click listener for that area
-            lastShoppingListConstraintLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(ctx, AddNewShoppingList.class);
-                    intent.putExtra("title_text", "Edit shopping list");
-                    intent.putExtra("shopping_list_id", lastShoppingListId);
-
-                    startActivity(intent);
-                }
-            });
-        }
+        loadLastShoppingList();
 
 
         return view;
@@ -302,6 +273,7 @@ public class HomeFragment extends Fragment {
     public void onResume(){
         super.onResume();
         loadRecipeData();
+        loadLastShoppingList();
         loadAnalytics();
     }
 
@@ -394,9 +366,41 @@ public class HomeFragment extends Fragment {
         spent30TextView.setText(String.valueOf(costThirty));
     }
 
+    private void loadLastShoppingList(){
+        // load the latest viewed shopping list
+        // get that info from sharedPreferences
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("homePageInfo", Context.MODE_PRIVATE);
+        int lastShoppingListId = sharedPreferences.getInt("lastShoppingListId", -1);
+
+        // load data
+        boolean success = loadLastShoppingListFromDb(lastShoppingListId);
+
+        if (!success){
+            // if that id cannot be found or no SL, set view to gone
+            lastShoppingListConstraintLayout.setVisibility(View.GONE);
+            lastShoppingListConstraintLayout.setEnabled(false);
+
+        } else {
+            // success
+            lastShoppingListConstraintLayout.setEnabled(true);
+            lastShoppingListConstraintLayout.setVisibility(View.VISIBLE);
+
+            // set a on click listener for that area
+            lastShoppingListConstraintLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ctx, AddNewShoppingList.class);
+                    intent.putExtra("title_text", "Edit shopping list");
+                    intent.putExtra("shopping_list_id", lastShoppingListId);
+
+                    startActivity(intent);
+                }
+            });
+        }
+    }
 
     // method to load shopping list data to the last viewed SL from db. Return true if that id is valid.
-    public boolean loadLastShoppingList(int id){
+    public boolean loadLastShoppingListFromDb(int id){
         DatabaseHelperShoppingLists db = new DatabaseHelperShoppingLists(ctx);
 
         Cursor cursor = db.getShoppingListFromId(id);
