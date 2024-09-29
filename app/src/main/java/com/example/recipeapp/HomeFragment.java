@@ -223,12 +223,27 @@ public class HomeFragment extends Fragment {
         // load data
         boolean success = loadLastShoppingList(lastShoppingListId);
 
-        // if that id cannot be found or no SL, set view to gone
         if (!success){
+            // if that id cannot be found or no SL, set view to gone
             lastShoppingListConstraintLayout.setVisibility(View.GONE);
+            lastShoppingListConstraintLayout.setEnabled(false);
 
         } else {
+            // success
+            lastShoppingListConstraintLayout.setEnabled(true);
             lastShoppingListConstraintLayout.setVisibility(View.VISIBLE);
+
+            // set a on click listener for that area
+            lastShoppingListConstraintLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ctx, AddNewShoppingList.class);
+                    intent.putExtra("title_text", "Edit shopping list");
+                    intent.putExtra("shopping_list_id", lastShoppingListId);
+
+                    startActivity(intent);
+                }
+            });
         }
 
 
