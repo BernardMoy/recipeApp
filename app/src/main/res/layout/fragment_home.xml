@@ -238,13 +238,13 @@
                     android:id="@+id/lastShoppingList_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/title_margin"
                     android:layout_marginTop="@dimen/content_margin"
+                    android:layout_marginEnd="@dimen/content_margin"
                     android:drawableStart="@drawable/circle_icon_red"
-                    android:text="  0% Completed"
+                    android:text="  0%"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/content_font_size"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -252,16 +252,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/title_margin"
+                    android:layout_marginEnd="@dimen/content_margin"
                     android:layout_marginTop="@dimen/content_margin_half"
-                    android:layout_marginEnd="@dimen/title_margin"
                     android:layout_weight="1"
-                    android:text="Shopping list name"
+                    android:text="Shopping list name long long long"
                     android:textAlignment="viewStart"
                     android:textColor="@color/black"
                     android:textSize="@dimen/title_font_size"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/lastShoppingList_status"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/lastShoppingList_status" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
                 <TextView

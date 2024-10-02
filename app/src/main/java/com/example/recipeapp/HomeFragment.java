@@ -70,6 +70,7 @@ public class HomeFragment extends Fragment {
     private TextView lastShoppingListItemCount;
     private TextView lastShoppingListPlaceCount;
     private TextView lastShoppingListCost;
+    private TextView lastShoppingListStatus;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -141,6 +142,7 @@ public class HomeFragment extends Fragment {
         lastShoppingListItemCount = view.findViewById(R.id.lastShoppingList_itemCount);
         lastShoppingListPlaceCount = view.findViewById(R.id.lastShoppingList_placeCount);
         lastShoppingListCost = view.findViewById(R.id.lastShoppingList_cost);
+        lastShoppingListStatus = view.findViewById(R.id.lastShoppingList_status);
 
         // set on click listener
         refreshButton.setOnClickListener(new View.OnClickListener() {
@@ -423,6 +425,39 @@ public class HomeFragment extends Fragment {
             lastShoppingListItemCount.setText(itemCountString);
             lastShoppingListPlaceCount.setText(placeCountString);
             lastShoppingListCost.setText(costString);
+
+
+            // display the percentage of SL that is completed
+            // first get count of the ingredients
+            Cursor cursor2 = db.getShoppingListsNumsFromId(id);
+            cursor2.moveToNext();
+
+            // if empty, display empty message
+            if (cursor2.getInt(0) == 0){
+                String text = "  -";
+                lastShoppingListStatus.setText(text);
+                lastShoppingListStatus.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.circle_icon_gray, 0, 0, 0);
+
+            } else {
+                // get the percentage
+                Cursor cursor3 = db.getShoppingListPercentage(id);
+                cursor3.moveToNext();
+                int percentage = Math.round(cursor3.getFloat(0)*100);
+                String text = "  " + String.valueOf(percentage) + "%";
+                lastShoppingListStatus.setText(text);
+
+                if (percentage == 0){
+                    lastShoppingListStatus.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.circle_icon_red, 0, 0, 0);
+
+                } else if (percentage == 100){
+                    lastShoppingListStatus.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.circle_icon_green, 0, 0, 0);
+
+                } else {
+                    lastShoppingListStatus.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.circle_icon_orange, 0, 0, 0);
+                }
+            }
+
+            db.close();
 
         } else {
             db.close();
