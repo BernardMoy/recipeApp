@@ -60,6 +60,7 @@
             android:layout_marginBottom="@dimen/content_margin" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/generateRecipeConstraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/light_gray_color_background"
@@ -84,7 +85,7 @@
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/generateRecipeConstraintLayout"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/content_margin"
