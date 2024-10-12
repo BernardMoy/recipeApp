@@ -420,7 +420,7 @@ public class HomeFragment extends Fragment {
             cursor1.moveToNext();
             String itemCountString = String.valueOf(cursor1.getInt(0)) + " items";
             String placeCountString = "(" + String.valueOf(cursor1.getInt(1)) + " places)";
-            String costString = String.valueOf(cursor1.getFloat(2));
+            String costString = String.valueOf(Math.round(cursor1.getFloat(2)*100)/100.0);
 
             lastShoppingListItemCount.setText(itemCountString);
             lastShoppingListPlaceCount.setText(placeCountString);
