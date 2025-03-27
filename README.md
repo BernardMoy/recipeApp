@@ -1,5 +1,5 @@
 # Recipe app
-A recipe app made using **Java** that supports creating recipes and shoping lists, as well as generating shopping lists and recommend recipes. This project is still work in progress but is sufficient to use for a university student.
+A recipe app made using **Java** and **sqlite** that supports creating recipes and shoping lists, as well as generating shopping lists and recommend recipes. This project is still work in progress but is sufficient to use for a university student.
 
 # Features
 - Create a new recipe featuring ingredients, prep time, link etc.
