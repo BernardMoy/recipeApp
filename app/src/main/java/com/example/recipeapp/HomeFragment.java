@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -420,7 +421,7 @@ public class HomeFragment extends Fragment {
             cursor1.moveToNext();
             String itemCountString = String.valueOf(cursor1.getInt(0)) + " items";
             String placeCountString = "(" + String.valueOf(cursor1.getInt(1)) + " places)";
-            String costString = String.valueOf(Math.round(cursor1.getFloat(2)*100)/100.0);
+            String costString = String.valueOf(new DecimalFormat("#.##").format(cursor1.getFloat(2)));
 
             lastShoppingListItemCount.setText(itemCountString);
             lastShoppingListPlaceCount.setText(placeCountString);
